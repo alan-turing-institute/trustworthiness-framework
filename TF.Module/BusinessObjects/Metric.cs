@@ -48,6 +48,7 @@ namespace TF.Module.BusinessObjects
         string code;
         bool booleanValue;
         int percentageValue;
+        Mechanism mechanism;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -59,6 +60,7 @@ namespace TF.Module.BusinessObjects
 
 
         [Size(200)]
+        [RuleRequiredField(DefaultContexts.Save)]
         public string Name
         {
             get => name;
@@ -91,7 +93,7 @@ namespace TF.Module.BusinessObjects
         }
 
         [ImmediatePostData]
-        [RuleRange(0, 100, "Percentage values must be in the range [0-100]")]
+        [RuleRange("PercentageRange", "Save", "0", "100", "Percentage values must be in the range [0-100]")]
         [Appearance("MetricPercentageValueEnable", AppearanceItemType = "ViewItem", TargetItems = "PercentageValue",
             Criteria = "MetricType = 0", Context = "Any", Enabled = false)]
         [Appearance("MetricPercentageValueStyle", AppearanceItemType = "ViewItem", TargetItems = "BooleanValue",
@@ -102,7 +104,7 @@ namespace TF.Module.BusinessObjects
             set => SetPropertyValue(nameof(PercentageValue), ref percentageValue, value);
         }
 
-        [RuleRange(0, 10, "Weights must be in the range [0-100]")]
+        [RuleRange("WeightRange", "Save", "0", "10", "Weights must be in the range [0-10]")]
         public int Weight
         {
             get => weight;
@@ -127,6 +129,13 @@ namespace TF.Module.BusinessObjects
             get => MetricType == EMetricType.Boolean
                 ? (BooleanValue ? 100 : 0)
                 : PercentageValue;
+        }
+
+        [Association("Mechanism-Metrics")]
+        public Mechanism Mechanism
+        {
+            get { return mechanism; }
+            set { SetPropertyValue(nameof(Mechanism), ref mechanism, value); }
         }
     }
 }
