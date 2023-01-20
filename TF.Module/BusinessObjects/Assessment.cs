@@ -19,7 +19,13 @@ namespace TF.Module.BusinessObjects
     [ImageName("BO_Contact")]
     public class Assessment : BaseObject
     {
-
+        public enum EAssessmentStatus
+        {
+            Draft,
+            Private,
+            Public
+        }
+        
         public Assessment(Session session)
             : base(session)
         {
@@ -28,12 +34,30 @@ namespace TF.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            
+            // copy from template
+            var template = Session.FindObject<Assessment>(CriteriaOperator.Parse("Code = 'MASTER'"));
+            if (template != null)
+            {
+                var cloneHelper = new CloneHelper(Session);
+                cloneHelper.Clone(template, this, false);
+            }
 
+            Status = EAssessmentStatus.Draft;
+            Code = "";
+            Name = "";
         }
 
         string description;
         string name;
         string code;
+        EAssessmentStatus status;
+
+        public EAssessmentStatus Status
+        {
+            get => status;
+            set => SetPropertyValue(nameof(Status), ref status, value);
+        }
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
