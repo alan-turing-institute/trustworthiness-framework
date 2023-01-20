@@ -25,7 +25,13 @@ namespace TF.Module.BusinessObjects
             Boolean,
             Percentage
         }
-        
+
+        public enum EMetricPhase
+        {
+            Design,
+            Operational
+        }
+
         public Metric(Session session)
             : base(session)
         {
@@ -39,6 +45,7 @@ namespace TF.Module.BusinessObjects
             BooleanValue = false;
             PercentageValue = 0;
             Weight = 1;
+            Phase = EMetricPhase.Design;
         }
 
         int weight;
@@ -49,6 +56,7 @@ namespace TF.Module.BusinessObjects
         bool booleanValue;
         int percentageValue;
         Mechanism mechanism;
+        EMetricPhase phase;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -79,6 +87,12 @@ namespace TF.Module.BusinessObjects
         {
             get => metricType;
             set => SetPropertyValue(nameof(MetricType), ref metricType, value);
+        }
+        
+        public EMetricPhase Phase
+        {
+            get => phase;
+            set => SetPropertyValue(nameof(Phase), ref phase, value);
         }
 
         [ImmediatePostData]

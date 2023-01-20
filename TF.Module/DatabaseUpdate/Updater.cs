@@ -13,6 +13,10 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using TF.Module.BusinessObjects;
 using System.Collections.Generic;
+using System.Reflection;
+using ExcelDataReader;
+using static TF.Module.BusinessObjects.Mechanism;
+using static TF.Module.BusinessObjects.Metric;
 
 namespace TF.Module.DatabaseUpdate {
     // For more typical usage scenarios, be sure to check out https://docs.devexpress.com/eXpressAppFramework/DevExpress.ExpressApp.Updating.ModuleUpdater
@@ -54,12 +58,77 @@ namespace TF.Module.DatabaseUpdate {
                 ObjectSpace.CommitChanges();
             }
 
-            //string name = "MyName";
-            //DomainObject1 theObject = ObjectSpace.FirstOrDefault<DomainObject1>(u => u.Name == name);
-            //if(theObject == null) {
-            //    theObject = ObjectSpace.CreateObject<DomainObject1>();
-            //    theObject.Name = name;
-            //}
+            // add master assessment if not available
+            Assessment assessment = ObjectSpace.FirstOrDefault<Assessment>(a => a.Code == "MASTER");
+            if (assessment != null)
+            {
+                assessment.Delete();
+                ObjectSpace.CommitChanges();
+                assessment = null;
+            }
+            
+            if(assessment == null)
+            {
+                assessment = ObjectSpace.CreateObject<Assessment>();
+                assessment.Code = "MASTER";
+                assessment.Name = "Master Assessment";
+
+                // now open embedded excel file
+                var assembly = Assembly.GetExecutingAssembly();
+                var resourceName = "TF.Module.DatabaseUpdate.TF.xlsx";
+                using (var stream = assembly.GetManifestResourceStream(resourceName))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        var result = reader.AsDataSet();
+
+                        // add mechanisms
+                        var mechanismTable = result.Tables["Mechanisms"];
+                        for (int i = 1; i < mechanismTable.Rows.Count; i++)
+                        {
+                            var row = mechanismTable.Rows[i];
+
+                            // create mechanism
+                            Mechanism mechanism = ObjectSpace.CreateObject<Mechanism>();
+                            mechanism.Pillar = (EPillar)Enum.Parse(typeof(EPillar), row[0].ToString());
+                            mechanism.Code = row[1].ToString();
+                            mechanism.Name = row[2].ToString();
+                            mechanism.Description = row[3].ToString();
+                            mechanism.DesignWeight = int.Parse(row[4].ToString());
+                            mechanism.DesignQuestion = row[5].ToString();
+                            mechanism.OperationalWeight = int.Parse(row[6].ToString());
+                            mechanism.OperationalQuestion = row[7].ToString();
+
+                            assessment.Mechanisms.Add(mechanism);
+                            mechanism.Assessment = assessment;
+                        }
+
+                        // add metrics
+                        var metricTable = result.Tables["Metrics"];
+                        for (int i = 1; i < metricTable.Rows.Count; i++)
+                        {
+                            var row = metricTable.Rows[i];
+
+                            // create metric
+                            Metric metric = ObjectSpace.CreateObject<Metric>();
+                            string mechanism_code = row[0].ToString();
+                            Mechanism m = assessment.Mechanisms.Where(mech => mech.Code == row[0].ToString()).Single();
+                            metric.Mechanism = m;
+                            m.Metrics.Add(metric);
+
+                            metric.Code = row[2].ToString();
+                            metric.Phase = (EMetricPhase)Enum.Parse(typeof(EMetricPhase), row[1].ToString());
+                            metric.MetricType = (EMetricType)Enum.Parse(typeof(EMetricType), row[3].ToString());
+                            metric.Name = row[4].ToString();
+                            metric.Description = row[5].ToString();
+                            metric.Weight = int.Parse(row[6].ToString());
+                        }
+                    }
+                }
+                
+                ObjectSpace.CommitChanges();
+            }
+
 #if !RELEASE
 
             // add one assessor
