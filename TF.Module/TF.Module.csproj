@@ -126,6 +126,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\Assessment.cs" />
     <Compile Include="BusinessObjects\Mechanism.cs" />
     <Compile Include="BusinessObjects\Metric.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />

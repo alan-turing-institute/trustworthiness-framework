@@ -50,6 +50,7 @@ namespace TF.Module.BusinessObjects
         string description;
         string name;
         string code;
+        Assessment assessment;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -113,5 +114,11 @@ namespace TF.Module.BusinessObjects
         [Association("Mechanism-Metrics"), Aggregated]
         public XPCollection<Metric> Metrics => GetCollection<Metric>(nameof(Metrics));
 
+        [Association("Assessment-Mechanisms")]
+        public Assessment Assessment
+        {
+            get { return assessment; }
+            set { SetPropertyValue(nameof(Assessment), ref assessment, value); }
+        }
     }
 }
