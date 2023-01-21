@@ -17,7 +17,7 @@ using System.Text;
 namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [ImageName("BO_Contact")]
+    [NavigationItem(false)]
     public class Metric : BaseObject
     {
         public enum EMetricType

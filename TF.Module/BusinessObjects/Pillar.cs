@@ -16,7 +16,7 @@ using System.Text;
 namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [ImageName("BO_Contact")]
+    [NavigationItem(false)]
     public class Pillar : BaseObject
     {
         
@@ -62,12 +62,24 @@ namespace TF.Module.BusinessObjects
             set { SetPropertyValue(nameof(Assessment), ref assessment, value); }
         }
 
+        [Appearance("DesignScoreRed", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
+            Criteria = "DesignScore<=33", Context = "Any", BackColor = "Salmon", Priority = 3)]
+        [Appearance("DesignScoreYellow", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
+            Criteria = "DesignScore<=66", Context = "Any", BackColor = "LightYellow", Priority = 2)]
+        [Appearance("DesignScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
+            Criteria = "DesignScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
         [PersistentAlias("Iif([Mechanisms].Sum([DesignWeight])=0,0,[Mechanisms].Sum([DesignScore]*[DesignWeight])/[Mechanisms].Sum([DesignWeight]))")]
         public int DesignScore
         {
             get => (int)(EvaluateAlias(nameof(DesignScore)) ?? 0);
         }
 
+        [Appearance("OperationalScoreRed", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
+            Criteria = "OperationalScore<=33", Context = "Any", BackColor = "Salmon", Priority = 3)]
+        [Appearance("OperationalScoreYellow", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
+            Criteria = "OperationalScore<=66", Context = "Any", BackColor = "LightYellow", Priority = 2)]
+        [Appearance("OperationalScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
+            Criteria = "OperationalScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
         [PersistentAlias("Iif([Mechanisms].Sum([OperationalWeight])=0,0,[Mechanisms].Sum([OperationalScore]*[OperationalWeight])/[Mechanisms].Sum([OperationalWeight]))")]
         public int OperationalScore
         {
