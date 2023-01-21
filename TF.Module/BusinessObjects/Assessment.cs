@@ -16,7 +16,6 @@ using System.Text;
 namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [ImageName("BO_Contact")]
     public class Assessment : BaseObject
     {
         public enum EAssessmentStatus
@@ -61,6 +60,7 @@ namespace TF.Module.BusinessObjects
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
+        [RuleUniqueValue("AssessmentCodeUnique", DefaultContexts.Save, CriteriaEvaluationBehavior = CriteriaEvaluationBehavior.BeforeTransaction)]
         public string Code
         {
             get => code;

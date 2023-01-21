@@ -18,6 +18,8 @@ namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [NavigationItem(false)]
+    [RuleCombinationOfPropertiesIsUnique("MechanismCodeUnique", DefaultContexts.Save, "Code, Pillar")]
+
     public class Mechanism : BaseObject
     {
         
@@ -46,6 +48,7 @@ namespace TF.Module.BusinessObjects
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
+        [ModelDefault("AllowEdit", "False")]
         public string Code
         {
             get => code;
@@ -54,6 +57,7 @@ namespace TF.Module.BusinessObjects
 
         [Size(200)]
         [RuleRequiredField(DefaultContexts.Save)]
+        [ModelDefault("AllowEdit", "False")]
         public string Name
         {
             get => name;
@@ -61,6 +65,7 @@ namespace TF.Module.BusinessObjects
         }
 
         [Size(SizeAttribute.Unlimited)]
+        [ModelDefault("AllowEdit", "False")]
         public string Description
         {
             get => description;
@@ -68,6 +73,7 @@ namespace TF.Module.BusinessObjects
         }
 
         [RuleRange("DesignWeightRange", "Save", "0", "10", "Weights must be in the range [0-10]")]
+        [ModelDefault("AllowEdit", "False")]
         public int DesignWeight
         {
             get => designWeight;
@@ -75,6 +81,7 @@ namespace TF.Module.BusinessObjects
         }
 
         [RuleRange("OperationalWeightRange", "Save", "0", "10", "Weights must be in the range [0-10]")]
+        [ModelDefault("AllowEdit", "False")]
         public int OperationalWeight
         {
             get => operationalWeight;
@@ -83,6 +90,7 @@ namespace TF.Module.BusinessObjects
 
 
         [Size(SizeAttribute.Unlimited)]
+        [ModelDefault("AllowEdit", "False")]
         public string DesignQuestion
         {
             get => designQuestion;
@@ -91,6 +99,7 @@ namespace TF.Module.BusinessObjects
 
         
         [Size(SizeAttribute.Unlimited)]
+        [ModelDefault("AllowEdit", "False")]
         public string OperationalQuestion
         {
             get => operationalQuestion;

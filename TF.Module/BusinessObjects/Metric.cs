@@ -18,6 +18,7 @@ namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [NavigationItem(false)]
+    [RuleCombinationOfPropertiesIsUnique("MetricCodeUnique", DefaultContexts.Save, "Code, Mechanism")]
     [Appearance("MetricEditable", Enabled = false, Criteria = "![Mechanism.DetailedAssessment]", Context = "DetailView", TargetItems = "*")]
     public class Metric : BaseObject
     {
@@ -61,6 +62,7 @@ namespace TF.Module.BusinessObjects
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
+        [ModelDefault("AllowEdit", "False")]
         public string Code
         {
             get => code;
@@ -70,6 +72,7 @@ namespace TF.Module.BusinessObjects
 
         [Size(200)]
         [RuleRequiredField(DefaultContexts.Save)]
+        [ModelDefault("AllowEdit", "False")]
         public string Name
         {
             get => name;
@@ -78,18 +81,21 @@ namespace TF.Module.BusinessObjects
 
 
         [Size(SizeAttribute.Unlimited)]
+        [ModelDefault("AllowEdit", "False")]
         public string Description
         {
             get => description;
             set => SetPropertyValue(nameof(Description), ref description, value);
         }
 
+        [ModelDefault("AllowEdit", "False")]
         public EMetricType MetricType
         {
             get => metricType;
             set => SetPropertyValue(nameof(MetricType), ref metricType, value);
         }
-        
+
+        [ModelDefault("AllowEdit", "False")]
         public EMetricPhase Phase
         {
             get => phase;
@@ -119,6 +125,7 @@ namespace TF.Module.BusinessObjects
             set => SetPropertyValue(nameof(PercentageValue), ref percentageValue, value);
         }
 
+        [ModelDefault("AllowEdit", "False")]
         [RuleRange("WeightRange", "Save", "0", "10", "Weights must be in the range [0-10]")]
         public int Weight
         {

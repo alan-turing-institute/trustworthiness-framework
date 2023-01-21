@@ -17,6 +17,7 @@ namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [NavigationItem(false)]
+    [RuleCombinationOfPropertiesIsUnique("PillarCodeUnique", DefaultContexts.Save, "Code, Assessment")]
     public class Pillar : BaseObject
     {
         
@@ -37,6 +38,7 @@ namespace TF.Module.BusinessObjects
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
+        [ModelDefault("AllowEdit", "False")]
         public string Code
         {
             get => code;
@@ -45,6 +47,7 @@ namespace TF.Module.BusinessObjects
 
         [Size(200)]
         [RuleRequiredField(DefaultContexts.Save)]
+        [ModelDefault("AllowEdit", "False")]
         public string Name
         {
             get => name;
