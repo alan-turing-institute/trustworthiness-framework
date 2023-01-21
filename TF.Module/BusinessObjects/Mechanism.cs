@@ -103,5 +103,23 @@ namespace TF.Module.BusinessObjects
             get { return pillar; }
             set { SetPropertyValue(nameof(Pillar), ref pillar, value); }
         }
+
+        [PersistentAlias("Iif([Metrics][[Phase]=0].Sum([Weight])=0,0,[Metrics][[Phase]=0].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=0].Sum([Weight]))")]
+        public int DesignScore
+        {
+            get => (int)(EvaluateAlias(nameof(DesignScore)) ?? 0);
+        }
+
+        [PersistentAlias("Iif([Metrics][[Phase]=1].Sum([Weight])=0,0,[Metrics][[Phase]=1].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=1].Sum([Weight]))")]
+        public int OperationalScore
+        {
+            get => (int)(EvaluateAlias(nameof(OperationalScore)) ?? 0);
+        }
+
+        [PersistentAlias("[Metrics].Count()")]
+        public int NoMetrics
+        {
+            get => (int)(EvaluateAlias(nameof(NoMetrics)) ?? 0);
+        }
     }
 }

@@ -61,5 +61,23 @@ namespace TF.Module.BusinessObjects
             get { return assessment; }
             set { SetPropertyValue(nameof(Assessment), ref assessment, value); }
         }
+
+        [PersistentAlias("Iif([Mechanisms].Sum([DesignWeight])=0,0,[Mechanisms].Sum([DesignScore]*[DesignWeight])/[Mechanisms].Sum([DesignWeight]))")]
+        public int DesignScore
+        {
+            get => (int)(EvaluateAlias(nameof(DesignScore)) ?? 0);
+        }
+
+        [PersistentAlias("Iif([Mechanisms].Sum([OperationalWeight])=0,0,[Mechanisms].Sum([OperationalScore]*[OperationalWeight])/[Mechanisms].Sum([OperationalWeight]))")]
+        public int OperationalScore
+        {
+            get => (int)(EvaluateAlias(nameof(OperationalScore)) ?? 0);
+        }
+
+        [PersistentAlias("[Mechanisms].Count()")]
+        public int NoMechanisms
+        {
+            get => (int)(EvaluateAlias(nameof(NoMechanisms)) ?? 0);
+        }
     }
 }

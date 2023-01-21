@@ -84,6 +84,5 @@ namespace TF.Module.BusinessObjects
 
         [Association("Assessment-Pillars"), Aggregated]
         public XPCollection<Pillar> Pillars => GetCollection<Pillar>(nameof(Pillars));
-
     }
 }
