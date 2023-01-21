@@ -18,6 +18,7 @@ namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [NavigationItem(false)]
+    [Appearance("MetricEditable", Enabled = false, Criteria = "![Mechanism.DetailedAssessment]", Context = "DetailView", TargetItems = "*")]
     public class Metric : BaseObject
     {
         public enum EMetricType

@@ -7,6 +7,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using DevExpress.XtraCharts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,7 @@ namespace TF.Module.BusinessObjects
             base.AfterConstruction();
 
             DesignWeight = OperationalWeight = 1;
+            DetailedAssessment = false;
         }
 
         string operationalQuestion;
@@ -40,6 +42,7 @@ namespace TF.Module.BusinessObjects
         string name;
         string code;
         Pillar pillar;
+        bool detailedAssessment;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -102,6 +105,13 @@ namespace TF.Module.BusinessObjects
         {
             get { return pillar; }
             set { SetPropertyValue(nameof(Pillar), ref pillar, value); }
+        }
+
+        [ImmediatePostData]
+        public bool DetailedAssessment
+        {
+            get => detailedAssessment;
+            set { SetPropertyValue(nameof(DetailedAssessment), ref detailedAssessment, value); }
         }
 
         [Appearance("DesignScoreRed", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
