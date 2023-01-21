@@ -109,6 +109,9 @@ namespace TF.Module.BusinessObjects
         [Association("Mechanism-Metrics"), Aggregated]
         public XPCollection<Metric> Metrics => GetCollection<Metric>(nameof(Metrics));
 
+        [Association("Mechanism-Choices"), Aggregated]
+        public XPCollection<MechanismChoice> Choices => GetCollection<MechanismChoice>(nameof(Choices));
+
         [Association("Pillar-Mechanisms")]
         public Pillar Pillar
         {

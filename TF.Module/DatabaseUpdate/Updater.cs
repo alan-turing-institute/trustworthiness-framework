@@ -114,6 +114,32 @@ namespace TF.Module.DatabaseUpdate {
 
                             mechanism.Pillar = pillar;
                             pillar.Mechanisms.Add(mechanism);
+
+                            for(var j = 0; j<5; j++)
+                            {
+                                string choice_text = row[8+j].ToString();
+                                if (string.IsNullOrWhiteSpace(choice_text))
+                                    break;
+                                var mechanism_choice = ObjectSpace.CreateObject<MechanismChoice>();
+                                mechanism_choice.Row = j + 1;
+                                mechanism_choice.Name = choice_text;
+                                mechanism_choice.Phase = EMetricPhase.Design;
+                                mechanism_choice.Mechanism = mechanism;
+                                mechanism.Choices.Add(mechanism_choice);
+                            }
+
+                            for (var j = 0; j < 5; j++)
+                            {
+                                string choice_text = row[13 + j].ToString();
+                                if (string.IsNullOrWhiteSpace(choice_text))
+                                    break;
+                                var mechanism_choice = ObjectSpace.CreateObject<MechanismChoice>();
+                                mechanism_choice.Row = j + 1;
+                                mechanism_choice.Name = choice_text;
+                                mechanism_choice.Phase = EMetricPhase.Operational;
+                                mechanism_choice.Mechanism = mechanism;
+                                mechanism.Choices.Add(mechanism_choice);
+                            }
                         }
 
                         // add metrics

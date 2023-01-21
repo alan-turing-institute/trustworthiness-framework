@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="TF">
   <BOModel>
     <Class Name="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser" Caption="Base User" />
@@ -6,7 +6,46 @@
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="22.2.3.0" IsNewNode="True" />
+  </SchemaModules>
   <Views>
-    <ListView Id="ApplicationUser_ListView" Caption="Users" />
+    <ListView Id="Mechanism_Choices_ListView_Design" ClassName="TF.Module.BusinessObjects.MechanismChoice" DataAccessMode="Client" Criteria="[Phase] = ##Enum#TF.Module.BusinessObjects.Metric+EMetricPhase,Design#" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Mechanism" PropertyName="Mechanism" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Name" PropertyName="Name" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Row" PropertyName="Row" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Phase" PropertyName="Phase" Index="2" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Mechanism_Choices_ListView_Operational" ClassName="TF.Module.BusinessObjects.MechanismChoice" DataAccessMode="Client" Criteria="[Phase] = ##Enum#TF.Module.BusinessObjects.Metric+EMetricPhase,Operational#" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Mechanism" PropertyName="Mechanism" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Name" PropertyName="Name" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Row" PropertyName="Row" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="Phase" PropertyName="Phase" Index="2" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Mechanism_DetailView">
+      <Items>
+        <PropertyEditor Id="ChoicesDesign" PropertyName="Choices" Caption="Design Choices" DataSourceCriteria="" View="Mechanism_Choices_ListView_Design" IsNewNode="True" />
+        <PropertyEditor Id="ChoicesOperational" PropertyName="Choices" Caption="Operational Choices" DataSourceCriteria="" View="Mechanism_Choices_ListView_Operational" IsNewNode="True" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Metrics" ImageName="" />
+            <LayoutGroup Id="Choices" Caption="Design Choices" ImageName="">
+              <LayoutItem Id="Choices" ViewItem="ChoicesDesign" />
+            </LayoutGroup>
+            <LayoutGroup Id="ChoicesOperational" Index="1" ShowCaption="True" Caption="Operational Choices" ImageName="" IsNewNode="True">
+              <LayoutItem Id="Choices" ShowCaption="False" Index="0" ViewItem="ChoicesOperational" IsNewNode="True" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
   </Views>
 </Application>
