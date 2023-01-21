@@ -60,12 +60,14 @@ namespace TF.Module.DatabaseUpdate {
 
             // add master assessment if not available
             Assessment assessment = ObjectSpace.FirstOrDefault<Assessment>(a => a.Code == "MASTER");
+            /*
             if (assessment != null)
             {
                 assessment.Delete();
                 ObjectSpace.CommitChanges();
                 assessment = null;
             }
+            */
             
             if(assessment == null)
             {
