@@ -19,15 +19,6 @@ namespace TF.Module.BusinessObjects
     [ImageName("BO_Contact")]
     public class Mechanism : BaseObject
     {
-        public enum EPillar
-        {
-            Security,
-            Privacy,
-            Ethics,
-            Resiliency,
-            Robustness,
-            Reliability
-        }
         
         public Mechanism(Session session)
             : base(session)
@@ -38,7 +29,6 @@ namespace TF.Module.BusinessObjects
         {
             base.AfterConstruction();
 
-            Pillar = EPillar.Security;
             DesignWeight = OperationalWeight = 1;
         }
 
@@ -46,11 +36,10 @@ namespace TF.Module.BusinessObjects
         string designQuestion;
         int operationalWeight;
         int designWeight;
-        EPillar pillar;
         string description;
         string name;
         string code;
-        Assessment assessment;
+        Pillar pillar;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -73,12 +62,6 @@ namespace TF.Module.BusinessObjects
         {
             get => description;
             set => SetPropertyValue(nameof(Description), ref description, value);
-        }
-
-        public EPillar Pillar
-        {
-            get => pillar;
-            set => SetPropertyValue(nameof(Pillar), ref pillar, value);
         }
 
         [RuleRange("DesignWeightRange", "Save", "0", "10", "Weights must be in the range [0-10]")]
@@ -114,11 +97,11 @@ namespace TF.Module.BusinessObjects
         [Association("Mechanism-Metrics"), Aggregated]
         public XPCollection<Metric> Metrics => GetCollection<Metric>(nameof(Metrics));
 
-        [Association("Assessment-Mechanisms")]
-        public Assessment Assessment
+        [Association("Pillar-Mechanisms")]
+        public Pillar Pillar
         {
-            get { return assessment; }
-            set { SetPropertyValue(nameof(Assessment), ref assessment, value); }
+            get { return pillar; }
+            set { SetPropertyValue(nameof(Pillar), ref pillar, value); }
         }
     }
 }

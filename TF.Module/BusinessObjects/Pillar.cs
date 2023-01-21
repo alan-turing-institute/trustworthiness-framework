@@ -17,16 +17,10 @@ namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [ImageName("BO_Contact")]
-    public class Assessment : BaseObject
+    public class Pillar : BaseObject
     {
-        public enum EAssessmentStatus
-        {
-            Draft,
-            Private,
-            Public
-        }
         
-        public Assessment(Session session)
+        public Pillar(Session session)
             : base(session)
         {
         }
@@ -35,29 +29,11 @@ namespace TF.Module.BusinessObjects
         {
             base.AfterConstruction();
             
-            // copy from template
-            var template = Session.FindObject<Assessment>(CriteriaOperator.Parse("Code = 'MASTER'"));
-            if (template != null)
-            {
-                var cloneHelper = new CloneHelper(Session);
-                cloneHelper.Clone(template, this, false);
-            }
-
-            Status = EAssessmentStatus.Draft;
-            Code = "";
-            Name = "";
         }
 
-        string description;
         string name;
         string code;
-        EAssessmentStatus status;
-
-        public EAssessmentStatus Status
-        {
-            get => status;
-            set => SetPropertyValue(nameof(Status), ref status, value);
-        }
+        Assessment assessment;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -75,15 +51,15 @@ namespace TF.Module.BusinessObjects
             set => SetPropertyValue(nameof(Name), ref name, value);
         }
 
-        [Size(SizeAttribute.Unlimited)]
-        public string Description
+        [Association("Pillar-Mechanisms"), Aggregated]
+        public XPCollection<Mechanism> Mechanisms => GetCollection<Mechanism>(nameof(Mechanisms));
+        
+
+        [Association("Assessment-Pillars")]
+        public Assessment Assessment
         {
-            get => description;
-            set => SetPropertyValue(nameof(Description), ref description, value);
+            get { return assessment; }
+            set { SetPropertyValue(nameof(Assessment), ref assessment, value); }
         }
-
-        [Association("Assessment-Pillars"), Aggregated]
-        public XPCollection<Pillar> Pillars => GetCollection<Pillar>(nameof(Pillars));
-
     }
 }

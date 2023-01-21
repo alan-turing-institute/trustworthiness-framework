@@ -90,7 +90,18 @@ namespace TF.Module.DatabaseUpdate {
 
                             // create mechanism
                             Mechanism mechanism = ObjectSpace.CreateObject<Mechanism>();
-                            mechanism.Pillar = (EPillar)Enum.Parse(typeof(EPillar), row[0].ToString());
+
+                            string pillar_code = row[0].ToString();
+                            Pillar pillar = assessment.Pillars.SingleOrDefault(p => p.Code == pillar_code);
+                            if (pillar == null)
+                            {
+                                pillar = ObjectSpace.CreateObject<Pillar>();
+                                pillar.Code = pillar_code;
+                                pillar.Name = pillar_code;
+                                pillar.Assessment = assessment;
+                                assessment.Pillars.Add(pillar);
+                            }
+
                             mechanism.Code = row[1].ToString();
                             mechanism.Name = row[2].ToString();
                             mechanism.Description = row[3].ToString();
@@ -99,8 +110,8 @@ namespace TF.Module.DatabaseUpdate {
                             mechanism.OperationalWeight = int.Parse(row[6].ToString());
                             mechanism.OperationalQuestion = row[7].ToString();
 
-                            assessment.Mechanisms.Add(mechanism);
-                            mechanism.Assessment = assessment;
+                            mechanism.Pillar = pillar;
+                            pillar.Mechanisms.Add(mechanism);
                         }
 
                         // add metrics
@@ -112,7 +123,7 @@ namespace TF.Module.DatabaseUpdate {
                             // create metric
                             Metric metric = ObjectSpace.CreateObject<Metric>();
                             string mechanism_code = row[0].ToString();
-                            Mechanism m = assessment.Mechanisms.Where(mech => mech.Code == row[0].ToString()).Single();
+                            Mechanism m = assessment.Pillars.SelectMany(p => p.Mechanisms).SingleOrDefault(x => x.Code == mechanism_code);
                             metric.Mechanism = m;
                             m.Metrics.Add(metric);
 
