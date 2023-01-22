@@ -33,7 +33,7 @@ namespace TF.Module.BusinessObjects
             base.AfterConstruction();
 
             DesignWeight = OperationalWeight = 1;
-            DetailedAssessment = false;
+            DetailedDesignAssessment = false;
         }
 
         string operationalQuestion;
@@ -44,7 +44,10 @@ namespace TF.Module.BusinessObjects
         string name;
         string code;
         Pillar pillar;
-        bool detailedAssessment;
+        bool detailedDesignAssessment;
+        bool detailedOperationalAssessment;
+        MechanismChoice selectedDesignChoice;
+        MechanismChoice selectedOperationalChoice;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -120,10 +123,31 @@ namespace TF.Module.BusinessObjects
         }
 
         [ImmediatePostData]
-        public bool DetailedAssessment
+        public bool DetailedDesignAssessment
         {
-            get => detailedAssessment;
-            set { SetPropertyValue(nameof(DetailedAssessment), ref detailedAssessment, value); }
+            get => detailedDesignAssessment;
+            set { SetPropertyValue(nameof(DetailedDesignAssessment), ref detailedDesignAssessment, value); }
+        }
+
+        [ImmediatePostData]
+        public bool DetailedOperationalAssessment
+        {
+            get => detailedOperationalAssessment;
+            set { SetPropertyValue(nameof(DetailedOperationalAssessment), ref detailedOperationalAssessment, value); }
+        }
+
+        [Association("Mechanism-MechanismChoiceDesign")]
+        public MechanismChoice SelectedDesignChoice
+        {
+            get { return selectedDesignChoice; }
+            set { SetPropertyValue(nameof(SelectedDesignChoice), ref selectedDesignChoice, value); }
+        }
+
+        [Association("Mechanism-MechanismChoiceOperational")]
+        public MechanismChoice SelectedOperationalChoice
+        {
+            get { return selectedOperationalChoice; }
+            set { SetPropertyValue(nameof(SelectedOperationalChoice), ref selectedOperationalChoice, value); }
         }
 
         [Appearance("DesignScoreRed", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",

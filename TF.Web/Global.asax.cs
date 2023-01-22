@@ -31,16 +31,22 @@ namespace TF.Web {
             security.RegisterXPOAdapterProviders();
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
-            if(ConfigurationManager.ConnectionStrings["ConnectionString"] != null) {
-                WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+#if DEBUG
+            if (ConfigurationManager.ConnectionStrings["DebugConnectionString"] != null)
+            {
+                WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["DebugConnectionString"].ConnectionString;
             }
-#if EASYTEST
+#elif EASYTEST
             if(ConfigurationManager.ConnectionStrings["EasyTestConnectionString"] != null) {
                 WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["EasyTestConnectionString"].ConnectionString;
             }
+#else
+            if (ConfigurationManager.ConnectionStrings["ConnectionString"] != null) {
+                WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            }
 #endif
 #if DEBUG
-            if(System.Diagnostics.Debugger.IsAttached && WebApplication.Instance.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
+            if (System.Diagnostics.Debugger.IsAttached && WebApplication.Instance.CheckCompatibilityType == CheckCompatibilityType.DatabaseSchema) {
                 WebApplication.Instance.DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
             }
 #endif

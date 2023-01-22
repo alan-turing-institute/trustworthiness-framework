@@ -19,7 +19,8 @@ namespace TF.Module.BusinessObjects
     [DefaultClassOptions]
     [NavigationItem(false)]
     //[RuleCombinationOfPropertiesIsUnique("MetricCodeUnique", DefaultContexts.Save, "Code, Mechanism.Oid")]
-    [Appearance("MetricEditable", Enabled = false, Criteria = "![Mechanism.DetailedAssessment]", Context = "Any", TargetItems = "*")]
+    [Appearance("MetricDesignEditable", Enabled = false, Criteria = "![Mechanism.DetailedDesignAssessment] and [Phase]=0", Context = "Any", TargetItems = "*")]
+    [Appearance("MetricOperationalEditable", Enabled = false, Criteria = "![Mechanism.DetailedOperationalAssessment] and [Phase]=1", Context = "Any", TargetItems = "*")]
     public class Metric : BaseObject
     {
         public enum EMetricType

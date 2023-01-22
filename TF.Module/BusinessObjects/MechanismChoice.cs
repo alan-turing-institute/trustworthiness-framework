@@ -67,5 +67,13 @@ namespace TF.Module.BusinessObjects
             get { return mechanism; }
             set { SetPropertyValue(nameof(Mechanism), ref mechanism, value); }
         }
+
+        [Browsable(false)]
+        [Association("Mechanism-MechanismChoiceDesign")]
+        public XPCollection<Mechanism> MechanismsDesign => GetCollection<Mechanism>(nameof(MechanismsDesign));
+
+        [Browsable(false)]
+        [Association("Mechanism-MechanismChoiceOperational")]
+        public XPCollection<Mechanism> MechanismsOperational => GetCollection<Mechanism>(nameof(MechanismsOperational));
     }
 }
