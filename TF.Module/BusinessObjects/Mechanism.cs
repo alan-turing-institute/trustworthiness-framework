@@ -18,7 +18,7 @@ namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [NavigationItem(false)]
-    [RuleCombinationOfPropertiesIsUnique("MechanismCodeUnique", DefaultContexts.Save, "Code, Pillar")]
+    //[RuleCombinationOfPropertiesIsUnique("MechanismCodeUnique", DefaultContexts.Save, "Code, Pillar.Oid")]
 
     public class Mechanism : BaseObject
     {
