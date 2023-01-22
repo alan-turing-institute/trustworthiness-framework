@@ -1,9 +1,125 @@
-﻿<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
   <Options CollectionsEditMode="Edit" />
+  <SchemaModules>
+    <SchemaModule Name="SystemAspNetModule" Version="22.2.3.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="22.2.3.0" IsNewNode="True" />
+  </SchemaModules>
   <ViewItems>
     <PropertyEditor Name="PropertyEditors">
       <RegisteredPropertyEditor PropertyType="System.Drawing.Color" EditorType="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxColorPickerPropertyEditor" />
     </PropertyEditor>
   </ViewItems>
+  <Views>
+    <DetailView Id="Assessment_DetailView">
+      <Items>
+        <PropertyEditor Id="Pillars" View="Assessment_Pillars_ListView" />
+        <PropertyEditor Id="Pillars_Chart" PropertyName="Pillars" View="Assessment_Pillars_ListView_Chart" IsNewNode="True" />
+      </Items>
+      <Layout>
+        <TabbedGroup Id="@6e9c1a6c-20e8-43e7-8095-edc6777ace33" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="True" Caption="Assessment" IsNewNode="True">
+            <LayoutGroup Id="Assessment" Index="0" ShowCaption="False" IsNewNode="True">
+              <LayoutItem Id="Status" ViewItem="Status" ShowCaption="" Index="0" IsNewNode="True" />
+              <LayoutItem Id="Code" ViewItem="Code" ShowCaption="" Index="1" IsNewNode="True" />
+              <LayoutItem Id="Name" ViewItem="Name" ShowCaption="" Index="2" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="SizeableEditors" Index="1" ShowCaption="False" IsNewNode="True">
+              <LayoutItem Id="Description" ViewItem="Description" ShowCaption="" Index="0" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Pillars_Group" Index="2" Direction="Horizontal" ShowCaption="True" ImageName="" Caption="Pillars" IsNewNode="True">
+            <LayoutItem Id="Pillars_List" ViewItem="Pillars" ShowCaption="" Index="0" RelativeSize="40" IsNewNode="True" />
+            <LayoutItem Id="Pillars_Chart" ShowCaption="" Index="1" RelativeSize="40" MinSize="0, 0" ViewItem="Pillars_Chart" SizeConstraintsType="Default" IsNewNode="True" />
+          </LayoutGroup>
+        </TabbedGroup>
+        <LayoutGroup Id="Main" Removed="True">
+          <LayoutGroup Id="Pillars_Group" Removed="True" />
+          <LayoutGroup Id="SimpleEditors" Removed="True" />
+          <LayoutGroup Id="SizeableEditors" Removed="True" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Assessment_Pillars_ListView" AllowDelete="False" AllowNew="False" PagerPosition="Bottom">
+      <Columns>
+        <ColumnInfo Id="Code" Index="-1" SortIndex="0" SortOrder="Ascending" />
+        <ColumnInfo Id="NoMechanisms" Index="-1" />
+        <ColumnInfo Id="Name" Index="0" SortIndex="-1" SortOrder="None" Width="47" />
+        <ColumnInfo Id="DesignScore" Index="1" />
+        <ColumnInfo Id="OperationalScore" Index="2" />
+      </Columns>
+    </ListView>
+    <ListView Id="Assessment_Pillars_ListView_Chart" ClassName="TF.Module.BusinessObjects.Pillar" DataAccessMode="Client" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Assessment" PropertyName="Assessment" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Name" PropertyName="Name" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Code" PropertyName="Code" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="DesignScore" PropertyName="DesignScore" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="OperationalScore" PropertyName="OperationalScore" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="NoMechanisms" PropertyName="NoMechanisms" Index="4" IsNewNode="True" />
+      </Columns>
+      <ChartSettings Settings="﻿&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#xD;&#xA;&lt;ChartXmlSerializer version=&quot;22.2.3.0&quot;&gt;&#xD;&#xA;  &lt;Chart AppearanceNameSerializable=&quot;Default&quot; SelectionMode=&quot;None&quot; SeriesSelectionMode=&quot;Series&quot;&gt;&#xD;&#xA;    &lt;DataContainer BoundSeriesSorting=&quot;None&quot; ValidateDataMembers=&quot;true&quot;&gt;&#xD;&#xA;      &lt;SeriesSerializable&gt;&#xD;&#xA;        &lt;Item1 Name=&quot;Design&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;DesignScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item1&gt;&#xD;&#xA;        &lt;Item2 Name=&quot;Operational&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;OperationalScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item2&gt;&#xD;&#xA;      &lt;/SeriesSerializable&gt;&#xD;&#xA;      &lt;SeriesTemplate /&gt;&#xD;&#xA;    &lt;/DataContainer&gt;&#xD;&#xA;    &lt;Legend CrosshairContentOffset=&quot;4&quot; MaxCrosshairContentWidth=&quot;50&quot; MaxCrosshairContentHeight=&quot;0&quot; AlignmentVertical=&quot;Center&quot; /&gt;&#xD;&#xA;  &lt;/Chart&gt;&#xD;&#xA;&lt;/ChartXmlSerializer&gt;" PreferredHeight="400" PreferredWidth="400" IsNewNode="True" />
+    </ListView>
+    <DetailView Id="Pillar_DetailView">
+      <Items>
+        <PropertyEditor Id="Mechanisms_Chart" PropertyName="Mechanisms" View="Pillar_Mechanisms_ListView_Chart" AllowEdit="False" IsNewNode="True" />
+      </Items>
+      <Layout>
+        <TabbedGroup Id="@a9e48bca-42d9-447a-989b-7ebb7bece41b" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="True" Caption="Pillar" IsNewNode="True">
+            <LayoutGroup Id="Pillar" Index="0" Direction="Horizontal" ShowCaption="False" IsNewNode="True">
+              <LayoutGroup Id="Pillar_col1" Index="0" ShowCaption="False" IsNewNode="True">
+                <LayoutItem Id="Code" ViewItem="Code" ShowCaption="" Index="0" IsNewNode="True" />
+                <LayoutItem Id="Name" ViewItem="Name" ShowCaption="" Index="1" IsNewNode="True" />
+                <LayoutItem Id="NoMechanisms" ViewItem="NoMechanisms" ShowCaption="" Index="1" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Pillar_col2" Index="1" ShowCaption="False" IsNewNode="True">
+                <LayoutItem Id="DesignScore" ViewItem="DesignScore" ShowCaption="" Index="0" IsNewNode="True" />
+                <LayoutItem Id="OperationalScore" ViewItem="OperationalScore" ShowCaption="" Index="1" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Mechanisms_Group" Index="1" Direction="Horizontal" ShowCaption="True" ImageName="" IsNewNode="True">
+            <LayoutItem Id="Mechanisms" ViewItem="Mechanisms" ShowCaption="" Index="0" RelativeSize="50" IsNewNode="True" />
+            <LayoutItem Id="Mechanisms_Chart" ShowCaption="" Index="0" RelativeSize="50" ViewItem="Mechanisms_Chart" IsNewNode="True" />
+          </LayoutGroup>
+        </TabbedGroup>
+        <LayoutGroup Id="Main" Removed="True">
+          <LayoutGroup Id="Mechanisms_Group" Removed="True" />
+          <LayoutGroup Id="SimpleEditors" Removed="True" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Pillar_Mechanisms_ListView">
+      <Columns>
+        <ColumnInfo Id="DesignWeight" Index="-1" Width="110" />
+        <ColumnInfo Id="DetailedAssessment" Index="-1" />
+        <ColumnInfo Id="NoMetrics" Index="-1" />
+        <ColumnInfo Id="OperationalWeight" Index="-1" Width="62" />
+        <ColumnInfo Id="Code" Index="0" />
+        <ColumnInfo Id="Name" SortOrder="Descending" Width="151" Index="1" />
+        <ColumnInfo Id="DesignScore" Index="2" />
+        <ColumnInfo Id="OperationalScore" Index="3" />
+      </Columns>
+    </ListView>
+    <ListView Id="Pillar_Mechanisms_ListView_Chart" ClassName="TF.Module.BusinessObjects.Mechanism" DataAccessMode="Client" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Code" PropertyName="Code" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DesignQuestion" PropertyName="DesignQuestion" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DesignWeight" PropertyName="DesignWeight" Index="-1" Width="110" IsNewNode="True" />
+        <ColumnInfo Id="DetailedAssessment" PropertyName="DetailedAssessment" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NoMetrics" PropertyName="NoMetrics" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="OperationalQuestion" PropertyName="OperationalQuestion" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="OperationalWeight" PropertyName="OperationalWeight" Index="-1" Width="62" IsNewNode="True" />
+        <ColumnInfo Id="Pillar" PropertyName="Pillar" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Name" PropertyName="Name" SortIndex="0" SortOrder="Descending" Index="0" Width="151" IsNewNode="True" />
+        <ColumnInfo Id="DesignScore" PropertyName="DesignScore" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="OperationalScore" PropertyName="OperationalScore" Index="2" IsNewNode="True" />
+      </Columns>
+      <ChartSettings Settings="﻿&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#xD;&#xA;&lt;ChartXmlSerializer version=&quot;22.2.3.0&quot;&gt;&#xD;&#xA;  &lt;Chart AppearanceNameSerializable=&quot;Default&quot; SelectionMode=&quot;None&quot; SeriesSelectionMode=&quot;Series&quot;&gt;&#xD;&#xA;    &lt;DataContainer BoundSeriesSorting=&quot;None&quot; ValidateDataMembers=&quot;true&quot;&gt;&#xD;&#xA;      &lt;SeriesSerializable&gt;&#xD;&#xA;        &lt;Item1 Name=&quot;Design&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;DesignScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item1&gt;&#xD;&#xA;        &lt;Item2 Name=&quot;Operational&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;OperationalScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item2&gt;&#xD;&#xA;      &lt;/SeriesSerializable&gt;&#xD;&#xA;      &lt;SeriesTemplate /&gt;&#xD;&#xA;    &lt;/DataContainer&gt;&#xD;&#xA;    &lt;Diagram TypeNameSerializable=&quot;RadarDiagram&quot;&gt;&#xD;&#xA;      &lt;AxisX&gt;&#xD;&#xA;        &lt;WholeRange StartSideMargin=&quot;0&quot; EndSideMargin=&quot;0&quot; /&gt;&#xD;&#xA;      &lt;/AxisX&gt;&#xD;&#xA;    &lt;/Diagram&gt;&#xD;&#xA;    &lt;Legend CrosshairContentOffset=&quot;4&quot; MaxCrosshairContentWidth=&quot;50&quot; MaxCrosshairContentHeight=&quot;0&quot; AlignmentVertical=&quot;Center&quot; /&gt;&#xD;&#xA;  &lt;/Chart&gt;&#xD;&#xA;&lt;/ChartXmlSerializer&gt;" PreferredHeight="400" PreferredWidth="400" IsNewNode="True" />
+    </ListView>
+  </Views>
 </Application>
