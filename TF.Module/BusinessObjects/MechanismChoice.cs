@@ -1,7 +1,6 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ConditionalAppearance;
-using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
@@ -75,5 +74,9 @@ namespace TF.Module.BusinessObjects
         [Browsable(false)]
         [Association("Mechanism-MechanismChoiceOperational")]
         public XPCollection<Mechanism> MechanismsOperational => GetCollection<Mechanism>(nameof(MechanismsOperational));
+
+        [Browsable(false)]
+        [Association("MechanismChoice-MetricRule"), Aggregated]
+        public XPCollection<MetricRule> MetricRules => GetCollection<MetricRule>(nameof(MetricRules));
     }
 }

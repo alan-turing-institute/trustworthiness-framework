@@ -1,7 +1,6 @@
 ﻿using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ConditionalAppearance;
-using DevExpress.ExpressApp.DC;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
@@ -160,5 +159,9 @@ namespace TF.Module.BusinessObjects
             get { return mechanism; }
             set { SetPropertyValue(nameof(Mechanism), ref mechanism, value); }
         }
+
+        [Browsable(false)]
+        [Association("Metric-MetricRule"), Aggregated]
+        public XPCollection<MetricRule> MetricRules => GetCollection<MetricRule>(nameof(MetricRules));
     }
 }

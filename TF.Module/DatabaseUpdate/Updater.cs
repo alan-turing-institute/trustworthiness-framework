@@ -60,15 +60,15 @@ namespace TF.Module.DatabaseUpdate {
 
             // add master assessment if not available
             Assessment assessment = ObjectSpace.FirstOrDefault<Assessment>(a => a.Code == "MASTER");
-            /*
+#if DEBUG
             if (assessment != null)
             {
                 assessment.Delete();
                 ObjectSpace.CommitChanges();
                 assessment = null;
             }
-            */
-            
+#endif
+
             if(assessment == null)
             {
                 assessment = ObjectSpace.CreateObject<Assessment>();
@@ -115,9 +115,9 @@ namespace TF.Module.DatabaseUpdate {
                             mechanism.Pillar = pillar;
                             pillar.Mechanisms.Add(mechanism);
 
-                            for(var j = 0; j<5; j++)
+                            for(var j = 0; j < 5; j++)
                             {
-                                string choice_text = row[8+j].ToString();
+                                string choice_text = row[8 + j].ToString();
                                 if (string.IsNullOrWhiteSpace(choice_text))
                                     break;
                                 var mechanism_choice = ObjectSpace.CreateObject<MechanismChoice>();
@@ -161,6 +161,22 @@ namespace TF.Module.DatabaseUpdate {
                             metric.Name = row[4].ToString();
                             metric.Description = row[5].ToString();
                             metric.Weight = int.Parse(row[6].ToString());
+
+                            for (var j = 0; j < 5; j++)
+                            {
+                                string rule_text = row[7 + j].ToString();
+                                if (string.IsNullOrWhiteSpace(rule_text))
+                                    break;
+
+                                int rule_value = int.Parse(rule_text);
+                                var mechanism_choice = m.Choices.Single(c => c.Row == j + 1 && c.Phase == metric.Phase);
+                                var rule = ObjectSpace.CreateObject<MetricRule>();
+                                rule.Choice = mechanism_choice;
+                                mechanism_choice.MetricRules.Add(rule);
+                                rule.Metric = metric;
+                                metric.MetricRules.Add(rule);
+                                rule.Value = rule_value;
+                            }
                         }
                     }
                 }

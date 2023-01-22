@@ -67,34 +67,38 @@
         <PropertyEditor Id="Metrics_Operational" PropertyName="Metrics" View="Mechanism_Metrics_ListView_Operational" IsNewNode="True" />
       </Items>
       <Layout>
-        <TabbedGroup Id="@37c77d36-0dd4-442f-902d-b6e1ea6f7414" IsNewNode="True">
-          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="True" Caption="Mechanism" IsNewNode="True">
-            <LayoutGroup Id="Mechanism" Index="0" Direction="Horizontal" ShowCaption="False" IsNewNode="True">
-              <LayoutGroup Id="Mechanism_col1" Index="0" ShowCaption="False" IsNewNode="True">
-                <LayoutItem Id="Code" ViewItem="Code" ShowCaption="" Index="0" IsNewNode="True" />
-                <LayoutItem Id="Name" ViewItem="Name" ShowCaption="" Index="1" IsNewNode="True" />
-                <LayoutItem Id="NoMetrics" ViewItem="NoMetrics" ShowCaption="" Index="2" IsNewNode="True" />
-                <LayoutItem Id="DetailedAssessment" ViewItem="DetailedAssessment" ShowCaption="" Index="3" IsNewNode="True" />
+        <TabbedGroup Id="@37c77d36-0dd4-442f-902d-b6e1ea6f7414" Index="0" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="True" Caption="Mechanism" RelativeSize="100" IsNewNode="True">
+            <LayoutGroup Id="Mechanism" Index="0" Direction="Horizontal" ShowCaption="False" RelativeSize="17.77059773828756" IsNewNode="True">
+              <LayoutGroup Id="Mechanism_col1" Index="0" ShowCaption="False" RelativeSize="50" IsNewNode="True">
+                <LayoutItem Id="Code" ViewItem="Code" ShowCaption="" Index="0" RelativeSize="29.09090909090909" IsNewNode="True" />
+                <LayoutItem Id="Name" ViewItem="Name" ShowCaption="" Index="1" RelativeSize="21.818181818181817" IsNewNode="True" />
+                <LayoutItem Id="NoMetrics" ViewItem="NoMetrics" ShowCaption="" Index="2" RelativeSize="21.818181818181817" IsNewNode="True" />
+                <LayoutItem Id="DetailedAssessment" ViewItem="DetailedAssessment" ShowCaption="" Index="3" RelativeSize="27.272727272727273" IsNewNode="True" />
               </LayoutGroup>
-              <LayoutGroup Id="Mechanism_col2" Index="1" ShowCaption="False" IsNewNode="True">
-                <LayoutItem Id="DesignScore" ViewItem="DesignScore" ShowCaption="" Index="2" IsNewNode="True" />
-                <LayoutItem Id="DesignWeight" ViewItem="DesignWeight" ShowCaption="" Index="2" IsNewNode="True" />
-                <LayoutItem Id="OperationalScore" ViewItem="OperationalScore" ShowCaption="" Index="3" IsNewNode="True" />
-                <LayoutItem Id="OperationalWeight" ViewItem="OperationalWeight" ShowCaption="" Index="3" IsNewNode="True" />
+              <LayoutGroup Id="Mechanism_col2" Index="1" ShowCaption="False" RelativeSize="50" IsNewNode="True">
+                <LayoutItem Id="DesignScore" ViewItem="DesignScore" ShowCaption="" Index="0" RelativeSize="29.09090909090909" IsNewNode="True" />
+                <LayoutItem Id="DesignWeight" ViewItem="DesignWeight" ShowCaption="" Index="1" RelativeSize="21.818181818181817" IsNewNode="True" />
+                <LayoutItem Id="OperationalScore" ViewItem="OperationalScore" ShowCaption="" Index="2" RelativeSize="21.818181818181817" IsNewNode="True" />
+                <LayoutItem Id="OperationalWeight" ViewItem="OperationalWeight" ShowCaption="" Index="3" RelativeSize="27.272727272727273" IsNewNode="True" />
               </LayoutGroup>
             </LayoutGroup>
-            <LayoutItem Id="Description" ViewItem="Description" ShowCaption="" Index="1" IsNewNode="True" />
+            <LayoutItem Id="Description" ViewItem="Description" ShowCaption="" Index="1" RelativeSize="82.229402261712437" IsNewNode="True" />
           </LayoutGroup>
-          <LayoutGroup Id="@17627e86-8154-4a1d-9ed2-65609ee0fbaa" Caption="Design" Index="1" IsNewNode="True">
-            <LayoutItem Id="DesignQuestion" ViewItem="DesignQuestion" ShowCaption="" Index="0" IsNewNode="True" />
-            <LayoutGroup Id="Metrics" Index="1" ShowCaption="False" ImageName="" IsNewNode="True">
-              <LayoutItem Id="Metrics" ViewItem="Metrics_Design" ShowCaption="False" Index="0" IsNewNode="True" />
+          <LayoutGroup Id="@17627e86-8154-4a1d-9ed2-65609ee0fbaa" Caption="Design" Index="1" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+            <LayoutItem Id="DesignQuestion" ViewItem="DesignQuestion" ShowCaption="" Index="0" RelativeSize="49.757673667205168" IsNewNode="True" />
+            <LayoutItem Id="SelectedDesignChoice" ViewItem="SelectedDesignChoice" Index="1" RelativeSize="3.877221324717286" IsNewNode="True" />
+            <LayoutItem Id="DetailedDesignAssessment" ViewItem="DetailedDesignAssessment" Index="2" RelativeSize="3.7156704361873989" IsNewNode="True" />
+            <LayoutGroup Id="Metrics" Index="3" ShowCaption="False" ImageName="" RelativeSize="42.649434571890147" IsNewNode="True">
+              <LayoutItem Id="Metrics_Design" ViewItem="Metrics_Design" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="@23b4147a-65c7-4595-8385-2ebffbfc8fa2" Caption="Operational" Index="2" IsNewNode="True">
-            <LayoutItem Id="OperationalQuestion" ViewItem="OperationalQuestion" ShowCaption="" Index="0" IsNewNode="True" />
-            <LayoutGroup Id="Metrics_Copy" Index="1" ShowCaption="False" IsNewNode="True">
-              <LayoutItem Id="Metrics" ViewItem="Metrics_Operational" ShowCaption="False" Index="0" IsNewNode="True" />
+          <LayoutGroup Id="@23b4147a-65c7-4595-8385-2ebffbfc8fa2" Caption="Operational" Index="2" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+            <LayoutItem Id="OperationalQuestion" ViewItem="OperationalQuestion" ShowCaption="" Index="0" RelativeSize="49.919224555735056" IsNewNode="True" />
+            <LayoutItem Id="SelectedOperationalChoice" ViewItem="SelectedOperationalChoice" Index="0" RelativeSize="9.67741935483871" IsNewNode="True" />
+            <LayoutItem Id="DetailedOperationalAssessment" ViewItem="DetailedOperationalAssessment" Index="1" RelativeSize="7.419354838709677" IsNewNode="True" />
+            <LayoutGroup Id="Metrics_Copy" Index="1" ShowCaption="False" Caption="Metrics" RelativeSize="50.080775444264944" IsNewNode="True">
+              <LayoutItem Id="Metrics_Operational" ViewItem="Metrics_Operational" Index="2" RelativeSize="82.903225806451616" IsNewNode="True" />
             </LayoutGroup>
           </LayoutGroup>
         </TabbedGroup>
@@ -178,9 +182,12 @@
     <ListView Id="Pillar_Mechanisms_ListView">
       <Columns>
         <ColumnInfo Id="DesignWeight" Index="-1" Width="110" />
-        <ColumnInfo Id="DetailedAssessment" Index="-1" />
+        <ColumnInfo Id="DetailedDesignAssessment" Index="-1" />
+        <ColumnInfo Id="DetailedOperationalAssessment" Index="-1" />
         <ColumnInfo Id="NoMetrics" Index="-1" />
         <ColumnInfo Id="OperationalWeight" Index="-1" Width="62" />
+        <ColumnInfo Id="SelectedDesignChoice" Index="-1" />
+        <ColumnInfo Id="SelectedOperationalChoice" Index="-1" />
         <ColumnInfo Id="Code" Index="0" />
         <ColumnInfo Id="Name" SortOrder="Descending" Width="151" Index="1" />
         <ColumnInfo Id="DesignScore" Index="2" />
@@ -193,7 +200,6 @@
         <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DesignQuestion" PropertyName="DesignQuestion" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="DesignWeight" PropertyName="DesignWeight" Index="-1" Width="110" IsNewNode="True" />
-        <ColumnInfo Id="DetailedAssessment" PropertyName="DetailedAssessment" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="NoMetrics" PropertyName="NoMetrics" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="OperationalQuestion" PropertyName="OperationalQuestion" Index="-1" IsNewNode="True" />

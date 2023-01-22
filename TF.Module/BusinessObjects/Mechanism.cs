@@ -8,6 +8,7 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
 using DevExpress.XtraCharts;
+using DevExpress.XtraPrinting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -136,18 +137,58 @@ namespace TF.Module.BusinessObjects
             set { SetPropertyValue(nameof(DetailedOperationalAssessment), ref detailedOperationalAssessment, value); }
         }
 
+        [ImmediatePostData]
         [Association("Mechanism-MechanismChoiceDesign")]
+        [DataSourceProperty("AvailableDesignChoices")]
         public MechanismChoice SelectedDesignChoice
         {
             get { return selectedDesignChoice; }
-            set { SetPropertyValue(nameof(SelectedDesignChoice), ref selectedDesignChoice, value); }
+            set { 
+                SetPropertyValue(nameof(SelectedDesignChoice), ref selectedDesignChoice, value);
+                if (value == null || IsSaving || IsLoading) return;
+                // propagate to metrics, according to rules
+                foreach(var metric in Metrics.Where(m => m.Phase == Metric.EMetricPhase.Design))
+                {
+                    int ruleValue = value.MetricRules.SingleOrDefault(r => r.Metric.Oid == metric.Oid)?.Value ?? 0;
+                    if (metric.MetricType == Metric.EMetricType.Boolean)
+                        metric.BooleanValue = ruleValue > 0;
+                    else
+                        metric.PercentageValue = ruleValue;
+                }
+            }
         }
 
+        [Browsable(false)]
+        public XPCollection<MechanismChoice> AvailableDesignChoices
+        {
+            get => new XPCollection<MechanismChoice>(Session, Choices.Where(c => c.Phase == Metric.EMetricPhase.Design));
+        }
+
+        [ImmediatePostData]
         [Association("Mechanism-MechanismChoiceOperational")]
+        [DataSourceProperty("AvailableOperationalChoices")]
         public MechanismChoice SelectedOperationalChoice
         {
             get { return selectedOperationalChoice; }
-            set { SetPropertyValue(nameof(SelectedOperationalChoice), ref selectedOperationalChoice, value); }
+            set { 
+                SetPropertyValue(nameof(SelectedOperationalChoice), ref selectedOperationalChoice, value);
+                if (value == null || IsSaving || IsLoading) return;
+                // propagate to metrics, according to rules
+                foreach (var metric in Metrics.Where(m => m.Phase == Metric.EMetricPhase.Operational))
+                {
+                    int ruleValue = value.MetricRules.SingleOrDefault(r => r.Metric.Oid == metric.Oid)?.Value ?? 0;
+                    if (metric.MetricType == Metric.EMetricType.Boolean)
+                        metric.BooleanValue = ruleValue > 0;
+                    else
+                        metric.PercentageValue = ruleValue;
+                }
+            }
+        }
+
+        [Browsable(false)]
+        public XPCollection<MechanismChoice> AvailableOperationalChoices
+        {
+            get => new XPCollection<MechanismChoice>(Session, Choices.Where(c => c.Phase == Metric.EMetricPhase.Operational));
         }
 
         [Appearance("DesignScoreRed", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
