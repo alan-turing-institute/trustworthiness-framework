@@ -168,7 +168,7 @@ namespace TF.Module.DatabaseUpdate {
                 ObjectSpace.CommitChanges();
             }
 
-#if !RELEASE
+//#if !RELEASE
 
             // add one assessor
             ApplicationUser assessorUser = ObjectSpace.FirstOrDefault<ApplicationUser>(u => u.UserName == "Assessor");
@@ -198,7 +198,7 @@ namespace TF.Module.DatabaseUpdate {
                 externalUser.Roles.Add(role2policy["Externals"]);
                 ObjectSpace.CommitChanges();
             }
-#endif
+//#endif
         }
         public override void UpdateDatabaseBeforeUpdateSchema() {
             base.UpdateDatabaseBeforeUpdateSchema();

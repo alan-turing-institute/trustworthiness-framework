@@ -102,7 +102,7 @@ namespace TF.Module.BusinessObjects
             set => SetPropertyValue(nameof(Phase), ref phase, value);
         }
 
-        [ImmediatePostData]
+        //[ImmediatePostData]
         [Appearance("MetricBooleanValueEnable", AppearanceItemType = "ViewItem", TargetItems = "BooleanValue", 
             Criteria = "MetricType = 1", Context = "Any", Enabled = false)]
         [Appearance("MetricBooleanValueStyle", AppearanceItemType = "ViewItem", TargetItems = "BooleanValue",
@@ -113,7 +113,7 @@ namespace TF.Module.BusinessObjects
             set => SetPropertyValue(nameof(BooleanValue), ref booleanValue, value);
         }
 
-        [ImmediatePostData]
+        //[ImmediatePostData]
         [RuleRange("PercentageRange", "Save", "0", "100", "Percentage values must be in the range [0-100]")]
         [Appearance("MetricPercentageValueEnable", AppearanceItemType = "ViewItem", TargetItems = "PercentageValue",
             Criteria = "MetricType = 0", Context = "Any", Enabled = false)]

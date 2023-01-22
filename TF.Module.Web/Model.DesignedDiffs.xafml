@@ -61,7 +61,90 @@
       </Columns>
       <ChartSettings Settings="﻿&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#xD;&#xA;&lt;ChartXmlSerializer version=&quot;22.2.3.0&quot;&gt;&#xD;&#xA;  &lt;Chart AppearanceNameSerializable=&quot;Default&quot; SelectionMode=&quot;None&quot; SeriesSelectionMode=&quot;Series&quot;&gt;&#xD;&#xA;    &lt;DataContainer BoundSeriesSorting=&quot;None&quot; ValidateDataMembers=&quot;true&quot;&gt;&#xD;&#xA;      &lt;SeriesSerializable&gt;&#xD;&#xA;        &lt;Item1 Name=&quot;Design&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;DesignScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item1&gt;&#xD;&#xA;        &lt;Item2 Name=&quot;Operational&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;OperationalScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item2&gt;&#xD;&#xA;      &lt;/SeriesSerializable&gt;&#xD;&#xA;      &lt;SeriesTemplate /&gt;&#xD;&#xA;    &lt;/DataContainer&gt;&#xD;&#xA;    &lt;Legend CrosshairContentOffset=&quot;4&quot; MaxCrosshairContentWidth=&quot;50&quot; MaxCrosshairContentHeight=&quot;0&quot; AlignmentVertical=&quot;Center&quot; /&gt;&#xD;&#xA;  &lt;/Chart&gt;&#xD;&#xA;&lt;/ChartXmlSerializer&gt;" PreferredHeight="400" PreferredWidth="400" IsNewNode="True" />
     </ListView>
+    <DetailView Id="Mechanism_DetailView">
+      <Items>
+        <PropertyEditor Id="Metrics_Design" PropertyName="Metrics" View="Mechanism_Metrics_ListView_Design" IsNewNode="True" />
+        <PropertyEditor Id="Metrics_Operational" PropertyName="Metrics" View="Mechanism_Metrics_ListView_Operational" IsNewNode="True" />
+      </Items>
+      <Layout>
+        <TabbedGroup Id="@37c77d36-0dd4-442f-902d-b6e1ea6f7414" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="True" Caption="Mechanism" IsNewNode="True">
+            <LayoutGroup Id="Mechanism" Index="0" Direction="Horizontal" ShowCaption="False" IsNewNode="True">
+              <LayoutGroup Id="Mechanism_col1" Index="0" ShowCaption="False" IsNewNode="True">
+                <LayoutItem Id="Code" ViewItem="Code" ShowCaption="" Index="0" IsNewNode="True" />
+                <LayoutItem Id="Name" ViewItem="Name" ShowCaption="" Index="1" IsNewNode="True" />
+                <LayoutItem Id="NoMetrics" ViewItem="NoMetrics" ShowCaption="" Index="2" IsNewNode="True" />
+                <LayoutItem Id="DetailedAssessment" ViewItem="DetailedAssessment" ShowCaption="" Index="3" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Mechanism_col2" Index="1" ShowCaption="False" IsNewNode="True">
+                <LayoutItem Id="DesignScore" ViewItem="DesignScore" ShowCaption="" Index="2" IsNewNode="True" />
+                <LayoutItem Id="DesignWeight" ViewItem="DesignWeight" ShowCaption="" Index="2" IsNewNode="True" />
+                <LayoutItem Id="OperationalScore" ViewItem="OperationalScore" ShowCaption="" Index="3" IsNewNode="True" />
+                <LayoutItem Id="OperationalWeight" ViewItem="OperationalWeight" ShowCaption="" Index="3" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutItem Id="Description" ViewItem="Description" ShowCaption="" Index="1" IsNewNode="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="@17627e86-8154-4a1d-9ed2-65609ee0fbaa" Caption="Design" Index="1" IsNewNode="True">
+            <LayoutItem Id="DesignQuestion" ViewItem="DesignQuestion" ShowCaption="" Index="0" IsNewNode="True" />
+            <LayoutGroup Id="Metrics" Index="1" ShowCaption="False" ImageName="" IsNewNode="True">
+              <LayoutItem Id="Metrics" ViewItem="Metrics_Design" ShowCaption="False" Index="0" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="@23b4147a-65c7-4595-8385-2ebffbfc8fa2" Caption="Operational" Index="2" IsNewNode="True">
+            <LayoutItem Id="OperationalQuestion" ViewItem="OperationalQuestion" ShowCaption="" Index="0" IsNewNode="True" />
+            <LayoutGroup Id="Metrics_Copy" Index="1" ShowCaption="False" IsNewNode="True">
+              <LayoutItem Id="Metrics" ViewItem="Metrics_Operational" ShowCaption="False" Index="0" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </TabbedGroup>
+        <LayoutGroup Id="Main" Removed="True">
+          <LayoutGroup Id="SimpleEditors" Removed="True" />
+          <LayoutGroup Id="SizeableEditors" Removed="True">
+            <LayoutItem Id="Description" Removed="True" />
+            <LayoutItem Id="DesignQuestion" Removed="True" />
+            <LayoutItem Id="OperationalQuestion" Removed="True" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" Removed="True">
+            <LayoutGroup Id="Choices" Removed="True" />
+            <LayoutGroup Id="Metrics" Removed="True" />
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <ListView Id="Mechanism_Metrics_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" AllowEdit="True" InlineEditMode="Batch" />
+    <ListView Id="Mechanism_Metrics_ListView_Design" ClassName="TF.Module.BusinessObjects.Metric" DataAccessMode="Client" AllowDelete="False" AllowLink="False" AllowNew="False" AllowEdit="True" InlineEditMode="Batch" Criteria="[Phase] = ##Enum#TF.Module.BusinessObjects.Metric+EMetricPhase,Design#" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Mechanism" PropertyName="Mechanism" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Name" PropertyName="Name" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Code" PropertyName="Code" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="MetricType" PropertyName="MetricType" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Phase" PropertyName="Phase" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="BooleanValue" PropertyName="BooleanValue" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="PercentageValue" PropertyName="PercentageValue" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="Weight" PropertyName="Weight" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="ScoreText" PropertyName="ScoreText" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="ScoreValue" PropertyName="ScoreValue" Index="8" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Mechanism_Metrics_ListView_Operational" ClassName="TF.Module.BusinessObjects.Metric" DataAccessMode="Client" AllowDelete="False" AllowLink="False" AllowNew="False" AllowEdit="True" InlineEditMode="Batch" Criteria="[Phase] = ##Enum#TF.Module.BusinessObjects.Metric+EMetricPhase,Operational#" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Mechanism" PropertyName="Mechanism" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Name" PropertyName="Name" SortIndex="0" SortOrder="Ascending" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Code" PropertyName="Code" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="MetricType" PropertyName="MetricType" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Phase" PropertyName="Phase" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="BooleanValue" PropertyName="BooleanValue" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="PercentageValue" PropertyName="PercentageValue" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="Weight" PropertyName="Weight" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="ScoreText" PropertyName="ScoreText" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="ScoreValue" PropertyName="ScoreValue" Index="8" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <DetailView Id="Pillar_DetailView">
       <Items>
         <PropertyEditor Id="Mechanisms_Chart" PropertyName="Mechanisms" View="Pillar_Mechanisms_ListView_Chart" AllowEdit="False" IsNewNode="True" />
@@ -81,7 +164,7 @@
               </LayoutGroup>
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Mechanisms_Group" Index="1" Direction="Horizontal" ShowCaption="True" ImageName="" IsNewNode="True">
+          <LayoutGroup Id="Mechanisms_Group" Index="1" Direction="Horizontal" ShowCaption="True" ImageName="" Caption="Mechanisms" IsNewNode="True">
             <LayoutItem Id="Mechanisms" ViewItem="Mechanisms" ShowCaption="" Index="0" RelativeSize="50" IsNewNode="True" />
             <LayoutItem Id="Mechanisms_Chart" ShowCaption="" Index="0" RelativeSize="50" ViewItem="Mechanisms_Chart" IsNewNode="True" />
           </LayoutGroup>

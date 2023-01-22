@@ -53,11 +53,15 @@ namespace TF.Web {
 			return dataStoreProvider;
         }
         private void TFAspNetApplication_DatabaseVersionMismatch(object sender, DevExpress.ExpressApp.DatabaseVersionMismatchEventArgs e) {
+            // TODO remove
+            e.Updater.Update();
+            e.Handled = true;
+            /*
 #if EASYTEST
             e.Updater.Update();
             e.Handled = true;
 #else
-            if(System.Diagnostics.Debugger.IsAttached) {
+            if (System.Diagnostics.Debugger.IsAttached) {
                 e.Updater.Update();
                 e.Handled = true;
             }
@@ -73,7 +77,7 @@ namespace TF.Web {
                 }
                 throw new InvalidOperationException(message);
             }
-#endif
+#endif#*/
         }
         private void InitializeComponent() {
             this.module1 = new DevExpress.ExpressApp.SystemModule.SystemModule();
