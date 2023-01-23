@@ -108,9 +108,15 @@ namespace TF.Module.DatabaseUpdate {
                             mechanism.Name = row[2].ToString();
                             mechanism.Description = row[3].ToString();
                             mechanism.DesignWeight = int.Parse(row[4].ToString());
-                            mechanism.DesignQuestion = row[5].ToString();
+                            string designQuestion = row[5].ToString();
+                            if (string.IsNullOrWhiteSpace(designQuestion))
+                                designQuestion = "Which of the following sentences best matches the design of your system?";
+                            mechanism.DesignQuestion = designQuestion;
                             mechanism.OperationalWeight = int.Parse(row[6].ToString());
-                            mechanism.OperationalQuestion = row[7].ToString();
+                            string operationalQuestion = row[7].ToString();
+                            if (string.IsNullOrWhiteSpace(operationalQuestion))
+                                operationalQuestion = "Which of the following sentences best matches the operational efficacy of your system?";
+                            mechanism.OperationalQuestion = operationalQuestion;
 
                             mechanism.Pillar = pillar;
                             pillar.Mechanisms.Add(mechanism);
@@ -160,11 +166,12 @@ namespace TF.Module.DatabaseUpdate {
                             metric.MetricType = (EMetricType)Enum.Parse(typeof(EMetricType), row[3].ToString());
                             metric.Name = row[4].ToString();
                             metric.Description = row[5].ToString();
-                            metric.Weight = int.Parse(row[6].ToString());
+                            metric.Links = row[6].ToString();
+                            metric.Weight = int.Parse(row[7].ToString());
 
                             for (var j = 0; j < 5; j++)
                             {
-                                string rule_text = row[7 + j].ToString();
+                                string rule_text = row[8 + j].ToString();
                                 if (string.IsNullOrWhiteSpace(rule_text))
                                     break;
 

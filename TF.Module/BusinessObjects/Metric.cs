@@ -55,6 +55,7 @@ namespace TF.Module.BusinessObjects
         string description;
         string name;
         string code;
+        string links;
         bool booleanValue;
         int percentageValue;
         Mechanism mechanism;
@@ -79,6 +80,13 @@ namespace TF.Module.BusinessObjects
             set => SetPropertyValue(nameof(Name), ref name, value);
         }
 
+        [Size(SizeAttribute.Unlimited)]
+        [ModelDefault("AllowEdit", "False")]
+        public string Links
+        {
+            get => links;
+            set => SetPropertyValue(nameof(Links), ref links, value);
+        }
 
         [Size(SizeAttribute.Unlimited)]
         [ModelDefault("AllowEdit", "False")]
