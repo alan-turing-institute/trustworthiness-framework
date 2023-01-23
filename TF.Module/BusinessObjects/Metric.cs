@@ -141,9 +141,9 @@ namespace TF.Module.BusinessObjects
         }
 
         [Appearance("ScoreValueRed", AppearanceItemType = "ViewItem", TargetItems = "ScoreValue",
-            Criteria = "ScoreValue<=33", Context = "Any", BackColor = "Salmon", Priority = 3)]
+            Criteria = "ScoreValue<=33", Context = "Any", BackColor = "Tomato", FontColor = "White", Priority = 3)]
         [Appearance("ScoreValueYellow", AppearanceItemType = "ViewItem", TargetItems = "ScoreValue",
-            Criteria = "ScoreValue<=66", Context = "Any", BackColor = "LightYellow", Priority = 2)]
+            Criteria = "ScoreValue<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("ScoreValueGreen", AppearanceItemType = "ViewItem", TargetItems = "ScoreValue",
             Criteria = "ScoreValue>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
         public int ScoreValue

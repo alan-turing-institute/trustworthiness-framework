@@ -192,9 +192,9 @@ namespace TF.Module.BusinessObjects
         }
 
         [Appearance("DesignScoreRed", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
-            Criteria = "DesignScore<=33", Context = "Any", BackColor = "Salmon", Priority = 3)]
+            Criteria = "DesignScore<=33", Context = "Any", BackColor = "Tomato", FontColor = "White", Priority = 3)]
         [Appearance("DesignScoreYellow", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
-            Criteria = "DesignScore<=66", Context = "Any", BackColor = "LightYellow", Priority = 2)]
+            Criteria = "DesignScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("DesignScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
             Criteria = "DesignScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
         [PersistentAlias("Iif([Metrics][[Phase]=0].Sum([Weight])=0,0,[Metrics][[Phase]=0].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=0].Sum([Weight]))")]
@@ -204,9 +204,9 @@ namespace TF.Module.BusinessObjects
         }
 
         [Appearance("OperationalScoreRed", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
-            Criteria = "OperationalScore<=33", Context = "Any", BackColor = "Salmon", Priority = 3)]
+            Criteria = "OperationalScore<=33", Context = "Any", BackColor = "Tomato", FontColor = "White", Priority = 3)]
         [Appearance("OperationalScoreYellow", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
-            Criteria = "OperationalScore<=66", Context = "Any", BackColor = "LightYellow", Priority = 2)]
+            Criteria = "OperationalScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("OperationalScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
             Criteria = "OperationalScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
         [PersistentAlias("Iif([Metrics][[Phase]=1].Sum([Weight])=0,0,[Metrics][[Phase]=1].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=1].Sum([Weight]))")]
