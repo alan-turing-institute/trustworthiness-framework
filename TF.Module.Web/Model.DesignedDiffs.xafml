@@ -1,5 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application>
+  <NavigationItems>
+    <Items>
+      <Item Id="@4b84b6b9-c87a-4609-83cd-3f93cded4f11" Caption="Main" IsNewNode="True">
+        <Items IsNewNode="True">
+          <Item Id="Assessment_ListView" ViewId="Assessment_ListView" ObjectKey="" IsNewNode="True" />
+        </Items>
+      </Item>
+      <Item Id="Default" Caption="Users &amp; Roles">
+        <Items>
+          <Item Id="Assessment_ListView" Removed="True" />
+        </Items>
+      </Item>
+    </Items>
+  </NavigationItems>
   <Options CollectionsEditMode="Edit" />
   <SchemaModules>
     <SchemaModule Name="SystemAspNetModule" Version="22.2.3.0" IsNewNode="True" />
@@ -40,6 +54,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Assessment_ListView" Criteria="[Code] &lt;&gt; 'MASTER'" />
     <ListView Id="Assessment_Pillars_ListView" AllowDelete="False" AllowNew="False" PagerPosition="Bottom">
       <Columns>
         <ColumnInfo Id="Code" Index="-1" SortIndex="0" SortOrder="Ascending" />
