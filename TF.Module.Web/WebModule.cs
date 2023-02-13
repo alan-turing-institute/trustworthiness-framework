@@ -13,6 +13,10 @@ using DevExpress.ExpressApp.Model.Core;
 using DevExpress.ExpressApp.Model.DomainLogics;
 using DevExpress.ExpressApp.Model.NodeGenerators;
 using DevExpress.Persistent.BaseImpl;
+using DevExpress.ExpressApp.ReportsV2;
+using TF.Module.BusinessObjects;
+using TF.Module.Web.Reports;
+using TF.Module.DatabaseUpdate;
 
 namespace TF.Module.Web {
     [ToolboxItemFilter("Xaf.Platform.Web")]
@@ -30,7 +34,10 @@ namespace TF.Module.Web {
             InitializeComponent();
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {
-            return ModuleUpdater.EmptyModuleUpdaters;
+            PredefinedReportsUpdater predefinedReportsUpdater = new PredefinedReportsUpdater(Application, objectSpace, versionFromDB);
+            predefinedReportsUpdater.AddPredefinedReport<AssessmentReport>("Assessment Report", typeof(Assessment), true);
+
+            return new ModuleUpdater[] { predefinedReportsUpdater };
         }
         public override void Setup(XafApplication application) {
             base.Setup(application);
