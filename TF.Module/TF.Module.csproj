@@ -133,6 +133,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\AssessmentComparison.cs" />
+    <Compile Include="BusinessObjects\MechanismComparison.cs" />
+    <Compile Include="BusinessObjects\MetricComparison.cs" />
     <Compile Include="BusinessObjects\MetricRule.cs" />
     <Compile Include="BusinessObjects\MechanismChoice.cs" />
     <Compile Include="BusinessObjects\Pillar.cs" />
@@ -140,6 +143,7 @@
     <Compile Include="BusinessObjects\CloneHelper.cs" />
     <Compile Include="BusinessObjects\Mechanism.cs" />
     <Compile Include="BusinessObjects\Metric.cs" />
+    <Compile Include="BusinessObjects\PillarComparison.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="BusinessObjects\ApplicationUser.cs" />
     <Compile Include="BusinessObjects\ApplicationUserLoginInfo.cs" />
