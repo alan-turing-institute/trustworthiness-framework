@@ -45,12 +45,16 @@ namespace TF.Module.BusinessObjects
             Status = EAssessmentStatus.Draft;
             Code = "";
             Name = "";
+
+            // set created on
+            CreatedOn = DateTime.Now;
         }
 
         string description;
         string name;
         string code;
         EAssessmentStatus status;
+        DateTime createdOn;
 
         public EAssessmentStatus Status
         {
@@ -80,6 +84,13 @@ namespace TF.Module.BusinessObjects
         {
             get => description;
             set => SetPropertyValue(nameof(Description), ref description, value);
+        }
+
+        [Browsable(false)]
+        public DateTime CreatedOn
+        {
+            get => createdOn;
+            set => SetPropertyValue(nameof(CreatedOn), ref createdOn, value);
         }
 
         [Association("Assessment-Pillars"), Aggregated]
