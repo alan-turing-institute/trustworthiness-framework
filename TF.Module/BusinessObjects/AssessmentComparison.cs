@@ -23,9 +23,62 @@ namespace TF.Module.BusinessObjects
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public AssessmentComparison()
+        public AssessmentComparison(Assessment assessment1, Assessment assessment2)
         {
             Oid = Guid.NewGuid();
+            Pillars = new List<PillarComparison>();
+            // fill the comparison
+            foreach (var pillar1 in assessment1.Pillars)
+            {
+                // pillars
+                var pillar2 = assessment2.Pillars.SingleOrDefault(p => p.Code == pillar1.Code);
+                if (pillar2 != null)
+                {
+                    var pillarComparison = new PillarComparison()
+                    {
+                        Code = pillar1.Code,
+                        Name = pillar2.Name,
+                    };
+                    Pillars.Add(pillarComparison);
+                    // mechanisms
+                    foreach (var mechanism1 in pillar1.Mechanisms)
+                    {
+                        var mechanism2 = pillar2.Mechanisms.SingleOrDefault(m => m.Code == mechanism1.Code);
+                        if (mechanism2 != null)
+                        {
+                            var mechanismComparison = new MechanismComparison()
+                            {
+                                Code = mechanism1.Code,
+                                Name = mechanism1.Name,
+                                DesignWeight = mechanism1.DesignWeight,
+                                OperationalWeight = mechanism1.OperationalWeight,
+                            };
+                            pillarComparison.Mechanisms.Add(mechanismComparison);
+                            // metrics
+                            foreach (var metric1 in mechanism1.Metrics)
+                            {
+                                var metric2 = mechanism2.Metrics.SingleOrDefault(m => m.Code == metric1.Code);
+                                if (metric2 != null)
+                                {
+                                    var metricComparison = new MetricComparison()
+                                    {
+                                        Code = metric1.Code,
+                                        Name = metric1.Name,
+                                        MetricType = metric1.MetricType,
+                                        Weight = metric1.Weight,
+                                        Phase = metric1.Phase,
+                                        BooleanValue1 = metric1.BooleanValue,
+                                        BooleanValue2 = metric2.BooleanValue,
+                                        PercentageValue1 = metric1.PercentageValue,
+                                        PercentageValue2 = metric2.PercentageValue,
+                                    };
+                                    mechanismComparison.Metrics.Add(metricComparison);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         [DevExpress.ExpressApp.Data.Key]

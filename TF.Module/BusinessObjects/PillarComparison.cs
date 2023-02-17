@@ -25,6 +25,7 @@ namespace TF.Module.BusinessObjects
         public PillarComparison()
         {
             Oid = Guid.NewGuid();
+            Mechanisms = new List<MechanismComparison>();
         }
 
         [DevExpress.ExpressApp.Data.Key]

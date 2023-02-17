@@ -26,6 +26,7 @@ namespace TF.Module.BusinessObjects
         public MechanismComparison()
         {
             Oid = Guid.NewGuid();
+            Metrics = new List<MetricComparison>();
         }
 
         [DevExpress.ExpressApp.Data.Key]
