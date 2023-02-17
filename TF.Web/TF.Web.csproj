@@ -47,6 +47,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Dashboard.v22.2.Web.WebForms, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v22.2">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
@@ -143,6 +144,12 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.Web.ASPxDiagram.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.ASPxGantt.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.ASPxGauges.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.ASPxHtmlEditor.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.ASPxPivotGrid.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Web.ASPxScheduler.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Web.ASPxThemes.v22.2">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
@@ -151,6 +158,7 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.Web.Bootstrap.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Web.v22.2">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
@@ -295,7 +303,6 @@
     <None Include="Properties\PublishProfiles\trustworthiness-framework - Web Deploy.pubxml" />
     <None Include="ReadMe.txt" />
     <Content Include="Web.config" />
-    <Content Include="trustworthiness-framework.PublishSettings" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TF.Module.Web\TF.Module.Web.csproj">

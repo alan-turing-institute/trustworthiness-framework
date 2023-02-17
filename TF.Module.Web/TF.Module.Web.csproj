@@ -44,6 +44,7 @@
     <Reference Include="DevExpress.Data.v22.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.DataAccess.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Drawing.v22.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -167,6 +168,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AssessmentController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\AssessmentController.Designer.cs">
+      <DependentUpon>AssessmentController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\AssessmentComparisonReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\AssessmentComparisonReport.Designer.cs">
+      <DependentUpon>AssessmentComparisonReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\AssessmentReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -182,8 +195,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controllers\AssessmentController.resx">
+      <DependentUpon>AssessmentController.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Reports\AssessmentComparisonReport.resx">
+      <DependentUpon>AssessmentComparisonReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\AssessmentReport.resx">
       <DependentUpon>AssessmentReport.cs</DependentUpon>
     </EmbeddedResource>
