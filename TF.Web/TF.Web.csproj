@@ -317,6 +317,7 @@
   <ItemGroup>
     <Content Include="Model.Desktop.xafml" />
     <Content Include="Model.Tablet.xafml" />
+    <Content Include="Data\keep.me" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\trustworthiness-framework - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\trustworthiness-framework - Web Deploy.pubxml" />
@@ -338,9 +339,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
