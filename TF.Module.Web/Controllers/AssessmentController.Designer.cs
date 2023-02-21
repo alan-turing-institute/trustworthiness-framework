@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.asCompareAssessments = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.asNewVersion = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             // 
             // asCompareAssessments
             // 
@@ -41,9 +42,21 @@
             this.asCompareAssessments.ToolTip = null;
             this.asCompareAssessments.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.asCompareAssessments_Execute);
             // 
+            // asNewVersion
+            // 
+            this.asNewVersion.Caption = "New Version";
+            this.asNewVersion.Category = "ObjectsCreation";
+            this.asNewVersion.ConfirmationMessage = null;
+            this.asNewVersion.Id = "e9e637f5-d7e7-43b2-bb1a-2fd9c23ae08b";
+            this.asNewVersion.SelectionDependencyType = DevExpress.ExpressApp.Actions.SelectionDependencyType.RequireSingleObject;
+            this.asNewVersion.TargetObjectType = typeof(TF.Module.BusinessObjects.Assessment);
+            this.asNewVersion.ToolTip = null;
+            this.asNewVersion.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.asNewVersion_Execute);
+            // 
             // AssessmentController
             // 
             this.Actions.Add(this.asCompareAssessments);
+            this.Actions.Add(this.asNewVersion);
             this.TargetObjectType = typeof(TF.Module.BusinessObjects.Assessment);
             this.TargetViewType = DevExpress.ExpressApp.ViewType.ListView;
 
@@ -52,5 +65,6 @@
         #endregion
 
         private DevExpress.ExpressApp.Actions.SimpleAction asCompareAssessments;
+        private DevExpress.ExpressApp.Actions.SimpleAction asNewVersion;
     }
 }

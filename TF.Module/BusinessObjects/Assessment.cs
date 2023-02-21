@@ -95,5 +95,40 @@ namespace TF.Module.BusinessObjects
 
         [Association("Assessment-Pillars"), Aggregated]
         public XPCollection<Pillar> Pillars => GetCollection<Pillar>(nameof(Pillars));
+
+        // fill metrics using a previous assessment
+        public void FillFromPreviousAssessment(Assessment prev)
+        {
+            // fill the comparison
+            foreach (var pillar1 in Pillars)
+            {
+                // pillars
+                var pillar2 = prev.Pillars.SingleOrDefault(p => p.Code == pillar1.Code);
+                if (pillar2 != null)
+                {
+                    // mechanisms
+                    foreach (var mechanism1 in pillar1.Mechanisms)
+                    {
+                        var mechanism2 = pillar2.Mechanisms.SingleOrDefault(m => m.Code == mechanism1.Code);
+                        if (mechanism2 != null)
+                        {
+                            // metrics
+                            foreach (var metric1 in mechanism1.Metrics)
+                            {
+                                var metric2 = mechanism2.Metrics.SingleOrDefault(m => 
+                                    m.Code == metric1.Code
+                                 && m.Phase == metric1.Phase
+                                 && m.MetricType == metric1.MetricType);
+                                if (metric2 != null)
+                                {
+                                    metric1.BooleanValue= metric2.BooleanValue;
+                                    metric1.PercentageValue= metric2.PercentageValue;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

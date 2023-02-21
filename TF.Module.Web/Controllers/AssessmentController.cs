@@ -80,5 +80,22 @@ namespace TF.Module.Web.Controllers
                 }
             }
         }
+
+        private void asNewVersion_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            // create a new assessment
+            var prevAssessment = View.CurrentObject as Assessment;
+            IObjectSpace os = Application.CreateObjectSpace();
+            var assessment = os.CreateObject<Assessment>();
+            assessment.Code = prevAssessment.Code + " Copy";
+            assessment.Name = prevAssessment.Name + " Copy";
+            assessment.Status = Assessment.EAssessmentStatus.Draft;
+            assessment.CreatedOn = DateTime.Now;
+            assessment.FillFromPreviousAssessment(prevAssessment);
+            // and go to its detail view
+            var detailView = Application.CreateDetailView(os, assessment);
+            detailView.ViewEditMode = ViewEditMode.Edit;
+            e.ShowViewParameters.CreatedView = detailView;
+        }
     }
 }

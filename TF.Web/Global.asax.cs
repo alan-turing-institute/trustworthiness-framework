@@ -32,9 +32,9 @@ namespace TF.Web {
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
 #if DEBUG
-            if (ConfigurationManager.ConnectionStrings["DebugConnectionString"] != null)
+            if (ConfigurationManager.ConnectionStrings["SqliteConnectionString"] != null)
             {
-                WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["DebugConnectionString"].ConnectionString;
+                WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["SqliteConnectionString"].ConnectionString;
             }
 #elif EASYTEST
             if(ConfigurationManager.ConnectionStrings["EasyTestConnectionString"] != null) {
