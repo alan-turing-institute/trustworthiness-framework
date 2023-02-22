@@ -3,9 +3,6 @@
   <BOModel>
     <Class Name="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser" Caption="Base User" />
   </BOModel>
-  <Options>
-    <LayoutManagerOptions RequiredFieldMark="*" />
-  </Options>
   <SchemaModules>
     <SchemaModule Name="SystemModule" Version="22.2.3.0" IsNewNode="True" />
   </SchemaModules>

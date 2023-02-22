@@ -22,4 +22,9 @@
   <ItemGroup>
     <ProjectReference Include="..\TF.Module\TF.Module.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="msedgedriver.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

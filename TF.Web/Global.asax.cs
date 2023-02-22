@@ -10,6 +10,7 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.Web;
 using DevExpress.Web;
+using DevExpress.ExpressApp.Web.TestScripts;
 
 namespace TF.Web {
     public class Global : System.Web.HttpApplication {
