@@ -54,7 +54,7 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Assessment_ListView" Criteria="[Code] &lt;&gt; 'MASTER'" />
+    <ListView Id="Assessment_ListView" Criteria="[Code] &lt;&gt; 'MASTER'" DetailRowMode="None" />
     <ListView Id="Assessment_Pillars_ListView" AllowDelete="False" AllowNew="False" PagerPosition="Bottom">
       <Columns>
         <ColumnInfo Id="Code" Index="-1" SortIndex="0" SortOrder="Ascending" />
@@ -64,7 +64,7 @@
         <ColumnInfo Id="OperationalScore" Index="2" />
       </Columns>
     </ListView>
-    <ListView Id="Assessment_Pillars_ListView_Chart" ClassName="TF.Module.BusinessObjects.Pillar" DataAccessMode="Client" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" IsNewNode="True">
+    <ListView Id="Assessment_Pillars_ListView_Chart" ClassName="TF.Module.BusinessObjects.Pillar" DataAccessMode="Client" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" AllowDelete="False" AllowLink="False" AllowNew="False" IsNewNode="True">
       <Columns IsNewNode="True">
         <ColumnInfo Id="Assessment" PropertyName="Assessment" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Oid" PropertyName="Oid" Index="-1" IsNewNode="True" />
@@ -76,7 +76,8 @@
       </Columns>
       <ChartSettings Settings="﻿&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#xD;&#xA;&lt;ChartXmlSerializer version=&quot;22.2.3.0&quot;&gt;&#xD;&#xA;  &lt;Chart AppearanceNameSerializable=&quot;Default&quot; SelectionMode=&quot;None&quot; SeriesSelectionMode=&quot;Series&quot;&gt;&#xD;&#xA;    &lt;DataContainer BoundSeriesSorting=&quot;None&quot; ValidateDataMembers=&quot;true&quot;&gt;&#xD;&#xA;      &lt;SeriesSerializable&gt;&#xD;&#xA;        &lt;Item1 Name=&quot;Design&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;DesignScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item1&gt;&#xD;&#xA;        &lt;Item2 Name=&quot;Operational&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;OperationalScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item2&gt;&#xD;&#xA;      &lt;/SeriesSerializable&gt;&#xD;&#xA;      &lt;SeriesTemplate /&gt;&#xD;&#xA;    &lt;/DataContainer&gt;&#xD;&#xA;    &lt;Legend CrosshairContentOffset=&quot;4&quot; MaxCrosshairContentWidth=&quot;50&quot; MaxCrosshairContentHeight=&quot;0&quot; AlignmentVertical=&quot;Center&quot; /&gt;&#xD;&#xA;  &lt;/Chart&gt;&#xD;&#xA;&lt;/ChartXmlSerializer&gt;" PreferredHeight="400" PreferredWidth="400" IsNewNode="True" />
     </ListView>
-    <DetailView Id="Mechanism_DetailView">
+    <ListView Id="Mechanism_Choices_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
+    <DetailView Id="Mechanism_DetailView" AllowDelete="False" AllowEdit="True" AllowNew="False">
       <Items>
         <PropertyEditor Id="Metrics_Design" PropertyName="Metrics" View="Mechanism_Metrics_ListView_Design" IsNewNode="True" />
         <PropertyEditor Id="Metrics_Operational" PropertyName="Metrics" View="Mechanism_Metrics_ListView_Operational" IsNewNode="True" />
@@ -89,7 +90,6 @@
                 <LayoutItem Id="Code" ViewItem="Code" ShowCaption="" Index="0" RelativeSize="29.09090909090909" IsNewNode="True" />
                 <LayoutItem Id="Name" ViewItem="Name" ShowCaption="" Index="1" RelativeSize="21.818181818181817" IsNewNode="True" />
                 <LayoutItem Id="NoMetrics" ViewItem="NoMetrics" ShowCaption="" Index="2" RelativeSize="21.818181818181817" IsNewNode="True" />
-                <LayoutItem Id="DetailedAssessment" ViewItem="DetailedAssessment" ShowCaption="" Index="3" RelativeSize="27.272727272727273" IsNewNode="True" />
               </LayoutGroup>
               <LayoutGroup Id="Mechanism_col2" Index="1" ShowCaption="False" RelativeSize="50" IsNewNode="True">
                 <LayoutItem Id="DesignScore" ViewItem="DesignScore" ShowCaption="" Index="0" RelativeSize="29.09090909090909" IsNewNode="True" />
@@ -131,6 +131,8 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <ListView Id="Mechanism_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
+    <ListView Id="Mechanism_LookupListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
     <ListView Id="Mechanism_Metrics_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" AllowEdit="True" InlineEditMode="Batch" />
     <ListView Id="Mechanism_Metrics_ListView_Design" ClassName="TF.Module.BusinessObjects.Metric" DataAccessMode="Client" AllowDelete="False" AllowLink="False" AllowNew="False" AllowEdit="True" InlineEditMode="Batch" Criteria="[Phase] = ##Enum#TF.Module.BusinessObjects.Metric+EMetricPhase,Design#" IsNewNode="True">
       <Columns IsNewNode="True">
@@ -164,7 +166,13 @@
         <ColumnInfo Id="Weight" PropertyName="Weight" Index="6" IsNewNode="True" />
       </Columns>
     </ListView>
-    <DetailView Id="Pillar_DetailView">
+    <DetailView Id="MechanismChoice_DetailView" AllowDelete="False" AllowEdit="False" AllowNew="False" />
+    <ListView Id="MechanismChoice_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
+    <ListView Id="MechanismChoice_LookupListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
+    <DetailView Id="Metric_DetailView" AllowDelete="False" AllowEdit="True" AllowNew="False" />
+    <ListView Id="Metric_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
+    <ListView Id="Metric_LookupListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
+    <DetailView Id="Pillar_DetailView" AllowDelete="False" AllowNew="False">
       <Items>
         <PropertyEditor Id="Mechanisms_Chart" PropertyName="Mechanisms" View="Pillar_Mechanisms_ListView_Chart" AllowEdit="False" IsNewNode="True" />
       </Items>
@@ -194,7 +202,9 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Pillar_Mechanisms_ListView">
+    <ListView Id="Pillar_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
+    <ListView Id="Pillar_LookupListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
+    <ListView Id="Pillar_Mechanisms_ListView" AllowDelete="False" AllowLink="False" AllowNew="False">
       <Columns>
         <ColumnInfo Id="DesignWeight" Index="-1" Width="110" />
         <ColumnInfo Id="DetailedDesignAssessment" Index="-1" />
@@ -209,7 +219,7 @@
         <ColumnInfo Id="OperationalScore" Index="3" />
       </Columns>
     </ListView>
-    <ListView Id="Pillar_Mechanisms_ListView_Chart" ClassName="TF.Module.BusinessObjects.Mechanism" DataAccessMode="Client" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" IsNewNode="True">
+    <ListView Id="Pillar_Mechanisms_ListView_Chart" ClassName="TF.Module.BusinessObjects.Mechanism" DataAccessMode="Client" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" AllowDelete="False" AllowLink="False" AllowNew="False" IsNewNode="True">
       <Columns IsNewNode="True">
         <ColumnInfo Id="Code" PropertyName="Code" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
