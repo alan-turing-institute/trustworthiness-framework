@@ -144,6 +144,7 @@
     <Compile Include="BusinessObjects\Mechanism.cs" />
     <Compile Include="BusinessObjects\Metric.cs" />
     <Compile Include="BusinessObjects\PillarComparison.cs" />
+    <Compile Include="BusinessObjects\TFBaseObject.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="BusinessObjects\ApplicationUser.cs" />
     <Compile Include="BusinessObjects\ApplicationUserLoginInfo.cs" />

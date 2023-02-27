@@ -19,7 +19,7 @@ namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [NavigationItem(false)]
-    public class MetricRule : BaseObject
+    public class MetricRule : TFBaseObject
     {
         public MetricRule(Session session)
             : base(session)

@@ -18,7 +18,7 @@ namespace TF.Module.BusinessObjects
 {
     [DefaultClassOptions]
     [NavigationItem(false)]
-    public class MechanismChoice : BaseObject
+    public class MechanismChoice : TFBaseObject
     {
         public MechanismChoice(Session session)
             : base(session)

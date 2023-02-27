@@ -25,26 +25,37 @@
     </PropertyEditor>
   </ViewItems>
   <Views>
-    <DetailView Id="Assessment_DetailView">
+    <DetailView Id="Assessment_DetailView" AllowNew="False">
       <Items>
         <PropertyEditor Id="Pillars" View="Assessment_Pillars_ListView" />
         <PropertyEditor Id="Pillars_Chart" PropertyName="Pillars" View="Assessment_Pillars_ListView_Chart" IsNewNode="True" />
       </Items>
       <Layout>
-        <TabbedGroup Id="@6e9c1a6c-20e8-43e7-8095-edc6777ace33" IsNewNode="True">
-          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="True" Caption="Assessment" IsNewNode="True">
-            <LayoutGroup Id="Assessment" Index="0" ShowCaption="False" IsNewNode="True">
-              <LayoutItem Id="Status" ViewItem="Status" ShowCaption="" Index="0" IsNewNode="True" />
-              <LayoutItem Id="Code" ViewItem="Code" ShowCaption="" Index="1" IsNewNode="True" />
-              <LayoutItem Id="Name" ViewItem="Name" ShowCaption="" Index="2" IsNewNode="True" />
+        <TabbedGroup Id="@6e9c1a6c-20e8-43e7-8095-edc6777ace33" Index="0" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="True" Caption="Assessment" RelativeSize="100" IsNewNode="True">
+            <LayoutGroup Id="Assessment" Index="0" ShowCaption="False" RelativeSize="14.716312056737589" IsNewNode="True">
+              <LayoutItem Id="Status" ViewItem="Status" ShowCaption="" Index="0" RelativeSize="38.554216867469883" IsNewNode="True" />
+              <LayoutItem Id="Code" ViewItem="Code" ShowCaption="" Index="1" RelativeSize="28.91566265060241" IsNewNode="True" />
+              <LayoutItem Id="Name" ViewItem="Name" ShowCaption="" Index="2" RelativeSize="32.53012048192771" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="SizeableEditors" Index="1" ShowCaption="False" IsNewNode="True">
-              <LayoutItem Id="Description" ViewItem="Description" ShowCaption="" Index="0" IsNewNode="True" />
+            <LayoutGroup Id="SizeableEditors" Index="1" ShowCaption="False" Caption="Description" RelativeSize="38.829787234042556" IsNewNode="True">
+              <LayoutItem Id="Description" ViewItem="Description" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
+            <LayoutGroup Id="Auto59c74410-67d2-4987-982c-d6464a296970" ShowCaption="False" Caption="" Direction="Horizontal" Index="2" RelativeSize="8.51063829787234" IsNewNode="True">
+              <LayoutGroup Id="Auto7a6fe302-7af8-4e06-97f4-22fa115a942b" ShowCaption="False" Caption="" Index="0" RelativeSize="50" IsNewNode="True">
+                <LayoutItem Id="CreatedBy" ViewItem="CreatedBy" Index="0" RelativeSize="50" IsNewNode="True" />
+                <LayoutItem Id="UpdatedBy" ViewItem="UpdatedBy" Index="1" RelativeSize="50" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Autocbbab1d4-b760-4b0f-840e-a3512044fde3" ShowCaption="False" Caption="" Index="1" RelativeSize="50" IsNewNode="True">
+                <LayoutItem Id="CreatedOn" ViewItem="CreatedOn" Index="0" RelativeSize="50" IsNewNode="True" />
+                <LayoutItem Id="UpdatedOn" ViewItem="UpdatedOn" Index="1" RelativeSize="50" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="Item1" ShowCaption="False" CaptionLocation="Top" Index="3" RelativeSize="37.943262411347519" Caption="Audit" IsNewNode="True" />
           </LayoutGroup>
-          <LayoutGroup Id="Pillars_Group" Index="2" Direction="Horizontal" ShowCaption="True" ImageName="" Caption="Pillars" IsNewNode="True">
-            <LayoutItem Id="Pillars_List" ViewItem="Pillars" ShowCaption="" Index="0" RelativeSize="40" IsNewNode="True" />
-            <LayoutItem Id="Pillars_Chart" ShowCaption="" Index="1" RelativeSize="40" MinSize="0, 0" ViewItem="Pillars_Chart" SizeConstraintsType="Default" IsNewNode="True" />
+          <LayoutGroup Id="Pillars_Group" Index="1" Direction="Horizontal" ShowCaption="True" ImageName="" Caption="Pillars" RelativeSize="100" IsNewNode="True">
+            <LayoutItem Id="Pillars" ViewItem="Pillars" Index="0" RelativeSize="50" IsNewNode="True" />
+            <LayoutItem Id="Pillars_Chart" ShowCaption="" Index="1" RelativeSize="50" MinSize="0, 0" ViewItem="Pillars_Chart" SizeConstraintsType="Default" IsNewNode="True" />
           </LayoutGroup>
         </TabbedGroup>
         <LayoutGroup Id="Main" Removed="True">
@@ -54,7 +65,12 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
-    <ListView Id="Assessment_ListView" Criteria="[Code] &lt;&gt; 'MASTER'" DetailRowMode="None" />
+    <ListView Id="Assessment_ListView" Criteria="[Code] &lt;&gt; 'MASTER'" DetailRowMode="None">
+      <Columns>
+        <ColumnInfo Id="UpdatedOn" Index="3" />
+        <ColumnInfo Id="UpdatedBy" Index="4" />
+      </Columns>
+    </ListView>
     <ListView Id="Assessment_Pillars_ListView" AllowDelete="False" AllowNew="False" PagerPosition="Bottom">
       <Columns>
         <ColumnInfo Id="Code" Index="-1" SortIndex="0" SortOrder="Ascending" />

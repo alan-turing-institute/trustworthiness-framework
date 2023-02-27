@@ -18,7 +18,7 @@ namespace TF.Module.BusinessObjects
     [DefaultClassOptions]
     [NavigationItem(false)]
     //[RuleCombinationOfPropertiesIsUnique("PillarCodeUnique", DefaultContexts.Save, "Code, Assessment.Oid")]
-    public class Pillar : BaseObject
+    public class Pillar : TFBaseObject
     {
         
         public Pillar(Session session)

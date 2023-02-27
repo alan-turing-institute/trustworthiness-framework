@@ -20,7 +20,7 @@ namespace TF.Module.BusinessObjects
     //[RuleCombinationOfPropertiesIsUnique("MetricCodeUnique", DefaultContexts.Save, "Code, Mechanism.Oid")]
     [Appearance("MetricDesignEditable", Enabled = false, Criteria = "![Mechanism.DetailedDesignAssessment] and [Phase]=0", Context = "Any", TargetItems = "*")]
     [Appearance("MetricOperationalEditable", Enabled = false, Criteria = "![Mechanism.DetailedOperationalAssessment] and [Phase]=1", Context = "Any", TargetItems = "*")]
-    public class Metric : BaseObject
+    public class Metric : TFBaseObject
     {
         public enum EMetricType
         {

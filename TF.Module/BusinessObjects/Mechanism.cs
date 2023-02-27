@@ -20,7 +20,7 @@ namespace TF.Module.BusinessObjects
     [DefaultClassOptions]
     [NavigationItem(false)]
     //[RuleCombinationOfPropertiesIsUnique("MechanismCodeUnique", DefaultContexts.Save, "Code, Pillar.Oid")]
-    public class Mechanism : BaseObject
+    public class Mechanism : TFBaseObject
     {
         
         public Mechanism(Session session)
