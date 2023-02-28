@@ -4,6 +4,7 @@ using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Layout;
 using DevExpress.ExpressApp.Model.NodeGenerators;
+using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Templates;
 using DevExpress.ExpressApp.Utils;
@@ -28,6 +29,18 @@ namespace TF.Module.Web.Controllers
         }
         protected override void OnActivated()
         {
+            // are we in user detail view?
+            var resetPasswordController = Frame.GetController<ResetPasswordController>();
+            if (resetPasswordController != null)
+            {
+                resetPasswordController.ActionStateUpdated += ResetPasswordController_ActionStateUpdated;
+            }
+            var changePasswordController = Frame.GetController<ChangePasswordController>();
+            if (changePasswordController != null)
+            {
+                changePasswordController.ActionStateUpdated += ChangePasswordController_ActionStateUpdated;
+            }
+
             base.OnActivated();
             // Perform various tasks depending on the target View.
             if(View.ViewEditMode == ViewEditMode.View)
@@ -36,6 +49,19 @@ namespace TF.Module.Web.Controllers
                 ObjectSpace.SetModified(null);
             }
         }
+
+        private void ChangePasswordController_ActionStateUpdated(object sender, EventArgs e)
+        {
+            var changePasswordController = (ChangePasswordController)sender;
+            changePasswordController.Actions["ChangePasswordByUser"].Enabled.RemoveItem(BaseManagePasswordController.ObjectSpaceIsNotModifiedKey);
+        }
+
+        private void ResetPasswordController_ActionStateUpdated(object sender, EventArgs e)
+        {
+            var resetPasswordController = (ResetPasswordController)sender;
+            resetPasswordController.Actions["ResetPassword"].Enabled.RemoveItem(BaseManagePasswordController.ObjectSpaceIsNotModifiedKey);
+        }
+
         protected override void OnViewControlsCreated()
         {
             base.OnViewControlsCreated();
