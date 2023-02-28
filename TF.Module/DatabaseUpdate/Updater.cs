@@ -49,7 +49,6 @@ namespace TF.Module.DatabaseUpdate {
             {
                 userAdmin = ObjectSpace.CreateObject<ApplicationUser>();
                 userAdmin.UserName = "Admin";
-                // userAdmin.SetPassword("Tf2023!!");
                 // save user to get key id
                 ObjectSpace.CommitChanges();
                 ((ISecurityUserWithLoginInfo)userAdmin).CreateUserLoginInfo(SecurityDefaults.PasswordAuthentication, ObjectSpace.GetKeyValueAsString(userAdmin));
@@ -60,29 +59,33 @@ namespace TF.Module.DatabaseUpdate {
 
             // add master assessment if not available
             Assessment assessment = ObjectSpace.FirstOrDefault<Assessment>(a => a.Code == "MASTER");
-#if DEBUG
-            if (assessment != null)
-            {
-                assessment.Delete();
-                ObjectSpace.CommitChanges();
-                assessment = null;
-            }
-#endif
 
-            if(assessment == null)
+            // now open embedded excel file
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "TF.Module.DatabaseUpdate.TF.xlsx";
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
             {
-                assessment = ObjectSpace.CreateObject<Assessment>();
-                assessment.Code = "MASTER";
-                assessment.Name = "Master Assessment";
-
-                // now open embedded excel file
-                var assembly = Assembly.GetExecutingAssembly();
-                var resourceName = "TF.Module.DatabaseUpdate.TF.xlsx";
-                using (var stream = assembly.GetManifestResourceStream(resourceName))
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    var result = reader.AsDataSet();
+
+                    // version
+                    DateTime version = DateTime.Parse(Convert.ToString(result.Tables["Main"].Rows[0][1]));
+                    if(assessment != null && assessment.CreatedOn <= version)
                     {
-                        var result = reader.AsDataSet();
+                        // older master assessment, rebuild it
+                        assessment.Delete();
+                        ObjectSpace.CommitChanges();
+                        assessment = null;
+                    }
+
+                    // create master assessment if needed
+                    if (assessment == null)
+                    {
+                        assessment = ObjectSpace.CreateObject<Assessment>();
+                        assessment.Code = "MASTER";
+                        assessment.Name = "Master Assessment";
+                        assessment.CreatedOn = version;
 
                         // add mechanisms
                         var mechanismTable = result.Tables["Mechanisms"];
@@ -121,7 +124,7 @@ namespace TF.Module.DatabaseUpdate {
                             mechanism.Pillar = pillar;
                             pillar.Mechanisms.Add(mechanism);
 
-                            for(var j = 0; j < 5; j++)
+                            for (var j = 0; j < 5; j++)
                             {
                                 string choice_text = row[8 + j].ToString();
                                 if (string.IsNullOrWhiteSpace(choice_text))
@@ -187,8 +190,6 @@ namespace TF.Module.DatabaseUpdate {
                         }
                     }
                 }
-                
-                ObjectSpace.CommitChanges();
             }
 
 #if !RELEASE
