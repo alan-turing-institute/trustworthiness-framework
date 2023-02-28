@@ -49,7 +49,7 @@ namespace TF.Module.DatabaseUpdate {
             {
                 userAdmin = ObjectSpace.CreateObject<ApplicationUser>();
                 userAdmin.UserName = "Admin";
-                userAdmin.SetPassword("Tf2023!!");
+                // userAdmin.SetPassword("Tf2023!!");
                 // save user to get key id
                 ObjectSpace.CommitChanges();
                 ((ISecurityUserWithLoginInfo)userAdmin).CreateUserLoginInfo(SecurityDefaults.PasswordAuthentication, ObjectSpace.GetKeyValueAsString(userAdmin));

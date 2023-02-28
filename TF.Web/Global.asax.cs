@@ -21,7 +21,7 @@ namespace TF.Web {
             DevExpress.ExpressApp.FrameworkSettings.DefaultSettingsCompatibilityMode = DevExpress.ExpressApp.FrameworkSettingsCompatibilityMode.Latest;
             RouteTable.Routes.RegisterXafRoutes();
             ASPxWebControl.CallbackError += new EventHandler(Application_Error);
-#if EASYTEST
+#if DEBUG
             DevExpress.ExpressApp.Web.TestScripts.TestScriptsManager.EasyTestEnabled = true;
 #endif
         }
@@ -33,9 +33,9 @@ namespace TF.Web {
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
 #if DEBUG
-            if (ConfigurationManager.ConnectionStrings["SqliteConnectionString"] != null)
+            if (ConfigurationManager.ConnectionStrings["MSSQLDebugConnectionString"] != null)
             {
-                WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["SqliteConnectionString"].ConnectionString;
+                WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["MSSQLDebugConnectionString"].ConnectionString;
             }
 #elif EASYTEST
             if(ConfigurationManager.ConnectionStrings["EasyTestConnectionString"] != null) {

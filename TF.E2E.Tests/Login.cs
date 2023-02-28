@@ -4,30 +4,24 @@ using System.Linq;
 using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
-
-// To run functional tests for ASP.NET Web Forms and ASP.NET Core Blazor XAF Applications,
-// install browser drivers: https://www.selenium.dev/documentation/getting_started/installing_browser_drivers/.
-//
-// -For Google Chrome: download "chromedriver.exe" from https://chromedriver.chromium.org/downloads.
-// -For Microsoft Edge: download "msedgedriver.exe" from https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/.
-//
-// Selenium requires a path to the downloaded driver. Add a folder with the driver to the system's PATH variable.
-//
-// Refer to the following article for more information: https://docs.devexpress.com/eXpressAppFramework/403852/
-
 namespace TF.Module.E2E.Tests {
-	public class TFTests : IDisposable {
+	public class TFLoginTests : IDisposable {
         const string WebAppName = "TF";
         const string AppDBName = "TF";
 
         EasyTestFixtureContext FixtureContext { get; } = new EasyTestFixtureContext();
 
-		public TFTests() {
+		public TFLoginTests() {
             FixtureContext.RegisterApplications(
                 new WebApplicationOptions(WebAppName, string.Format(@"{0}\..\..\..\..\TF.Web", Environment.CurrentDirectory))
             );
-            // FixtureContext.RegisterDatabases(new DatabaseOptions(AppDBName, "TFEasyTest", server: @"(localdb)\mssqllocaldb"));	           
-		}
+            // FixtureContext.RegisterDatabases(new DatabaseOptions(AppDBName, "TFEasyTest", server: @"(localdb)\mssqllocaldb"));	
+            // 
+            // delete file if exists
+            string dbfile = "E:/Workspace/TF/TF.Web/Data/TF.db";
+            if (System.IO.File.Exists(dbfile))
+                System.IO.File.Delete(dbfile);
+        }
         public void Dispose() {
             FixtureContext.CloseRunningApplications();
         }
@@ -54,7 +48,7 @@ namespace TF.Module.E2E.Tests {
             appContext.RunApplication();
             appContext.GetForm().FillForm(
                 ("User Name", "Admin"),
-                ("Password", "Tf2023!!")
+                ("Password", "")
             );
             appContext.GetAction("Log In").Execute();
             // having succeeded, we should NOT have a login action
