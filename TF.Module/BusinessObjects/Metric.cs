@@ -55,6 +55,7 @@ namespace TF.Module.BusinessObjects
         string description;
         string name;
         string code;
+        string standards;
         string links;
         bool booleanValue;
         int percentageValue;
@@ -78,6 +79,14 @@ namespace TF.Module.BusinessObjects
         {
             get => name;
             set => SetPropertyValue(nameof(Name), ref name, value);
+        }
+
+        [Size(SizeAttribute.Unlimited)]
+        [ModelDefault("AllowEdit", "False")]
+        public string Standards
+        {
+            get => standards;
+            set => SetPropertyValue(nameof(Standards), ref standards, value);
         }
 
         [Size(SizeAttribute.Unlimited)]

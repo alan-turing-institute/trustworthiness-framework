@@ -85,6 +85,9 @@ namespace TF.Module.BusinessObjects
         [Association("Assessment-Pillars"), Aggregated]
         public XPCollection<Pillar> Pillars => GetCollection<Pillar>(nameof(Pillars));
 
+        [Association("Assessment-Standards"), Aggregated]
+        public XPCollection<Standard> Standards => GetCollection<Standard>(nameof(Standards));
+
         // fill metrics using a previous assessment
         public void FillFromPreviousAssessment(Assessment prev)
         {
