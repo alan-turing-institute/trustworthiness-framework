@@ -180,5 +180,9 @@ namespace TF.Module.BusinessObjects
         [Browsable(false)]
         [Association("Metric-MetricRule"), Aggregated]
         public XPCollection<MetricRule> MetricRules => GetCollection<MetricRule>(nameof(MetricRules));
+
+        [Browsable(false)]
+        [Association("Metric-MetricStandard"), Aggregated]
+        public XPCollection<MetricStandard> MetricStandards => GetCollection<MetricStandard>(nameof(MetricStandards));
     }
 }

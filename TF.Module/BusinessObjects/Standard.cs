@@ -51,6 +51,10 @@ namespace TF.Module.BusinessObjects
             set { SetPropertyValue(nameof(Assessment), ref assessment, value); }
         }
 
+        [Browsable(false)]
+        [Association("Standard-MetricStandard"), Aggregated]
+        public XPCollection<MetricStandard> MetricStandards => GetCollection<MetricStandard>(nameof(MetricStandards));
+
         public bool Compliant
         {
             get => compliant;
@@ -60,12 +64,9 @@ namespace TF.Module.BusinessObjects
                 {
                     if(compliant && !IsLoading)
                     {
-                        var metrics = Assessment.Pillars
-                            .SelectMany(p => p.Mechanisms)
-                            .SelectMany(m => m.Metrics)
-                            .Where(m => !string.IsNullOrEmpty(m.Standards) && m.Standards.Contains(Name));
-                        foreach (var metric in metrics)
+                        foreach (var metric_standard in MetricStandards)
                         {
+                            var metric = metric_standard.Metric;
                             if (metric.ScoreValue != 100)
                             {
                                 if (metric.MetricType == Metric.EMetricType.Boolean)

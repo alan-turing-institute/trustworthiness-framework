@@ -136,6 +136,7 @@
     <Compile Include="BusinessObjects\AssessmentComparison.cs" />
     <Compile Include="BusinessObjects\MechanismComparison.cs" />
     <Compile Include="BusinessObjects\MetricComparison.cs" />
+    <Compile Include="BusinessObjects\MetricStandard.cs" />
     <Compile Include="BusinessObjects\MetricRule.cs" />
     <Compile Include="BusinessObjects\MechanismChoice.cs" />
     <Compile Include="BusinessObjects\Standard.cs" />
