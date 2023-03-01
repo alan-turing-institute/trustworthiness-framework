@@ -138,6 +138,7 @@
     <Compile Include="BusinessObjects\MetricComparison.cs" />
     <Compile Include="BusinessObjects\MetricRule.cs" />
     <Compile Include="BusinessObjects\MechanismChoice.cs" />
+    <Compile Include="BusinessObjects\Standard.cs" />
     <Compile Include="BusinessObjects\Pillar.cs" />
     <Compile Include="BusinessObjects\Assessment.cs" />
     <Compile Include="BusinessObjects\CloneHelper.cs" />
