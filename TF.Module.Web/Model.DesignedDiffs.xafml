@@ -33,29 +33,32 @@
       <Layout>
         <TabbedGroup Id="@6e9c1a6c-20e8-43e7-8095-edc6777ace33" Index="0" RelativeSize="100" IsNewNode="True">
           <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="True" Caption="Assessment" RelativeSize="100" IsNewNode="True">
-            <LayoutGroup Id="Assessment" Index="0" ShowCaption="False" RelativeSize="14.716312056737589" IsNewNode="True">
+            <LayoutGroup Id="Assessment" Index="0" ShowCaption="False" RelativeSize="16.767676767676768" IsNewNode="True">
               <LayoutItem Id="Status" ViewItem="Status" ShowCaption="" Index="0" RelativeSize="38.554216867469883" IsNewNode="True" />
               <LayoutItem Id="Code" ViewItem="Code" ShowCaption="" Index="1" RelativeSize="28.91566265060241" IsNewNode="True" />
               <LayoutItem Id="Name" ViewItem="Name" ShowCaption="" Index="2" RelativeSize="32.53012048192771" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="SizeableEditors" Index="1" ShowCaption="False" Caption="Description" RelativeSize="38.829787234042556" IsNewNode="True">
+            <LayoutGroup Id="SizeableEditors" Index="1" ShowCaption="False" Caption="Description" RelativeSize="37.777777777777779" IsNewNode="True">
               <LayoutItem Id="Description" ViewItem="Description" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
-            <LayoutGroup Id="Auto59c74410-67d2-4987-982c-d6464a296970" ShowCaption="False" Caption="" Direction="Horizontal" Index="2" RelativeSize="8.51063829787234" IsNewNode="True">
-              <LayoutGroup Id="Auto7a6fe302-7af8-4e06-97f4-22fa115a942b" ShowCaption="False" Caption="" Index="0" RelativeSize="50" IsNewNode="True">
+            <LayoutGroup Id="Auto59c74410-67d2-4987-982c-d6464a296970" ShowCaption="False" Caption="Auto59c74410-67d2-4987-982c-d6464a296970(9)" Direction="Horizontal" Index="2" RelativeSize="12.121212121212121" IsNewNode="True">
+              <LayoutGroup Id="Auto7a6fe302-7af8-4e06-97f4-22fa115a942b" ShowCaption="False" Caption="Auto7a6fe302-7af8-4e06-97f4-22fa115a942b(10)" Index="0" RelativeSize="50" IsNewNode="True">
                 <LayoutItem Id="CreatedBy" ViewItem="CreatedBy" Index="0" RelativeSize="50" IsNewNode="True" />
                 <LayoutItem Id="UpdatedBy" ViewItem="UpdatedBy" Index="1" RelativeSize="50" IsNewNode="True" />
               </LayoutGroup>
-              <LayoutGroup Id="Autocbbab1d4-b760-4b0f-840e-a3512044fde3" ShowCaption="False" Caption="" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutGroup Id="Autocbbab1d4-b760-4b0f-840e-a3512044fde3" ShowCaption="False" Caption="Autocbbab1d4-b760-4b0f-840e-a3512044fde3(13)" Index="1" RelativeSize="50" IsNewNode="True">
                 <LayoutItem Id="CreatedOn" ViewItem="CreatedOn" Index="0" RelativeSize="50" IsNewNode="True" />
                 <LayoutItem Id="UpdatedOn" ViewItem="UpdatedOn" Index="1" RelativeSize="50" IsNewNode="True" />
               </LayoutGroup>
             </LayoutGroup>
-            <LayoutGroup Id="Item1" ShowCaption="False" CaptionLocation="Top" Index="3" RelativeSize="37.943262411347519" Caption="Audit" IsNewNode="True" />
+            <LayoutGroup Id="Item1" ShowCaption="False" CaptionLocation="Top" Index="3" RelativeSize="33.333333333333336" Caption="Audit" IsNewNode="True" />
           </LayoutGroup>
-          <LayoutGroup Id="Pillars_Group" Index="1" Direction="Horizontal" ShowCaption="True" ImageName="" Caption="Pillars" RelativeSize="100" IsNewNode="True">
-            <LayoutItem Id="Pillars" ViewItem="Pillars" Index="0" RelativeSize="50" IsNewNode="True" />
-            <LayoutItem Id="Pillars_Chart" ShowCaption="" Index="1" RelativeSize="50" MinSize="0, 0" ViewItem="Pillars_Chart" SizeConstraintsType="Default" IsNewNode="True" />
+          <LayoutGroup Id="@3049acaa-dfc3-4b40-87e2-eddf6ef5553e" ShowCaption="True" Caption="Standards" Index="1" RelativeSize="100" IsNewNode="True">
+            <LayoutItem Id="Standards" ViewItem="Standards" Index="0" RelativeSize="100" IsNewNode="True" />
+          </LayoutGroup>
+          <LayoutGroup Id="Pillars_Group" Index="2" Direction="Horizontal" ShowCaption="True" ImageName="" Caption="Pillars" RelativeSize="100" IsNewNode="True">
+            <LayoutItem Id="Pillars" ViewItem="Pillars" Index="0" RelativeSize="49.893162393162392" IsNewNode="True" />
+            <LayoutItem Id="Pillars_Chart" ShowCaption="" Index="1" RelativeSize="50.106837606837608" MinSize="0, 0" ViewItem="Pillars_Chart" SizeConstraintsType="Default" IsNewNode="True" />
           </LayoutGroup>
         </TabbedGroup>
         <LayoutGroup Id="Main" Removed="True">
@@ -92,6 +95,7 @@
       </Columns>
       <ChartSettings Settings="﻿&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#xD;&#xA;&lt;ChartXmlSerializer version=&quot;22.2.3.0&quot;&gt;&#xD;&#xA;  &lt;Chart AppearanceNameSerializable=&quot;Default&quot; SelectionMode=&quot;None&quot; SeriesSelectionMode=&quot;Series&quot;&gt;&#xD;&#xA;    &lt;DataContainer BoundSeriesSorting=&quot;None&quot; ValidateDataMembers=&quot;true&quot;&gt;&#xD;&#xA;      &lt;SeriesSerializable&gt;&#xD;&#xA;        &lt;Item1 Name=&quot;Design&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;DesignScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item1&gt;&#xD;&#xA;        &lt;Item2 Name=&quot;Operational&quot; ArgumentDataMember=&quot;Code&quot; ValueDataMembersSerializable=&quot;OperationalScore&quot;&gt;&#xD;&#xA;          &lt;View TypeNameSerializable=&quot;RadarAreaSeriesView&quot; /&gt;&#xD;&#xA;        &lt;/Item2&gt;&#xD;&#xA;      &lt;/SeriesSerializable&gt;&#xD;&#xA;      &lt;SeriesTemplate /&gt;&#xD;&#xA;    &lt;/DataContainer&gt;&#xD;&#xA;    &lt;Legend CrosshairContentOffset=&quot;4&quot; MaxCrosshairContentWidth=&quot;50&quot; MaxCrosshairContentHeight=&quot;0&quot; AlignmentVertical=&quot;Center&quot; /&gt;&#xD;&#xA;  &lt;/Chart&gt;&#xD;&#xA;&lt;/ChartXmlSerializer&gt;" PreferredHeight="400" PreferredWidth="400" IsNewNode="True" />
     </ListView>
+    <ListView Id="Assessment_Standards_ListView" AllowEdit="True" InlineEditMode="Batch" AllowDelete="False" AllowLink="False" AllowNew="False" />
     <ListView Id="Mechanism_Choices_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
     <DetailView Id="Mechanism_DetailView" AllowDelete="False" AllowEdit="True" AllowNew="False">
       <Items>
@@ -185,7 +189,17 @@
     <DetailView Id="MechanismChoice_DetailView" AllowDelete="False" AllowEdit="False" AllowNew="False" />
     <ListView Id="MechanismChoice_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
     <ListView Id="MechanismChoice_LookupListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
-    <DetailView Id="Metric_DetailView" AllowDelete="False" AllowEdit="True" AllowNew="False" />
+    <DetailView Id="Metric_DetailView" AllowDelete="False" AllowEdit="True" AllowNew="False">
+      <Layout>
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SizeableEditors">
+            <LayoutItem Id="Description" Index="0" />
+            <LayoutItem Id="Standards" Index="1" />
+            <LayoutItem Id="Links" Index="2" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <ListView Id="Metric_ListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
     <ListView Id="Metric_LookupListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
     <DetailView Id="Pillar_DetailView" AllowDelete="False" AllowNew="False">
