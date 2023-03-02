@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TF.Module.BusinessObjects;
 
 namespace TF.Module.Web.Controllers
 {
@@ -48,8 +49,14 @@ namespace TF.Module.Web.Controllers
             }
 
             base.OnActivated();
+
             // Perform various tasks depending on the target View.
-            if(View.ViewEditMode == ViewEditMode.View)
+            ISecurityUserWithRoles currentUser = (ISecurityUserWithRoles)SecuritySystem.CurrentUser;
+
+            if (View.ViewEditMode == ViewEditMode.View 
+                && (View.CurrentObject is Metric == false)
+                && currentUser.Roles.Any(r => r.Name == "Administrators" || r.Name == "Assessors")
+                )
             {
                 View.ViewEditMode = ViewEditMode.Edit;
                 ObjectSpace.SetModified(null);

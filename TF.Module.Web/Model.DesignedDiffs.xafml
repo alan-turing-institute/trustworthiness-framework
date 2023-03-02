@@ -195,7 +195,34 @@
           <LayoutGroup Id="SizeableEditors">
             <LayoutItem Id="Description" Index="0" />
             <LayoutItem Id="Standards" Index="1" />
-            <LayoutItem Id="Links" Index="2" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Metric_DetailView_Description" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" RequiredFieldMark="" ClassName="TF.Module.BusinessObjects.Metric" AllowDelete="False" AllowNew="False" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="BooleanValue" PropertyName="BooleanValue" IsNewNode="True" />
+        <PropertyEditor Id="Code" PropertyName="Code" IsNewNode="True" />
+        <PropertyEditor Id="CreatedBy" PropertyName="CreatedBy" IsNewNode="True" />
+        <PropertyEditor Id="CreatedOn" PropertyName="CreatedOn" IsNewNode="True" />
+        <PropertyEditor Id="Description" PropertyName="Description" IsNewNode="True" />
+        <PropertyEditor Id="MetricType" PropertyName="MetricType" IsNewNode="True" />
+        <PropertyEditor Id="Name" PropertyName="Name" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="PercentageValue" PropertyName="PercentageValue" IsNewNode="True" />
+        <PropertyEditor Id="Phase" PropertyName="Phase" IsNewNode="True" />
+        <PropertyEditor Id="ScoreText" PropertyName="ScoreText" IsNewNode="True" />
+        <PropertyEditor Id="ScoreValue" PropertyName="ScoreValue" IsNewNode="True" />
+        <PropertyEditor Id="Standards" PropertyName="Standards" IsNewNode="True" />
+        <PropertyEditor Id="UpdatedBy" PropertyName="UpdatedBy" IsNewNode="True" />
+        <PropertyEditor Id="UpdatedOn" PropertyName="UpdatedOn" IsNewNode="True" />
+        <PropertyEditor Id="Weight" PropertyName="Weight" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" IsNewNode="True">
+          <LayoutGroup Id="SizeableEditors" Index="1" ShowCaption="False" IsNewNode="True">
+            <LayoutItem Id="Standards" ViewItem="Standards" ShowCaption="" Index="0" MinSize="0, 30" MaxSize="0, 30" IsNewNode="True" />
+            <LayoutItem Id="Description" ViewItem="Description" ShowCaption="" Index="1" MaxSize="0, 500" MinSize="0, 500" IsNewNode="True" />
           </LayoutGroup>
         </LayoutGroup>
       </Layout>

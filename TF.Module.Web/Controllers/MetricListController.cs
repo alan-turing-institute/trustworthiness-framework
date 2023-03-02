@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.UI.WebControls;
 using TF.Module.BusinessObjects;
 
 namespace TF.Module.Web.Controllers
@@ -45,11 +46,15 @@ namespace TF.Module.Web.Controllers
 
         private void asShowDetails_Execute(object sender, SimpleActionExecuteEventArgs e)
         {
-            // get the metric
-            var metric = View.CurrentObject as Metric;
-            string message = metric.Description;
-            if (string.IsNullOrEmpty(message)) { message = "No description available."; }
-            Application.ShowViewStrategy.ShowMessage(message, InformationType.Info, displayInterval: 10000, InformationPosition.Bottom);
+            // create new objectspace
+            var os = Application.CreateObjectSpace();
+            // search current metric in the new objectspace
+            var metric = os.GetObjectByKey<Metric>(((Metric)View.CurrentObject).Oid);
+            // open a new detail view
+            var dv = Application.CreateDetailView(os, "Metric_DetailView_Description", false, metric);
+            dv.ViewEditMode = ViewEditMode.View;
+            // show the detail view
+            e.ShowViewParameters.CreatedView = dv;
         }
     }
 }
