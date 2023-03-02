@@ -38,7 +38,41 @@ namespace TF.Module.DatabaseUpdate {
                     role2policy[role_name] = ObjectSpace.CreateObject<PermissionPolicyRole>();
                     role2policy[role_name].Name = role_name;
                 }
-                role2policy[role_name].IsAdministrative = role_name.Equals("Administrators");
+                role2policy[role_name].IsAdministrative = false;
+
+                switch(role_name)
+                {
+                    case "Administrators":
+                        role2policy[role_name].IsAdministrative = true;
+                        break;
+                    case "Assessors":
+                        role2policy[role_name].PermissionPolicy = SecurityPermissionPolicy.ReadOnlyAllByDefault;
+                        role2policy[role_name].AddNavigationPermission("Application/NavigationItems/Items/Default/Items/PermissionPolicyRole_ListView", SecurityPermissionState.Deny);
+                        role2policy[role_name].AddNavigationPermission("Application/NavigationItems/Items/Default/Items/ApplicationUser_ListView", SecurityPermissionState.Deny);
+                        role2policy[role_name].AddNavigationPermission("Application/NavigationItems/Items/Reports", SecurityPermissionState.Deny);
+                        role2policy[role_name].AddTypePermission(typeof(ApplicationUser), SecurityOperations.ReadWriteAccess, SecurityPermissionState.Allow)
+                            .AddMemberPermission(SecurityOperations.ReadWriteAccess, "Roles; ChangePasswordOnFirstLogon; IsActive", "", SecurityPermissionState.Deny);
+                        role2policy[role_name].AddTypePermission(typeof(Assessment), SecurityOperations.CRUDAccess, SecurityPermissionState.Allow);
+                        role2policy[role_name].AddTypePermission(typeof(Pillar), SecurityOperations.ReadWriteAccess, SecurityPermissionState.Allow);
+                        role2policy[role_name].AddTypePermission(typeof(Mechanism), SecurityOperations.ReadWriteAccess, SecurityPermissionState.Allow);
+                        role2policy[role_name].AddTypePermission(typeof(Metric), SecurityOperations.ReadWriteAccess, SecurityPermissionState.Allow);
+                        break;
+                    case "Externals":
+                        role2policy[role_name].PermissionPolicy = SecurityPermissionPolicy.ReadOnlyAllByDefault;
+                        role2policy[role_name].AddNavigationPermission("Application/NavigationItems/Items/Default/Items/PermissionPolicyRole_ListView", SecurityPermissionState.Deny);
+                        role2policy[role_name].AddNavigationPermission("Application/NavigationItems/Items/Default/Items/ApplicationUser_ListView", SecurityPermissionState.Deny);
+                        role2policy[role_name].AddNavigationPermission("Application/NavigationItems/Items/Reports", SecurityPermissionState.Deny);
+                        role2policy[role_name].AddTypePermission(typeof(ApplicationUser), SecurityOperations.ReadWriteAccess, SecurityPermissionState.Allow)
+                            .AddMemberPermission(SecurityOperations.ReadWriteAccess, "Roles; ChangePasswordOnFirstLogon; IsActive", "", SecurityPermissionState.Deny);
+                        role2policy[role_name].AddActionPermission("e9e637f5-d7e7-43b2-bb1a-2fd9c23ae08b"); // new version
+                        role2policy[role_name].AddActionPermission("70193d13-ba28-4c40-a2b6-f205ea25071e"); // compare
+                        role2policy[role_name].AddTypePermission(typeof(Assessment), SecurityOperations.Read, SecurityPermissionState.Deny);
+                        role2policy[role_name].AddObjectPermission(typeof(Assessment), SecurityOperations.Read,
+                            "[Status] = ##Enum#TF.Module.BusinessObjects.Assessment+EAssessmentStatus,Public#", SecurityPermissionState.Allow);
+                        break;
+                    default:
+                        break;
+                }
             }
             // persists roles
             ObjectSpace.CommitChanges();
@@ -59,6 +93,9 @@ namespace TF.Module.DatabaseUpdate {
 
             // add master assessment if not available
             Assessment assessment = ObjectSpace.FirstOrDefault<Assessment>(a => a.Code == "MASTER");
+            
+            // standards
+            var standards = new List<string>();
 
             // now open embedded excel file
             var assembly = Assembly.GetExecutingAssembly();
@@ -169,8 +206,28 @@ namespace TF.Module.DatabaseUpdate {
                             metric.MetricType = (EMetricType)Enum.Parse(typeof(EMetricType), row[3].ToString());
                             metric.Name = row[4].ToString();
                             metric.Description = row[5].ToString();
-                            metric.Links = row[6].ToString();
+                            metric.Standards = row[6].ToString();
                             metric.Weight = int.Parse(row[7].ToString());
+
+                            if (!string.IsNullOrWhiteSpace(metric.Standards))
+                            {
+                                foreach(var s in metric.Standards.Split(','))
+                                {
+                                    var standard_name = s.Trim();
+                                    var standard = assessment.Standards.SingleOrDefault(st => st.Name == standard_name);
+                                    if(standard == null)
+                                    {
+                                        standard = ObjectSpace.CreateObject<Standard>();
+                                        standard.Name = standard_name;
+                                        assessment.Standards.Add(standard);
+                                    }
+                                    var metric_standard = ObjectSpace.CreateObject<MetricStandard>();
+                                    metric_standard.Metric = metric;
+                                    metric_standard.Standard = standard;
+                                    standard.MetricStandards.Add(metric_standard);
+                                    metric.MetricStandards.Add(metric_standard);
+                                }
+                            }
 
                             for (var j = 0; j < 5; j++)
                             {
@@ -187,6 +244,15 @@ namespace TF.Module.DatabaseUpdate {
                                 metric.MetricRules.Add(rule);
                                 rule.Value = rule_value;
                             }
+                        }
+
+                        // add standards
+                        foreach(var s in standards)
+                        {
+                            var standard = ObjectSpace.CreateObject<Standard>();
+                            standard.Name = s;
+                            standard.Assessment = assessment;
+                            assessment.Standards.Add(standard);
                         }
                     }
                 }
