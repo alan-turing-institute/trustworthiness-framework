@@ -182,6 +182,12 @@
     <Compile Include="Controllers\HideEditController.Designer.cs">
       <DependentUpon>HideEditController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\MetricListController.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\MetricListController.Designer.cs">
+      <DependentUpon>MetricListController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Reports\AssessmentComparisonReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -205,6 +211,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controllers\AssessmentController.resx">
       <DependentUpon>AssessmentController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\MetricListController.resx">
+      <DependentUpon>MetricListController.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />
