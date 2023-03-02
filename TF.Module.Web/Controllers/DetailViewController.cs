@@ -4,6 +4,7 @@ using DevExpress.ExpressApp.Actions;
 using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Layout;
 using DevExpress.ExpressApp.Model.NodeGenerators;
+using DevExpress.ExpressApp.ReportsV2;
 using DevExpress.ExpressApp.Security;
 using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Templates;
@@ -39,6 +40,11 @@ namespace TF.Module.Web.Controllers
             if (changePasswordController != null)
             {
                 changePasswordController.ActionStateUpdated += ChangePasswordController_ActionStateUpdated;
+            }
+            var reportController = Frame.GetController<PrintSelectionBaseController>();
+            if (reportController != null)
+            {
+                reportController.ShowInReportActionEnableMode = PrintSelectionBaseController.ActionEnabledMode.None;
             }
 
             base.OnActivated();
