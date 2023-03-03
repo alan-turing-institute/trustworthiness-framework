@@ -108,7 +108,7 @@ namespace TF.Module.DatabaseUpdate {
 
                     // version
                     DateTime version = DateTime.Parse(Convert.ToString(result.Tables["Main"].Rows[0][1]));
-                    if(assessment != null && assessment.CreatedOn <= version)
+                    if(assessment != null && assessment.CreatedOn < version)
                     {
                         // older master assessment, rebuild it
                         assessment.Delete();
