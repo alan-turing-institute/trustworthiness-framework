@@ -27,6 +27,11 @@ namespace TF.Module.BusinessObjects
         {
             Oid = Guid.NewGuid();
             Pillars = new List<PillarComparison>();
+            // fill codes and names
+            Code1 = assessment1.Code;
+            Name1 = assessment1.Name;
+            Code2 = assessment2.Code;
+            Name2 = assessment2.Name;
             // fill the comparison
             foreach (var pillar1 in assessment1.Pillars)
             {
@@ -87,6 +92,11 @@ namespace TF.Module.BusinessObjects
 
         public Assessment Assessment1 { get; set; }
         public Assessment Assessment2 { get; set; }
+
+        public string Code1 { get; set; }
+        public string Name1 { get; set; }
+        public string Code2 { get; set; }
+        public string Name2 { get; set; }
 
         public List<PillarComparison> Pillars { get; set; }
 
