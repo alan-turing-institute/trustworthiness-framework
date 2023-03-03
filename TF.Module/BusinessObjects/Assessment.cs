@@ -91,6 +91,15 @@ namespace TF.Module.BusinessObjects
         // fill metrics using a previous assessment
         public void FillFromPreviousAssessment(Assessment prev)
         {
+            // fill the standards
+            foreach (var standard1 in Standards)
+            {
+                var standard2 = prev.Standards.SingleOrDefault(s => s.Name == standard1.Name);
+                if (standard2 != null)
+                {
+                    standard1.Compliant = standard2.Compliant;
+                }
+            }
             // fill the comparison
             foreach (var pillar1 in Pillars)
             {
