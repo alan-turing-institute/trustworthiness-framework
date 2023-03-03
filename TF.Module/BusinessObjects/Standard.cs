@@ -55,6 +55,12 @@ namespace TF.Module.BusinessObjects
         [Association("Standard-MetricStandard"), Aggregated]
         public XPCollection<MetricStandard> MetricStandards => GetCollection<MetricStandard>(nameof(MetricStandards));
 
+        [PersistentAlias("[MetricStandards].Count()")]
+        public int NoMetrics
+        {
+            get => (int)(EvaluateAlias(nameof(NoMetrics)) ?? 0);
+        }
+
         public bool Compliant
         {
             get => compliant;
