@@ -25,18 +25,26 @@ namespace TF.Module.E2E.Tests {
             FixtureContext.CloseRunningApplications();
         }
 
-        private IApplicationContext Login(string applicationName)
+        private IApplicationContext Login(string applicationName, bool isAdmin = true)
         {
             // login
             var appContext = FixtureContext.CreateApplicationContext(applicationName);
             appContext.RunApplication();
             appContext.GetForm().FillForm(
-                ("User Name", "Admin"),
+                ("User Name", isAdmin ? "Admin" : "Assessor"),
                 ("Password", "")
             );
             appContext.GetAction("Log In").Execute();
-            appContext.Navigate("Application User");
             return appContext;
+        }
+
+        [Theory]
+        [InlineData(WebAppName)]
+        public void TestOnlyAdminCanCreateUsers(string applicationName)
+        {
+            IApplicationContext appContext = Login(applicationName, isAdmin: false);
+            // register
+            Assert.False(appContext.Navigate("Application User"));
         }
 
         [Theory]
@@ -44,6 +52,7 @@ namespace TF.Module.E2E.Tests {
         public void TestMissingUserName(string applicationName)
         {
             IApplicationContext appContext = Login(applicationName);
+            appContext.Navigate("Application User");
             // register
             appContext.GetAction("New").Execute();
             appContext.GetAction("Save").Execute();
@@ -56,6 +65,7 @@ namespace TF.Module.E2E.Tests {
         public void TestValidUser(string applicationName)
         {
             IApplicationContext appContext = Login(applicationName);
+            appContext.Navigate("Application User");
             // register
             appContext.GetAction("New").Execute();
             appContext.GetForm().FillForm(
@@ -71,6 +81,7 @@ namespace TF.Module.E2E.Tests {
         public void TestDuplicateUser(string applicationName)
         {
             IApplicationContext appContext = Login(applicationName);
+            appContext.Navigate("Application User");
             // register
             appContext.GetAction("New").Execute();
             appContext.GetForm().FillForm(
