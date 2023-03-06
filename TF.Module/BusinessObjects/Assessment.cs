@@ -113,6 +113,8 @@ namespace TF.Module.BusinessObjects
                         var mechanism2 = pillar2.Mechanisms.SingleOrDefault(m => m.Code == mechanism1.Code);
                         if (mechanism2 != null)
                         {
+                            mechanism1.DetailedDesignAssessment = mechanism2.DetailedDesignAssessment;
+                            mechanism1.DetailedOperationalAssessment = mechanism2.DetailedOperationalAssessment;
                             // metrics
                             foreach (var metric1 in mechanism1.Metrics)
                             {
