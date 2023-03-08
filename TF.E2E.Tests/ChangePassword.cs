@@ -4,13 +4,13 @@ using System.Linq;
 using Xunit;
 
 namespace TF.Module.E2E.Tests {
-	public class TFForgottenPasswordTests : IDisposable {
+	public class TFChangePasswordTests : IDisposable {
         const string WebAppName = "TF";
         const string AppDBName = "TF";
 
         EasyTestFixtureContext FixtureContext { get; } = new EasyTestFixtureContext();
 
-		public TFForgottenPasswordTests() {
+		public TFChangePasswordTests() {
             FixtureContext.RegisterApplications(
                 new WebApplicationOptions(WebAppName, string.Format(@"{0}\..\..\..\..\TF.Web", Environment.CurrentDirectory))
             );
@@ -40,24 +40,36 @@ namespace TF.Module.E2E.Tests {
 
         [Theory]
         [InlineData(WebAppName)]
-        public void TestOnlyAdminCanChangePasswords(string applicationName)
+        public void TestUserNeedsPreviousPassword(string applicationName)
         {
             IApplicationContext appContext = Login(applicationName, userName: "Assessor");
-            // register
-            Assert.False(appContext.Navigate("Application User"));
+            appContext.Navigate("My Details");
+            appContext.GetAction("Change My Password").Execute();
+            appContext.GetForm().FillForm(
+                ("Old Password", "InvalidPwd"),
+                ("New Password", "NewPwd"),
+                ("Confirm Password", "NewPwd")
+                );
+            appContext.GetAction("OK").Execute();
+            // check error
+            Assert.Equal("Old password is wrong.", appContext.GetValidation().GetValidationHeader());
         }
 
         [Theory]
         [InlineData(WebAppName)]
-        public void TestAdminCanGenerateTempPassword(string applicationName)
+        public void TestUserChangesHisPassword(string applicationName)
         {
-            IApplicationContext appContext = Login(applicationName);
-            appContext.Navigate("Application User");
-            // select assessor user
-            appContext.GetGrid().ProcessRow(("USER NAME", "Assessor"));
-            // generate temp password
-            Assert.True(appContext.GetAction("Reset Password").Execute());
+            IApplicationContext appContext = Login(applicationName, userName: "Assessor");
+            appContext.Navigate("My Details");
+            appContext.GetAction("Change My Password").Execute();
+            appContext.GetForm().FillForm(
+                ("Old Password", ""),
+                ("New Password", "NewPwd"),
+                ("Confirm Password", "NewPwd")
+                );
+            appContext.GetAction("OK").Execute();
+            // check error
+            Assert.Equal("", appContext.GetValidation().GetValidationHeader());
         }
-
     }
 }
