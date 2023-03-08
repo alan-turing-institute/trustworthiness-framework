@@ -323,8 +323,11 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\trustworthiness-framework - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\trustworthiness-framework - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\trustworthiness-framework-webapp - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\trustworthiness-framework-webapp - Web Deploy.pubxml" />
     <None Include="ReadMe.txt" />
     <Content Include="Web.config" />
+    <Content Include="trustworthiness-framework-webapp.PublishSettings" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TF.Module.Web\TF.Module.Web.csproj">

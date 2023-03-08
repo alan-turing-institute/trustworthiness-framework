@@ -33,10 +33,15 @@ namespace TF.Web {
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
 #if DEBUG
+            if (ConfigurationManager.ConnectionStrings["SqliteConnectionString"] != null)
+            {
+                WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["SqliteConnectionString"].ConnectionString;
+            }
+            /*
             if (ConfigurationManager.ConnectionStrings["MSSQLDebugConnectionString"] != null)
             {
                 WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["MSSQLDebugConnectionString"].ConnectionString;
-            }
+            }*/
 #elif EASYTEST
             if(ConfigurationManager.ConnectionStrings["EasyTestConnectionString"] != null) {
                 WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["EasyTestConnectionString"].ConnectionString;
