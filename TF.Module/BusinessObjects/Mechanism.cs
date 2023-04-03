@@ -33,7 +33,6 @@ namespace TF.Module.BusinessObjects
             base.AfterConstruction();
 
             DesignWeight = OperationalWeight = 1;
-            DetailedDesignAssessment = false;
         }
 
         string operationalQuestion;
@@ -44,8 +43,6 @@ namespace TF.Module.BusinessObjects
         string name;
         string code;
         Pillar pillar;
-        bool detailedDesignAssessment;
-        bool detailedOperationalAssessment;
         MechanismChoice selectedDesignChoice;
         MechanismChoice selectedOperationalChoice;
 
@@ -120,20 +117,6 @@ namespace TF.Module.BusinessObjects
         {
             get { return pillar; }
             set { SetPropertyValue(nameof(Pillar), ref pillar, value); }
-        }
-
-        [ImmediatePostData]
-        public bool DetailedDesignAssessment
-        {
-            get => detailedDesignAssessment;
-            set { SetPropertyValue(nameof(DetailedDesignAssessment), ref detailedDesignAssessment, value); }
-        }
-
-        [ImmediatePostData]
-        public bool DetailedOperationalAssessment
-        {
-            get => detailedOperationalAssessment;
-            set { SetPropertyValue(nameof(DetailedOperationalAssessment), ref detailedOperationalAssessment, value); }
         }
 
         [ImmediatePostData]
