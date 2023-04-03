@@ -6,4 +6,46 @@
   <SchemaModules>
     <SchemaModule Name="SystemModule" Version="22.2.3.0" IsNewNode="True" />
   </SchemaModules>
+	<Validation>
+		<Rules>
+			<RuleCriteria
+				Id="PreventDeleteAdminUser"
+				TargetContextIDs="Delete"
+				Criteria="[UserName] != 'Admin'"
+				TargetType="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser"
+				CustomMessageTemplate="Cannot remove this user."
+				IsNewNode="True" />
+			<RuleCriteria
+				Id="PreventDeleteAdminRole"
+				TargetContextIDs="Delete"
+				Criteria="[Name] != 'Administrators'"
+				TargetType="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole"
+				CustomMessageTemplate="Cannot remove this role."
+				IsNewNode="True" />
+		</Rules>
+	</Validation>
+	<BOModel>
+		<Class Name="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser">
+			<AppearanceRules>
+				<AppearanceRule
+				  Id="DisableAdminUserEditors"
+				  Enabled="False"
+				  Context="DetailView"
+				  Criteria="[UserName] == 'Admin'"
+				  TargetItems="IsActive; Roles; UserName"
+				  IsNewNode="True" />
+			</AppearanceRules>
+		</Class>
+		<Class Name="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyRole">
+			<AppearanceRules>
+				<AppearanceRule
+					Id="DisableAdminRoleEditors"
+					Enabled="False"
+					Context="DetailView"
+					TargetItems="Name; Users; IsAdministrative"
+					Criteria="[Name] == 'Administrators'"
+					IsNewNode="True" />
+			</AppearanceRules>
+		</Class>
+	</BOModel>	
 </Application>
