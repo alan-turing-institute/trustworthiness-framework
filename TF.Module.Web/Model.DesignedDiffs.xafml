@@ -265,6 +265,7 @@
     <ListView Id="Pillar_Mechanisms_ListView" AllowDelete="False" AllowLink="False" AllowNew="False">
       <Columns>
         <ColumnInfo Id="DesignWeight" Index="-1" Width="110" />
+        <ColumnInfo Id="ExcludeFromAssessment" Index="-1" />
         <ColumnInfo Id="NoMetrics" Index="-1" />
         <ColumnInfo Id="OperationalWeight" Index="-1" Width="62" />
         <ColumnInfo Id="SelectedDesignChoice" Index="-1" />
@@ -275,7 +276,7 @@
         <ColumnInfo Id="OperationalScore" Index="3" />
       </Columns>
     </ListView>
-    <ListView Id="Pillar_Mechanisms_ListView_Chart" ClassName="TF.Module.BusinessObjects.Mechanism" DataAccessMode="Client" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" AllowDelete="False" AllowLink="False" AllowNew="False" IsNewNode="True">
+    <ListView Id="Pillar_Mechanisms_ListView_Chart" ClassName="TF.Module.BusinessObjects.Mechanism" DataAccessMode="Client" EditorTypeName="DevExpress.ExpressApp.Chart.Web.ASPxChartListEditor" AllowDelete="False" AllowLink="False" AllowNew="False" Filter="[ExcludeFromAssessment] = False" IsNewNode="True">
       <Columns IsNewNode="True">
         <ColumnInfo Id="Code" PropertyName="Code" Index="-1" IsNewNode="True" />
         <ColumnInfo Id="Description" PropertyName="Description" Index="-1" IsNewNode="True" />
