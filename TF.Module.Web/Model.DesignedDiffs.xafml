@@ -77,7 +77,9 @@
     <ListView Id="Assessment_Pillars_ListView" AllowDelete="False" AllowNew="False" PagerPosition="Bottom">
       <Columns>
         <ColumnInfo Id="Code" Index="-1" SortIndex="0" SortOrder="Ascending" />
+        <ColumnInfo Id="DesignMandatory" Index="-1" />
         <ColumnInfo Id="NoMechanisms" Index="-1" />
+        <ColumnInfo Id="OperationalMandatory" Index="-1" />
         <ColumnInfo Id="Name" Index="0" SortIndex="-1" SortOrder="None" Width="47" />
         <ColumnInfo Id="DesignScore" Index="1" />
         <ColumnInfo Id="OperationalScore" Index="2" />
@@ -124,7 +126,6 @@
           <LayoutGroup Id="@17627e86-8154-4a1d-9ed2-65609ee0fbaa" Caption="Design" Index="1" ShowCaption="True" RelativeSize="100" IsNewNode="True">
             <LayoutItem Id="DesignQuestion" ViewItem="DesignQuestion" ShowCaption="" Index="0" RelativeSize="49.489795918367349" IsNewNode="True" />
             <LayoutItem Id="SelectedDesignChoice" ViewItem="SelectedDesignChoice" Index="1" RelativeSize="4.0816326530612246" IsNewNode="True" />
-            <LayoutItem Id="DetailedDesignAssessment" ViewItem="DetailedDesignAssessment" Index="2" RelativeSize="3.5714285714285716" IsNewNode="True" />
             <LayoutGroup Id="Metrics" Index="3" ShowCaption="False" ImageName="" RelativeSize="42.857142857142854" IsNewNode="True">
               <LayoutItem Id="Metrics_Design" ViewItem="Metrics_Design" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
@@ -132,7 +133,6 @@
           <LayoutGroup Id="@23b4147a-65c7-4595-8385-2ebffbfc8fa2" Caption="Operational" Index="2" ShowCaption="True" RelativeSize="100" IsNewNode="True">
             <LayoutItem Id="OperationalQuestion" ViewItem="OperationalQuestion" ShowCaption="" Index="0" RelativeSize="42.3469387755102" IsNewNode="True" />
             <LayoutItem Id="SelectedOperationalChoice" ViewItem="SelectedOperationalChoice" Index="1" RelativeSize="4.0816326530612246" IsNewNode="True" />
-            <LayoutItem Id="DetailedOperationalAssessment" ViewItem="DetailedOperationalAssessment" Index="2" RelativeSize="6.8027210884353737" IsNewNode="True" />
             <LayoutGroup Id="Metrics_Copy" Index="3" ShowCaption="False" Caption="Metrics" RelativeSize="46.7687074829932" IsNewNode="True">
               <LayoutItem Id="Metrics_Operational" ViewItem="Metrics_Operational" Index="0" RelativeSize="100" IsNewNode="True" />
             </LayoutGroup>
@@ -264,9 +264,11 @@
     <ListView Id="Pillar_LookupListView" AllowDelete="False" AllowLink="False" AllowNew="False" />
     <ListView Id="Pillar_Mechanisms_ListView" AllowDelete="False" AllowLink="False" AllowNew="False">
       <Columns>
+        <ColumnInfo Id="DesignMandatory" Index="-1" />
         <ColumnInfo Id="DesignWeight" Index="-1" Width="110" />
         <ColumnInfo Id="ExcludeFromAssessment" Index="-1" />
         <ColumnInfo Id="NoMetrics" Index="-1" />
+        <ColumnInfo Id="OperationalMandatory" Index="-1" />
         <ColumnInfo Id="OperationalWeight" Index="-1" Width="62" />
         <ColumnInfo Id="SelectedDesignChoice" Index="-1" />
         <ColumnInfo Id="SelectedOperationalChoice" Index="-1" />

@@ -60,6 +60,7 @@ namespace TF.Module.BusinessObjects
         int percentageValue;
         Mechanism mechanism;
         EMetricPhase phase;
+        bool mandatory;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -74,6 +75,8 @@ namespace TF.Module.BusinessObjects
         [Size(200)]
         [RuleRequiredField(DefaultContexts.Save)]
         [ModelDefault("AllowEdit", "False")]
+        [Appearance("MetricPurple", AppearanceItemType = "ViewItem", TargetItems = "Name",
+            Criteria = "Mandatory", Context = "Any", BackColor = "DeepPink", FontColor = "White", Priority = 4)]
         public string Name
         {
             get => name;
@@ -159,6 +162,12 @@ namespace TF.Module.BusinessObjects
             get => MetricType == EMetricType.Boolean
                 ? (BooleanValue ? 100 : 0)
                 : PercentageValue;
+        }
+
+        public bool Mandatory
+        {
+            get => mandatory;
+            set => SetPropertyValue(nameof(Mandatory), ref mandatory, value);
         }
 
         [Association("Mechanism-Metrics")]

@@ -208,6 +208,7 @@ namespace TF.Module.DatabaseUpdate {
                             metric.Description = row[5].ToString();
                             metric.Standards = row[6].ToString();
                             metric.Weight = int.Parse(row[7].ToString());
+                            metric.Mandatory = int.Parse(row[8].ToString()) == 1;
 
                             if (!string.IsNullOrWhiteSpace(metric.Standards))
                             {
@@ -231,7 +232,7 @@ namespace TF.Module.DatabaseUpdate {
 
                             for (var j = 0; j < 5; j++)
                             {
-                                string rule_text = row[8 + j].ToString();
+                                string rule_text = row[9 + j].ToString();
                                 if (string.IsNullOrWhiteSpace(rule_text))
                                     break;
 

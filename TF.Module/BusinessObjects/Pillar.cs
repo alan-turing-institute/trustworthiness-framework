@@ -65,28 +65,44 @@ namespace TF.Module.BusinessObjects
             set { SetPropertyValue(nameof(Assessment), ref assessment, value); }
         }
 
+        [Appearance("DesignScorePurple", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
+            Criteria = "!DesignMandatory", Context = "Any", BackColor = "DeepPink", FontColor = "White", Priority = 4)]
         [Appearance("DesignScoreRed", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
             Criteria = "DesignScore<=33", Context = "Any", BackColor = "Tomato", FontColor = "White", Priority = 3)]
         [Appearance("DesignScoreYellow", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
             Criteria = "DesignScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("DesignScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
             Criteria = "DesignScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif([Mechanisms][ExcludeFromAssessment == false].Sum([DesignWeight])=0,0,[Mechanisms][ExcludeFromAssessment == false].Sum([DesignScore]*[DesignWeight])/[Mechanisms][ExcludeFromAssessment == false].Sum([DesignWeight]))")]
+        [PersistentAlias("Iif(!DesignMandatory,0,[Mechanisms][!ExcludeFromAssessment].Sum([DesignWeight])=0,0,[Mechanisms][!ExcludeFromAssessment].Sum([DesignScore]*[DesignWeight])/[Mechanisms][!ExcludeFromAssessment].Sum([DesignWeight]))")]
         public int DesignScore
         {
             get => (int)(EvaluateAlias(nameof(DesignScore)) ?? 0);
         }
 
+        [PersistentAlias("[Mechanisms][!ExcludeFromAssessment And !DesignMandatory].Count() = 0")]
+        public bool DesignMandatory
+        {
+            get => (bool)(EvaluateAlias(nameof(DesignMandatory)) ?? false);
+        }
+
+        [Appearance("OperationalScorePurple", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
+            Criteria = "!OperationalMandatory", Context = "Any", BackColor = "DeepPink", FontColor = "White", Priority = 4)]
         [Appearance("OperationalScoreRed", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
             Criteria = "OperationalScore<=33", Context = "Any", BackColor = "Tomato", FontColor = "White", Priority = 3)]
         [Appearance("OperationalScoreYellow", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
             Criteria = "OperationalScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("OperationalScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
             Criteria = "OperationalScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif([Mechanisms][ExcludeFromAssessment == false].Sum([OperationalWeight])=0,0,[Mechanisms][ExcludeFromAssessment == false].Sum([OperationalScore]*[OperationalWeight])/[Mechanisms][ExcludeFromAssessment == false].Sum([OperationalWeight]))")]
+        [PersistentAlias("Iif(!OperationalMandatory,0,[Mechanisms][!ExcludeFromAssessment].Sum([OperationalWeight])=0,0,[Mechanisms][!ExcludeFromAssessment].Sum([OperationalScore]*[OperationalWeight])/[Mechanisms][!ExcludeFromAssessment].Sum([OperationalWeight]))")]
         public int OperationalScore
         {
             get => (int)(EvaluateAlias(nameof(OperationalScore)) ?? 0);
+        }
+
+        [PersistentAlias("[Mechanisms][!ExcludeFromAssessment And !OperationalMandatory].Count() = 0")]
+        public bool OperationalMandatory
+        {
+            get => (bool)(EvaluateAlias(nameof(OperationalMandatory)) ?? false);
         }
 
         [PersistentAlias("[Mechanisms].Count()")]

@@ -181,28 +181,44 @@ namespace TF.Module.BusinessObjects
             get => new XPCollection<MechanismChoice>(Session, Choices.Where(c => c.Phase == Metric.EMetricPhase.Operational));
         }
 
+        [Appearance("DesignScorePurple", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
+            Criteria = "!ExcludeFromAssessment And !DesignMandatory", Context = "Any", BackColor = "DeepPink", FontColor = "White", Priority = 4)]
         [Appearance("DesignScoreRed", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
-            Criteria = "DesignScore<=33", Context = "Any", BackColor = "Tomato", FontColor = "White", Priority = 3)]
+            Criteria = "!ExcludeFromAssessment And DesignScore<=33", Context = "Any", BackColor = "Tomato", FontColor = "White", Priority = 3)]
         [Appearance("DesignScoreYellow", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
-            Criteria = "DesignScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
+            Criteria = "!ExcludeFromAssessment And DesignScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("DesignScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
-            Criteria = "DesignScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif([Metrics][[Phase]=0].Sum([Weight])=0,0,[Metrics][[Phase]=0].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=0].Sum([Weight]))")]
+            Criteria = "!ExcludeFromAssessment And DesignScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
+        [PersistentAlias("Iif(!DesignMandatory,0,[Metrics][[Phase]=0].Sum([Weight])=0,0,[Metrics][[Phase]=0].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=0].Sum([Weight]))")]
         public int DesignScore
         {
             get => (int)(EvaluateAlias(nameof(DesignScore)) ?? 0);
         }
 
+        [PersistentAlias("[Metrics][[Phase]=0 and [Mandatory] and ScoreValue=0].Count() = 0")]
+        public bool DesignMandatory
+        {
+            get => (bool)(EvaluateAlias(nameof(DesignMandatory)) ?? false);
+        }
+
+        [Appearance("OperationalScorePurple", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
+            Criteria = "!ExcludeFromAssessment And !OperationalMandatory", Context = "Any", BackColor = "DeepPink", FontColor = "White", Priority = 4)]
         [Appearance("OperationalScoreRed", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
-            Criteria = "OperationalScore<=33", Context = "Any", BackColor = "Tomato", FontColor = "White", Priority = 3)]
+            Criteria = "!ExcludeFromAssessment And OperationalScore<=33", Context = "Any", BackColor = "Tomato", FontColor = "White", Priority = 3)]
         [Appearance("OperationalScoreYellow", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
-            Criteria = "OperationalScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
+            Criteria = "!ExcludeFromAssessment And OperationalScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("OperationalScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
-            Criteria = "OperationalScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif([Metrics][[Phase]=1].Sum([Weight])=0,0,[Metrics][[Phase]=1].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=1].Sum([Weight]))")]
+            Criteria = "!ExcludeFromAssessment And OperationalScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
+        [PersistentAlias("Iif(!OperationalMandatory,0,[Metrics][[Phase]=1].Sum([Weight])=0,0,[Metrics][[Phase]=1].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=1].Sum([Weight]))")]
         public int OperationalScore
         {
             get => (int)(EvaluateAlias(nameof(OperationalScore)) ?? 0);
+        }
+
+        [PersistentAlias("[Metrics][[Phase]=1 and [Mandatory] and ScoreValue=0].Count() = 0")]
+        public bool OperationalMandatory
+        {
+            get => (bool)(EvaluateAlias(nameof(OperationalMandatory)) ?? false);
         }
 
         [PersistentAlias("[Metrics].Count()")]
