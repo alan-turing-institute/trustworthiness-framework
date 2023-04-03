@@ -46,7 +46,7 @@ namespace TF.Module.BusinessObjects
                     };
                     Pillars.Add(pillarComparison);
                     // mechanisms
-                    foreach (var mechanism1 in pillar1.Mechanisms)
+                    foreach (var mechanism1 in pillar1.Mechanisms.Where(m => !m.ExcludeFromAssessment))
                     {
                         var mechanism2 = pillar2.Mechanisms.SingleOrDefault(m => m.Code == mechanism1.Code);
                         if (mechanism2 != null)

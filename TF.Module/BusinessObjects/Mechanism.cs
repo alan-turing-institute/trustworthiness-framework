@@ -33,6 +33,7 @@ namespace TF.Module.BusinessObjects
             base.AfterConstruction();
 
             DesignWeight = OperationalWeight = 1;
+            excludeFromAssessment = false;
         }
 
         string operationalQuestion;
@@ -45,6 +46,7 @@ namespace TF.Module.BusinessObjects
         Pillar pillar;
         MechanismChoice selectedDesignChoice;
         MechanismChoice selectedOperationalChoice;
+        bool excludeFromAssessment;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -70,6 +72,12 @@ namespace TF.Module.BusinessObjects
         {
             get => description;
             set => SetPropertyValue(nameof(Description), ref description, value);
+        }
+
+        public bool ExcludeFromAssessment
+        {             
+            get => excludeFromAssessment;
+            set => SetPropertyValue(nameof(ExcludeFromAssessment), ref excludeFromAssessment, value);
         }
 
         [RuleRange("DesignWeightRange", "Save", "0", "10", "Weights must be in the range [0-10]")]

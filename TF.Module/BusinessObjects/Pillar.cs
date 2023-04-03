@@ -71,7 +71,7 @@ namespace TF.Module.BusinessObjects
             Criteria = "DesignScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("DesignScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
             Criteria = "DesignScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif([Mechanisms].Sum([DesignWeight])=0,0,[Mechanisms].Sum([DesignScore]*[DesignWeight])/[Mechanisms].Sum([DesignWeight]))")]
+        [PersistentAlias("Iif([Mechanisms][ExcludeFromAssessment == false].Sum([DesignWeight])=0,0,[Mechanisms][ExcludeFromAssessment == false].Sum([DesignScore]*[DesignWeight])/[Mechanisms][ExcludeFromAssessment == false].Sum([DesignWeight]))")]
         public int DesignScore
         {
             get => (int)(EvaluateAlias(nameof(DesignScore)) ?? 0);
@@ -83,7 +83,7 @@ namespace TF.Module.BusinessObjects
             Criteria = "OperationalScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("OperationalScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
             Criteria = "OperationalScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif([Mechanisms].Sum([OperationalWeight])=0,0,[Mechanisms].Sum([OperationalScore]*[OperationalWeight])/[Mechanisms].Sum([OperationalWeight]))")]
+        [PersistentAlias("Iif([Mechanisms][ExcludeFromAssessment == false].Sum([OperationalWeight])=0,0,[Mechanisms][ExcludeFromAssessment == false].Sum([OperationalScore]*[OperationalWeight])/[Mechanisms][ExcludeFromAssessment == false].Sum([OperationalWeight]))")]
         public int OperationalScore
         {
             get => (int)(EvaluateAlias(nameof(OperationalScore)) ?? 0);
