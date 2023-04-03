@@ -612,8 +612,8 @@
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
             this.xrTableCell13.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[DesignScore]"),
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "iif([DesignScore]<=33,\'Tomato\',iif([DesignScore]<=66,\'LemonChiffon\',\'LightGreen\')" +
-                    ")\n\n")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "iif([ExcludeFromAssessment],\'White\',![DesignMandatory],\'DeepPink\',[DesignScore]<=" +
+                    "33,\'Tomato\',iif([DesignScore]<=66,\'LemonChiffon\',\'LightGreen\'))\n\n")});
             this.xrTableCell13.Multiline = true;
             this.xrTableCell13.Name = "xrTableCell13";
             this.xrTableCell13.StylePriority.UseBorders = false;
@@ -629,8 +629,8 @@
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
             this.xrTableCell14.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[OperationalScore]"),
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "iif([OperationalScore]<=33,\'Tomato\',iif([OperationalScore]<=66,\'LemonChiffon\',\'Li" +
-                    "ghtGreen\'))\n")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "BackColor", "iif([ExcludeFromAssessment],\'White\',![OperationalMandatory],\'DeepPink\',[Operation" +
+                    "alScore]<=33,\'Tomato\',iif([OperationalScore]<=66,\'LemonChiffon\',\'LightGreen\'))\n")});
             this.xrTableCell14.Multiline = true;
             this.xrTableCell14.Name = "xrTableCell14";
             this.xrTableCell14.StylePriority.UseBorders = false;
