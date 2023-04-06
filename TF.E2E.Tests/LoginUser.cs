@@ -5,13 +5,13 @@ using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace TF.Module.E2E.Tests {
-	public class TFLoginTests : IDisposable {
+	public class TFLoginUserTests : IDisposable {
         const string WebAppName = "TF";
         const string AppDBName = "TF";
 
         EasyTestFixtureContext FixtureContext { get; } = new EasyTestFixtureContext();
 
-		public TFLoginTests() {
+		public TFLoginUserTests() {
             FixtureContext.RegisterApplications(
                 new WebApplicationOptions(WebAppName, string.Format(@"{0}\..\..\..\..\TF.Web", Environment.CurrentDirectory))
             );

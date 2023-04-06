@@ -4,13 +4,13 @@ using System.Linq;
 using Xunit;
 
 namespace TF.Module.E2E.Tests {
-	public class TFChangePasswordTests : IDisposable {
+	public class TFUserChangePasswordTests : IDisposable {
         const string WebAppName = "TF";
         const string AppDBName = "TF";
 
         EasyTestFixtureContext FixtureContext { get; } = new EasyTestFixtureContext();
 
-		public TFChangePasswordTests() {
+		public TFUserChangePasswordTests() {
             FixtureContext.RegisterApplications(
                 new WebApplicationOptions(WebAppName, string.Format(@"{0}\..\..\..\..\TF.Web", Environment.CurrentDirectory))
             );
