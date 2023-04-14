@@ -61,6 +61,7 @@ namespace TF.Module.BusinessObjects
         Mechanism mechanism;
         EMetricPhase phase;
         bool mandatory;
+        int mechanismCap, pillarCap;
 
         [Size(20)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -168,6 +169,18 @@ namespace TF.Module.BusinessObjects
         {
             get => mandatory;
             set => SetPropertyValue(nameof(Mandatory), ref mandatory, value);
+        }
+
+        public int MechanismCap
+        {
+            get => mechanismCap;
+            set => SetPropertyValue(nameof(MechanismCap), ref mechanismCap, value);
+        }
+
+        public int PillarCap
+        {
+            get => pillarCap;
+            set => SetPropertyValue(nameof(PillarCap), ref pillarCap, value);
         }
 
         [Association("Mechanism-Metrics")]

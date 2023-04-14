@@ -197,7 +197,7 @@ namespace TF.Module.DatabaseUpdate {
                             // create metric
                             Metric metric = ObjectSpace.CreateObject<Metric>();
                             string mechanism_code = row[0].ToString();
-                            Mechanism m = assessment.Pillars.SelectMany(p => p.Mechanisms).SingleOrDefault(x => x.Code == mechanism_code);
+                            Mechanism m = assessment.Pillars.SelectMany(p => p.Mechanisms).Single(x => x.Code == mechanism_code);
                             metric.Mechanism = m;
                             m.Metrics.Add(metric);
 
@@ -208,7 +208,14 @@ namespace TF.Module.DatabaseUpdate {
                             metric.Description = row[5].ToString();
                             metric.Standards = row[6].ToString();
                             metric.Weight = int.Parse(row[7].ToString());
-                            metric.Mandatory = int.Parse(row[8].ToString()) == 1;
+
+                            // mandatory
+                            var mandatory_caps = row[8].ToString().Split("-".ToCharArray()).Select(x => int.Parse(x)).ToList();
+                            if(mandatory_caps.Count != 2)
+                                throw new ArgumentOutOfRangeException("Needed two caps for metrics");
+                            metric.Mandatory = mandatory_caps.Any(c => c < 100);
+                            metric.MechanismCap = mandatory_caps[0];
+                            metric.PillarCap = mandatory_caps[1];
 
                             if (!string.IsNullOrWhiteSpace(metric.Standards))
                             {

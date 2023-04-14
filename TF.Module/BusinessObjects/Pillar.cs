@@ -73,7 +73,7 @@ namespace TF.Module.BusinessObjects
             Criteria = "DesignScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("DesignScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
             Criteria = "DesignScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif(!DesignMandatory,0,[Mechanisms][!ExcludeFromAssessment].Sum([DesignWeight])=0,0,[Mechanisms][!ExcludeFromAssessment].Sum([DesignScore]*[DesignWeight])/[Mechanisms][!ExcludeFromAssessment].Sum([DesignWeight]))")]
+        [PersistentAlias("Min(Iif([Mechanisms][!ExcludeFromAssessment].Sum([DesignWeight])=0,0,[Mechanisms][!ExcludeFromAssessment].Sum([DesignScore]*[DesignWeight])/[Mechanisms][!ExcludeFromAssessment].Sum([DesignWeight])),[Mechanisms][!ExcludeFromAssessment].Min([DesignPillarCap]))")]
         public int DesignScore
         {
             get => (int)(EvaluateAlias(nameof(DesignScore)) ?? 0);
@@ -93,7 +93,8 @@ namespace TF.Module.BusinessObjects
             Criteria = "OperationalScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("OperationalScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
             Criteria = "OperationalScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif(!OperationalMandatory,0,[Mechanisms][!ExcludeFromAssessment].Sum([OperationalWeight])=0,0,[Mechanisms][!ExcludeFromAssessment].Sum([OperationalScore]*[OperationalWeight])/[Mechanisms][!ExcludeFromAssessment].Sum([OperationalWeight]))")]
+
+        [PersistentAlias("Min(Iif([Mechanisms][!ExcludeFromAssessment].Sum([OperationalWeight])=0,0,[Mechanisms][!ExcludeFromAssessment].Sum([OperationalScore]*[OperationalWeight])/[Mechanisms][!ExcludeFromAssessment].Sum([OperationalWeight])),[Mechanisms][!ExcludeFromAssessment].Min([OperationalPillarCap]))")]
         public int OperationalScore
         {
             get => (int)(EvaluateAlias(nameof(OperationalScore)) ?? 0);

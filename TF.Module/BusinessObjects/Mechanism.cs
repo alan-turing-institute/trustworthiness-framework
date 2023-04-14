@@ -189,7 +189,7 @@ namespace TF.Module.BusinessObjects
             Criteria = "!ExcludeFromAssessment And DesignScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("DesignScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "DesignScore",
             Criteria = "!ExcludeFromAssessment And DesignScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif(!DesignMandatory,0,[Metrics][[Phase]=0].Sum([Weight])=0,0,[Metrics][[Phase]=0].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=0].Sum([Weight]))")]
+        [PersistentAlias("Min(Iif(IsNull([Metrics][[Phase]=0].Sum([Weight]),0)=0,0,[Metrics][[Phase]=0].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=0].Sum([Weight])),Iif(DesignMandatory,100,[Metrics][[Phase]=0 and [Mandatory] and [ScoreValue]=0].Max([MechanismCap])))")]
         public int DesignScore
         {
             get => (int)(EvaluateAlias(nameof(DesignScore)) ?? 0);
@@ -201,6 +201,13 @@ namespace TF.Module.BusinessObjects
             get => (bool)(EvaluateAlias(nameof(DesignMandatory)) ?? false);
         }
 
+        [Browsable(false)]
+        [PersistentAlias("[Metrics][[Phase]=0 and [Mandatory] and ScoreValue=0].Min([PillarCap])")]
+        public int DesignPillarCap
+        {
+            get => (int)(EvaluateAlias(nameof(DesignPillarCap)) ?? 100);
+        }
+
         [Appearance("OperationalScorePurple", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
             Criteria = "!ExcludeFromAssessment And !OperationalMandatory", Context = "Any", BackColor = "DeepPink", FontColor = "White", Priority = 4)]
         [Appearance("OperationalScoreRed", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
@@ -209,16 +216,23 @@ namespace TF.Module.BusinessObjects
             Criteria = "!ExcludeFromAssessment And OperationalScore<=66", Context = "Any", BackColor = "LemonChiffon", Priority = 2)]
         [Appearance("OperationalScoreGreen", AppearanceItemType = "ViewItem", TargetItems = "OperationalScore",
             Criteria = "!ExcludeFromAssessment And OperationalScore>66", Context = "Any", BackColor = "LightGreen", Priority = 1)]
-        [PersistentAlias("Iif(!OperationalMandatory,0,[Metrics][[Phase]=1].Sum([Weight])=0,0,[Metrics][[Phase]=1].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=1].Sum([Weight]))")]
+        [PersistentAlias("Min(Iif(IsNull([Metrics][[Phase]=1].Sum([Weight]),0)=0,0,[Metrics][[Phase]=1].Sum([ScoreValue]*[Weight])/[Metrics][[Phase]=1].Sum([Weight])),Iif(OperationalMandatory,100,[Metrics][[Phase]=1 and [Mandatory] and [ScoreValue]=0].Max([MechanismCap])))")]
         public int OperationalScore
         {
             get => (int)(EvaluateAlias(nameof(OperationalScore)) ?? 0);
         }
 
-        [PersistentAlias("[Metrics][[Phase]=1 and [Mandatory] and ScoreValue=0].Count() = 0")]
+        [PersistentAlias("[Metrics][[Phase]=1 and [Mandatory] and [ScoreValue]=0].Count() = 0")]
         public bool OperationalMandatory
         {
             get => (bool)(EvaluateAlias(nameof(OperationalMandatory)) ?? false);
+        }
+
+        [Browsable(false)]
+        [PersistentAlias("[Metrics][[Phase]=1 and [Mandatory] and ScoreValue=0].Min([PillarCap])")]
+        public int OperationalPillarCap
+        {
+            get => (int)(EvaluateAlias(nameof(OperationalPillarCap)) ?? 100);
         }
 
         [PersistentAlias("[Metrics].Count()")]
