@@ -56,6 +56,8 @@ namespace TF.Web {
                 WebApplication.Instance.DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
             }
 #endif
+            WebApplication.Instance.DatabaseUpdateMode = DatabaseUpdateMode.UpdateDatabaseAlways;
+
             WebApplication.Instance.Setup();
             WebApplication.Instance.Start();
         }

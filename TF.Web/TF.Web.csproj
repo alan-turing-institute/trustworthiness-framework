@@ -22,6 +22,8 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerLaunchUrl>http://{ServiceIPAddress}</DockerLaunchUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -320,6 +322,8 @@
     <Content Include="Model.Desktop.xafml" />
     <Content Include="Model.Tablet.xafml" />
     <Content Include="Data\keep.me" />
+    <None Include="Docker\Dockerfile" />
+    <Content Include="Docker\keep.me" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\trustworthiness-framework - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\trustworthiness-framework - Web Deploy.pubxml" />

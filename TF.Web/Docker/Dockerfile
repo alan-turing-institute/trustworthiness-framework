@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/framework/aspnet:4.8-windowsservercore-ltsc2019
+RUN mkdir C:/SQLSetup
+COPY SQLSetup/. C:/SQLSetup
+
+SHELL ["cmd", "/S", "/C"]
+
+RUN C:/SQLSetup/Setup.exe /q /ACTION=Install /INSTANCENAME=SQLEXPRESS /FEATURES=SQLEngine /UPDATEENABLED=0 /SQLSVCACCOUNT="NT AUTHORITY\System" /SQLSYSADMINACCOUNTS="BUILTIN\ADMINISTRATORS" /TCPENABLED=1 /NPENABLED=1 /IACCEPTSQLSERVERLICENSETERMS /SQLSVCSTARTUPTYPE="Automatic" /ADDCURRENTUSERASSQLADMIN="True" /SAPWD="Tf2023!" /SECURITYMODE=SQL
+
+RUN powershell -Command (Remove-Item -Path C:/SQLSetup -Recurse -Force) 
+
+WORKDIR /inetpub/wwwroot
+COPY publish .
+
+EXPOSE 80
+EXPOSE 1433
