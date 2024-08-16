@@ -1,4 +1,4 @@
-# Trustworthiness Framework
+# DISTAF - Digital Identity Systems Trustworthiness Assessment Framework
 
 ## Licences
 
