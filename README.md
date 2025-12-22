@@ -1,37 +1,105 @@
-# DISTAF - Digital Identity Systems Trustworthiness Assessment Framework
+# Trustworthiness Framework
 
-## Licences
+A comprehensive digital identity assessment platform for evaluating organizational maturity across key pillars of trustworthiness. The tool provides structured assessments, automated scoring, standards compliance mapping, and detailed PDF reports.
 
-The solution is using NET Framework 4.8, Asp.NET and Devexpress XAF, a suite of commercial components for the UI and the data-layer.
-For the latter, license is available at https://www.devexpress.com/products/net/application_framework/
+## Docker Deployment
 
-Furthermore, the dockerised version of the tool makes use of WindowsServerCore which may require a license.
+### Pulling the Container from Docker Hub
 
-## Solution structure
+```bash
+docker pull kimbotto/distaf-app:latest
+```
 
-The solution is composed of 4 projects:
+### Building the Container Locally
 
-1) **TF.Module** is the platform agnostic module, containing all the business objects and the logic;
-2) **TF.Module.Web** provides web-specific functionalities to entities, for example, to compare assessments or to create new versions;
-3) **TF.Web** is the main web application and the entry point of the framework;
-4) **TF.E2E.Tests** contains the end-to-end tests used to validate the project;
+```bash
+# Build the image
+docker build -t distaf-app .
 
-## Data layer
+# Or use docker compose
+docker compose build
+```
 
-The framework uses the XPO ORM Mapper to be portable to different databases. Specifically, the solution has been tested with SQLite3 and Microsoft SQL Server, however, every database supported by ADO.NET should work by changing the connection string.
+### Running the Container
 
-## Docker support
+**Linux/macOS:**
+```bash
+docker run -d \
+  --name distaf-app \
+  --restart unless-stopped \
+  -e NODE_ENV=production \
+  -e PORT=3000 \
+  -e DB_PATH=/app/data \
+  -e SESSION_SECRET=change_in_production \
+  -p 3000:3000 \
+  -v "$(pwd)/data:/app/data" \
+  --health-cmd="wget --no-verbose --tries=1 --spider http://localhost:3000/api/health" \
+  --health-interval=30s \
+  --health-timeout=10s \
+  --health-retries=3 \
+  --health-start-period=10s \
+  kimbotto/distaf-app
+```
 
-The file `TF.Web\Docker\Dockerfile` contains the commands required to create a docker image. 
-To build the image, it is needed to:
+**Windows (PowerShell):**
+```powershell
+docker run -d `
+  --name distaf-app `
+  --restart unless-stopped `
+  -e NODE_ENV=production `
+  -e PORT=3000 `
+  -e DB_PATH=/app/data `
+  -e SESSION_SECRET=change_in_production `
+  -p 3000:3000 `
+  -v "${PWD}/data:/app/data" `
+  --health-cmd="wget --no-verbose --tries=1 --spider http://localhost:3000/api/health" `
+  --health-interval=30s `
+  --health-timeout=10s `
+  --health-retries=3 `
+  --health-start-period=10s `
+  kimbotto/distaf-app
+```
 
-1) **publish** the TF.Web application inside `TF.Web\Docker\publish`
-2) **extract** a Microsoft SQL Server Express Setup file inside `TF.Web\Docker\SQLSetup`
-3) **run** the command `docker build -f .\Dockerfile -t tf:1_0 .` inside `TF.Web\Docker`; that command will create a new image, starting from a vanilla setup of asp.net in windows-server-core, installing SQL Server and then copying the published version of the framework
+**Windows (CMD):**
+```cmd
+docker run -d --name distaf-app --restart unless-stopped -e NODE_ENV=production -e PORT=3000 -e DB_PATH=/app/data -e SESSION_SECRET=change_in_production -p 3000:3000 -v "C:\path\to\your\project\data:/app/data" --health-cmd="wget --no-verbose --tries=1 --spider http://localhost:3000/api/health" --health-interval=30s --health-timeout=10s --health-retries=3 --health-start-period=10s kimbotto/distaf-app
+```
+*Note: Replace `C:\path\to\your\project\data` with the absolute path to your data directory.*
 
-### Note
-The first time the docker is started, it may require some time to fully bootstrap the system (Windows + SQL Server + IIS + framework). Such time depends on the resources assigned to the Docker Engine. In case of low performances and/or timeout, please retry or add more computational resources.
+The application will be available at `http://localhost:3000`. Default credentials are:
+- Username: `admin`
+- Password: `admin123`
 
+⚠️ **Important:** Change the admin password after first login and set a secure `SESSION_SECRET` for production deployments.
 
+### Updating the Container
 
+To update to the latest version:
 
+```bash
+# 1. Pull the latest image
+docker pull kimbotto/distaf-app:latest
+
+# 2. Stop and remove the existing container
+docker stop distaf-app
+docker rm distaf-app
+
+# 3. Run the new container (use the same run command as above)
+docker run -d \
+  --name distaf-app \
+  --restart unless-stopped \
+  -e NODE_ENV=production \
+  -e PORT=3000 \
+  -e DB_PATH=/app/data \
+  -e SESSION_SECRET=change_in_production \
+  -p 3000:3000 \
+  -v "$(pwd)/data:/app/data" \
+  --health-cmd="wget --no-verbose --tries=1 --spider http://localhost:3000/api/health" \
+  --health-interval=30s \
+  --health-timeout=10s \
+  --health-retries=3 \
+  --health-start-period=10s \
+  kimbotto/distaf-app
+```
+
+**Note:** Your data is preserved in the `./data` directory and will be available in the updated container.

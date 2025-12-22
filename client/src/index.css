@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(215 13.8% 13.1%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(215 13.8% 13.1%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(215 13.8% 13.1%);
+  --primary: hsl(207 90% 54%);
+  --primary-foreground: hsl(0 0% 100%);
+  --primary-dark: hsl(211 100% 43%);
+  --secondary: hsl(123 38% 57%);
+  --secondary-foreground: hsl(0 0% 100%);
+  --accent: hsl(36 100% 50%);
+  --accent-foreground: hsl(0 0% 100%);
+  --error: hsl(0 84% 60%);
+  --error-foreground: hsl(0 0% 100%);
+  --warning: hsl(45 100% 51%);
+  --warning-foreground: hsl(0 0% 100%);
+  --surface: hsl(0 0% 100%);
+  --text-primary: hsl(220 9% 13%);
+  --text-secondary: hsl(220 9% 46%);
+  --muted: hsl(0 0% 96%);
+  --muted-foreground: hsl(220 9% 46%);
+  --border: hsl(220 13% 91%);
+  --input: hsl(220 13% 91%);
+  --ring: hsl(207 90% 54%);
+  --chart-1: hsl(207 90% 54%);
+  --chart-2: hsl(123 38% 57%);
+  --chart-3: hsl(36 100% 50%);
+  --chart-4: hsl(0 84% 60%);
+  --chart-5: hsl(45 100% 51%);
+  --sidebar: hsl(0 0% 100%);
+  --sidebar-foreground: hsl(215 13.8% 13.1%);
+  --sidebar-primary: hsl(207 90% 54%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(220 13% 91%);
+  --sidebar-accent-foreground: hsl(207 90% 54%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(207 90% 54%);
+  --font-sans: 'Roboto', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'Fira Code', monospace;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: hsl(220 9% 13%);
+  --foreground: hsl(0 0% 95%);
+  --card: hsl(220 9% 15%);
+  --card-foreground: hsl(0 0% 95%);
+  --popover: hsl(220 9% 15%);
+  --popover-foreground: hsl(0 0% 95%);
+  --primary: hsl(207 90% 54%);
+  --primary-foreground: hsl(0 0% 100%);
+  --primary-dark: hsl(211 100% 43%);
+  --secondary: hsl(123 38% 57%);
+  --secondary-foreground: hsl(0 0% 100%);
+  --accent: hsl(36 100% 50%);
+  --accent-foreground: hsl(0 0% 100%);
+  --error: hsl(0 84% 60%);
+  --error-foreground: hsl(0 0% 100%);
+  --warning: hsl(45 100% 51%);
+  --warning-foreground: hsl(0 0% 100%);
+  --surface: hsl(220 9% 15%);
+  --text-primary: hsl(0 0% 95%);
+  --text-secondary: hsl(220 9% 70%);
+  --muted: hsl(220 9% 20%);
+  --muted-foreground: hsl(220 9% 70%);
+  --border: hsl(220 9% 25%);
+  --input: hsl(220 9% 25%);
+  --ring: hsl(207 90% 54%);
+  --chart-1: hsl(207 90% 54%);
+  --chart-2: hsl(123 38% 57%);
+  --chart-3: hsl(36 100% 50%);
+  --chart-4: hsl(0 84% 60%);
+  --chart-5: hsl(45 100% 51%);
+  --sidebar: hsl(220 9% 15%);
+  --sidebar-foreground: hsl(0 0% 95%);
+  --sidebar-primary: hsl(207 90% 54%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(220 9% 25%);
+  --sidebar-accent-foreground: hsl(207 90% 54%);
+  --sidebar-border: hsl(220 9% 25%);
+  --sidebar-ring: hsl(207 90% 54%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: var(--font-sans);
+    background-color: hsl(0 0% 96%);
+    color: var(--text-primary);
+  }
+
+  .bg-background {
+    background-color: hsl(0 0% 96%);
+  }
+
+  .bg-surface {
+    background-color: var(--surface);
+  }
+
+  .text-text-primary {
+    color: var(--text-primary);
+  }
+
+  .text-text-secondary {
+    color: var(--text-secondary);
+  }
+
+  .text-primary {
+    color: var(--primary);
+  }
+
+  .bg-primary {
+    background-color: var(--primary);
+  }
+
+  .bg-primary-dark {
+    background-color: var(--primary-dark);
+  }
+
+  .hover\:bg-primary-dark:hover {
+    background-color: var(--primary-dark);
+  }
+
+  .text-secondary {
+    color: var(--secondary);
+  }
+
+  .bg-secondary {
+    background-color: var(--secondary);
+  }
+
+  .text-accent {
+    color: var(--accent);
+  }
+
+  .text-error {
+    color: var(--error);
+  }
+
+  .text-warning {
+    color: var(--warning);
+  }
+
+  .hover\:text-error:hover {
+    color: var(--error);
+  }
+
+  .hover\:text-text-primary:hover {
+    color: var(--text-primary);
+  }
+
+  .hover\:text-primary-dark:hover {
+    color: var(--primary-dark);
+  }
+}
+
+/* Custom styles for Chart.js */
+.chart-container {
+  position: relative;
+  height: 400px;
+  width: 400px;
+}
+
+/* Ensure proper contrast for buttons */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+/* Progress bar styling */
+.progress-bar {
+  background-color: var(--primary);
+}
+
+/* Badge styling */
+.badge-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.badge-secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+}

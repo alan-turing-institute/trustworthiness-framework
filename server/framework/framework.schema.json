@@ -1,0 +1,177 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Framework Schema",
+  "description": "Schema for the digital identity framework with pillars, mechanisms, and metrics",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/Pillar"
+  },
+  "definitions": {
+    "Pillar": {
+      "type": "object",
+      "required": ["code", "name", "description", "mechanisms"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Unique code identifier for the pillar",
+          "pattern": "^[A-Z]+$",
+          "examples": ["P", "RO", "E", "RES", "REL", "S"]
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the pillar"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this pillar covers"
+        },
+        "mechanisms": {
+          "type": "array",
+          "description": "Array of mechanisms under this pillar",
+          "items": {
+            "$ref": "#/definitions/Mechanism"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "Mechanism": {
+      "type": "object",
+      "required": ["code", "name", "description", "metrics"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Unique code identifier for the mechanism",
+          "pattern": "^[A-Z]+-[A-Z.]+$",
+          "examples": ["P-P.CDM", "S-S.AC"]
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the mechanism"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the mechanism's purpose"
+        },
+        "operationalConfigurations": {
+          "type": "array",
+          "description": "Operational configuration levels for this mechanism",
+          "items": {
+            "$ref": "#/definitions/Configuration"
+          }
+        },
+        "designConfigurations": {
+          "type": "array",
+          "description": "Design configuration levels for this mechanism",
+          "items": {
+            "$ref": "#/definitions/Configuration"
+          }
+        },
+        "metrics": {
+          "type": "array",
+          "description": "Array of metrics under this mechanism",
+          "items": {
+            "$ref": "#/definitions/Metric"
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "Configuration": {
+      "type": "object",
+      "required": ["label", "description"],
+      "properties": {
+        "label": {
+          "type": "string",
+          "description": "Label of the configuration level",
+          "examples": ["Minimal Implementation", "Standard Implementation", "Basic Design", "Mature Design"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of what this configuration level represents"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Metric": {
+      "type": "object",
+      "required": ["code", "name", "description", "type", "standards", "pillarCap", "mechanismCap", "metricType"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Unique code identifier for the metric within its mechanism",
+          "pattern": "^[A-Z.0-9]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the metric with code prefix"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of what this metric measures"
+        },
+        "type": {
+          "type": "string",
+          "description": "Whether this is a design or operational metric",
+          "enum": ["design", "operational"]
+        },
+        "standards": {
+          "type": "array",
+          "description": "Array of relevant standards that apply to this metric",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pillarCap": {
+          "type": "number",
+          "description": "Maximum percentage cap at pillar level",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "mechanismCap": {
+          "type": "number",
+          "description": "Maximum percentage cap at mechanism level",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "metricType": {
+          "type": "string",
+          "description": "Type of metric measurement",
+          "enum": ["boolean", "percentage", "numeric", "text"]
+        },
+        "percentageChoice0": {
+          "type": ["number", "null"],
+          "description": "Percentage value for choice 0",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "percentageChoice1": {
+          "type": ["number", "null"],
+          "description": "Percentage value for choice 1",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "percentageChoice2": {
+          "type": ["number", "null"],
+          "description": "Percentage value for choice 2",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "percentageChoice3": {
+          "type": ["number", "null"],
+          "description": "Percentage value for choice 3",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "percentageChoice4": {
+          "type": ["number", "null"],
+          "description": "Percentage value for choice 4",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
