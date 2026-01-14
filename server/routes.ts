@@ -26,6 +26,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated, isAdmin, hashPassword, comparePasswords } from "./auth";
 import { pdfService } from "./pdf-service";
+import * as XLSX from "xlsx";
 import {
   createUserSchema,
   updateUserSchema,
@@ -588,6 +589,235 @@ export function registerRoutes(app: Express): Server {
       }
       console.error("Error cloning assessment:", error);
       res.status(500).json({ message: "Failed to clone assessment" });
+    }
+  });
+
+  // Excel export endpoint
+  app.get("/api/assessments/:id/export-excel", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.id;
+      const currentUser = await storage.getUser(userId);
+      const assessment = await storage.getAssessment(req.params.id);
+
+      if (!assessment) {
+        return res.status(404).json({ message: "Assessment not found" });
+      }
+
+      // Check access permissions
+      const canAccess =
+        currentUser?.role === "admin" ||
+        currentUser?.role === "assessor" ||
+        assessment.userId === userId ||
+        (assessment.isPublic && currentUser?.role !== undefined);
+
+      if (!canAccess) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+
+      // Fetch framework structure and existing responses/notes
+      const framework = await storage.getPillarsWithStructure();
+      const responses = await storage.getAssessmentResponses(req.params.id);
+      const metricNotes = await storage.getAssessmentMetricNotes(req.params.id);
+
+      // Create response and notes maps for quick lookup
+      const responseMap = new Map(responses.map(r => [r.metricId, r]));
+      const notesMap = new Map(metricNotes.map(n => [n.metricId, n.notes]));
+
+      // Build Excel data rows
+      const rows: any[] = [];
+      for (const pillar of framework) {
+        for (const mechanism of pillar.mechanisms) {
+          for (const metric of mechanism.metrics) {
+            const response = responseMap.get(metric.id);
+            const notes = notesMap.get(metric.id) || "";
+
+            // Determine current score display
+            let currentScore = "";
+            if (response) {
+              if (metric.metricType === "boolean") {
+                currentScore = response.answer ? "Yes" : "No";
+              } else {
+                currentScore = response.answerValue?.toString() || "0";
+              }
+            }
+
+            rows.push({
+              "Pillar Code": pillar.code,
+              "Pillar Name": pillar.name,
+              "Mechanism Code": mechanism.code,
+              "Mechanism Name": mechanism.name,
+              "Metric ID": metric.id,
+              "Metric Code": metric.code,
+              "Metric Name": metric.name,
+              "Metric Type": metric.type,
+              "Answer Type": metric.metricType,
+              "Current Score": currentScore,
+              "Score": currentScore, // Pre-fill with current value for editing
+              "Notes": notes
+            });
+          }
+        }
+      }
+
+      // Create workbook and worksheet
+      const workbook = XLSX.utils.book_new();
+      const worksheet = XLSX.utils.json_to_sheet(rows);
+
+      // Set column widths for better readability
+      worksheet['!cols'] = [
+        { wch: 12 }, // Pillar Code
+        { wch: 25 }, // Pillar Name
+        { wch: 15 }, // Mechanism Code
+        { wch: 35 }, // Mechanism Name
+        { wch: 40 }, // Metric ID
+        { wch: 15 }, // Metric Code
+        { wch: 50 }, // Metric Name
+        { wch: 12 }, // Metric Type
+        { wch: 12 }, // Answer Type
+        { wch: 15 }, // Current Score
+        { wch: 15 }, // Score
+        { wch: 50 }, // Notes
+      ];
+
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Assessment");
+
+      // Generate buffer
+      const buffer = XLSX.write(workbook, { type: "buffer", bookType: "xlsx" });
+
+      // Set response headers
+      const fileName = `assessment-${assessment.systemName.replace(/[^a-zA-Z0-9]/g, '-')}-${new Date().toISOString().split('T')[0]}.xlsx`;
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+      res.setHeader('Content-Length', buffer.length);
+
+      res.send(buffer);
+    } catch (error) {
+      console.error("Error exporting assessment to Excel:", error);
+      res.status(500).json({ message: "Failed to export assessment to Excel" });
+    }
+  });
+
+  // Excel import endpoint
+  app.post("/api/assessments/:id/import-excel", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.id;
+      const currentUser = await storage.getUser(userId);
+      const assessment = await storage.getAssessment(req.params.id);
+
+      if (!assessment) {
+        return res.status(404).json({ message: "Assessment not found" });
+      }
+
+      // Check edit permissions
+      const canEdit =
+        currentUser?.role === "admin" ||
+        (assessment.userId === userId && currentUser?.role !== "external");
+
+      if (!canEdit) {
+        return res.status(403).json({ message: "Cannot edit this assessment" });
+      }
+
+      // Get the raw body as buffer
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) {
+        chunks.push(chunk);
+      }
+      const buffer = Buffer.concat(chunks);
+
+      if (buffer.length === 0) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+
+      // Parse Excel file
+      const workbook = XLSX.read(buffer, { type: "buffer" });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const rows = XLSX.utils.sheet_to_json(worksheet) as any[];
+
+      if (rows.length === 0) {
+        return res.status(400).json({ message: "Excel file is empty" });
+      }
+
+      // Validate that required columns exist
+      const requiredColumns = ["Metric ID", "Answer Type", "Score"];
+      const firstRow = rows[0];
+      for (const col of requiredColumns) {
+        if (!(col in firstRow)) {
+          return res.status(400).json({ message: `Missing required column: ${col}` });
+        }
+      }
+
+      // Process each row
+      let updatedScores = 0;
+      let updatedNotes = 0;
+      let errors: string[] = [];
+
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const metricId = row["Metric ID"];
+        const answerType = row["Answer Type"];
+        const scoreValue = row["Score"];
+        const notes = row["Notes"];
+        const rowNum = i + 2; // Excel row number (1-indexed + header)
+
+        // Skip rows without a score
+        if (scoreValue === undefined || scoreValue === null || scoreValue === "") {
+          continue;
+        }
+
+        try {
+          // Parse and save score
+          if (answerType === "boolean") {
+            const normalizedValue = String(scoreValue).toLowerCase().trim();
+            const boolValue = normalizedValue === "yes" || normalizedValue === "true" || normalizedValue === "1";
+
+            await storage.upsertAssessmentResponse({
+              assessmentId: req.params.id,
+              metricId,
+              answer: boolValue,
+              answerValue: null
+            });
+            updatedScores++;
+          } else if (answerType === "percentage") {
+            const numValue = parseFloat(scoreValue);
+            if (isNaN(numValue) || numValue < 0 || numValue > 100) {
+              errors.push(`Row ${rowNum}: Invalid percentage value "${scoreValue}" (must be 0-100)`);
+              continue;
+            }
+
+            await storage.upsertAssessmentResponse({
+              assessmentId: req.params.id,
+              metricId,
+              answer: numValue === 100,
+              answerValue: numValue
+            });
+            updatedScores++;
+          }
+
+          // Save notes if present
+          if (notes !== undefined && notes !== null && notes !== "") {
+            await storage.upsertAssessmentMetricNote({
+              assessmentId: req.params.id,
+              metricId,
+              notes: String(notes)
+            });
+            updatedNotes++;
+          }
+        } catch (err) {
+          errors.push(`Row ${rowNum}: Failed to process - ${err instanceof Error ? err.message : String(err)}`);
+        }
+      }
+
+      res.json({
+        success: true,
+        message: `Import completed: ${updatedScores} scores updated, ${updatedNotes} notes updated`,
+        updatedScores,
+        updatedNotes,
+        errors: errors.length > 0 ? errors : undefined
+      });
+    } catch (error) {
+      console.error("Error importing Excel:", error);
+      res.status(500).json({ message: "Failed to import Excel file" });
     }
   });
 

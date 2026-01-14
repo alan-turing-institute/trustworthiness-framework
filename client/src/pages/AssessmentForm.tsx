@@ -18,7 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ChevronDown, ChevronLeft, ChevronRight, Save, ArrowLeft, Shield, Lock, Gavel, CheckCircle, Zap, Mountain, Circle, Loader2, Info } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Save, ArrowLeft, Shield, Lock, Gavel, CheckCircle, Zap, Mountain, Circle, Loader2, Info, Download, Upload } from "lucide-react";
 import type { PillarWithMechanisms, Assessment, AssessmentResponse, AssessmentMetricNote } from "@shared/schema";
 import { PercentageSlider } from "@/components/PercentageSlider";
 
@@ -58,6 +58,8 @@ export default function AssessmentForm() {
   const [currentMetricIndex, setCurrentMetricIndex] = useState<Record<string, number>>({});
   const [isSaving, setIsSaving] = useState(false);
   const [metricInfoDialog, setMetricInfoDialog] = useState<{ open: boolean; metric: any | null }>({ open: false, metric: null });
+  const [isImporting, setIsImporting] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Filter states
   const [completionFilter, setCompletionFilter] = useState<"all" | "completed" | "not_completed">("all");
@@ -69,6 +71,7 @@ export default function AssessmentForm() {
   const isSavingRef = useRef(false);
   const percentageSliderTimeoutRef = useRef<NodeJS.Timeout>();
   const pendingPercentageResponse = useRef<{ metricId: string; answer: boolean; answerValue: number } | null>(null);
+  const noteTimeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
 
   // Refs to track current values without causing re-renders
   const systemNameRef = useRef(systemName);
@@ -350,7 +353,7 @@ export default function AssessmentForm() {
     },
     onSuccess: (response, variables) => {
       console.log('[saveMetricNoteMutation] Note saved successfully for metric:', variables.metricId);
-      queryClient.invalidateQueries({ queryKey: ["/api/assessments", id, "metric-notes"] });
+      // Don't invalidate queries to prevent refetch from overwriting local state
       setIsSaving(false);
     },
     onError: (error) => {
@@ -577,13 +580,16 @@ export default function AssessmentForm() {
   const handleMetricNoteChange = (metricId: string, notes: string) => {
     setMetricNotes(prev => ({ ...prev, [metricId]: notes }));
     if (id) {
+      // Clear previous timeout for this metric
+      if (noteTimeoutsRef.current[metricId]) {
+        clearTimeout(noteTimeoutsRef.current[metricId]);
+      }
+      
       // Debounce the save operation
-      const timeoutId = setTimeout(() => {
+      noteTimeoutsRef.current[metricId] = setTimeout(() => {
         saveMetricNoteMutation.mutate({ metricId, notes });
+        delete noteTimeoutsRef.current[metricId];
       }, 1000);
-
-      // Clear previous timeout
-      return () => clearTimeout(timeoutId);
     }
   };
 
@@ -627,6 +633,89 @@ export default function AssessmentForm() {
 
   const toggleMechanismExclusion = (mechanismId: string) => {
     setExcludedMechanisms(prev => ({ ...prev, [mechanismId]: !prev[mechanismId] }));
+  };
+
+  // Excel export handler
+  const handleExportExcel = async () => {
+    if (!id) return;
+
+    try {
+      const response = await fetch(`/api/assessments/${id}/export-excel`, {
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to export');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = response.headers.get('Content-Disposition')?.split('filename=')[1]?.replace(/"/g, '') || 'assessment.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      toast({
+        title: "Success",
+        description: "Assessment exported to Excel"
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to export assessment to Excel",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Excel import handler
+  const handleImportExcel = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !id) return;
+
+    setIsImporting(true);
+
+    try {
+      const response = await fetch(`/api/assessments/${id}/import-excel`, {
+        method: 'POST',
+        credentials: 'include',
+        body: file
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to import');
+      }
+
+      // Refresh data after import
+      queryClient.invalidateQueries({ queryKey: ["/api/assessments", id, "responses"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/assessments", id, "metric-notes"] });
+
+      toast({
+        title: "Import Completed",
+        description: result.message
+      });
+
+      if (result.errors && result.errors.length > 0) {
+        console.warn('Import errors:', result.errors);
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to import Excel file",
+        variant: "destructive"
+      });
+    } finally {
+      setIsImporting(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
   };
 
   const navigateMetric = (mechanismId: string, direction: 'prev' | 'next', maxIndex: number) => {
@@ -822,6 +911,43 @@ export default function AssessmentForm() {
                       <span className="text-green-600">Auto-save enabled</span>
                     )}
                   </div>
+                )}
+
+                {/* Excel Export/Import buttons for existing assessments */}
+                {id && (
+                  <>
+                    <Button
+                      variant="outline"
+                      onClick={handleExportExcel}
+                      title="Export assessment to Excel for offline editing"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Export Excel
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isImporting}
+                      title="Import scores and notes from Excel file"
+                    >
+                      {isImporting ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : (
+                        <Upload className="w-4 h-4 mr-2" />
+                      )}
+                      Import Excel
+                    </Button>
+
+                    {/* Hidden file input for Excel import */}
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleImportExcel}
+                      accept=".xlsx,.xls"
+                      className="hidden"
+                    />
+                  </>
                 )}
 
                 <Button
