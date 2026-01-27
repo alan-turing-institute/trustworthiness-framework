@@ -646,7 +646,6 @@ export function registerRoutes(app: Express): Server {
               "Pillar Name": pillar.name,
               "Mechanism Code": mechanism.code,
               "Mechanism Name": mechanism.name,
-              "Metric ID": metric.id,
               "Metric Code": metric.code,
               "Metric Name": metric.name,
               "Metric Type": metric.type,
@@ -669,7 +668,6 @@ export function registerRoutes(app: Express): Server {
         { wch: 25 }, // Pillar Name
         { wch: 15 }, // Mechanism Code
         { wch: 35 }, // Mechanism Name
-        { wch: 40 }, // Metric ID
         { wch: 15 }, // Metric Code
         { wch: 50 }, // Metric Name
         { wch: 12 }, // Metric Type
@@ -739,11 +737,22 @@ export function registerRoutes(app: Express): Server {
       }
 
       // Validate that required columns exist
-      const requiredColumns = ["Metric ID", "Answer Type", "Score"];
+      const requiredColumns = ["Metric Code", "Answer Type", "Score"];
       const firstRow = rows[0];
       for (const col of requiredColumns) {
         if (!(col in firstRow)) {
           return res.status(400).json({ message: `Missing required column: ${col}` });
+        }
+      }
+
+      // Fetch all metrics to allow matching by Code
+      const allPillars = await storage.getPillarsWithStructure();
+      const metricMap = new Map<string, string>(); // code -> id
+      for (const p of allPillars) {
+        for (const m of p.mechanisms) {
+          for (const mt of m.metrics) {
+            metricMap.set(mt.code, mt.id);
+          }
         }
       }
 
@@ -754,11 +763,19 @@ export function registerRoutes(app: Express): Server {
 
       for (let i = 0; i < rows.length; i++) {
         const row = rows[i];
-        const metricId = row["Metric ID"];
+        const metricCode = row["Metric Code"];
         const answerType = row["Answer Type"];
         const scoreValue = row["Score"];
         const notes = row["Notes"];
         const rowNum = i + 2; // Excel row number (1-indexed + header)
+
+        // Find the metric ID by code
+        const metricId = metricMap.get(metricCode);
+
+        if (!metricId) {
+          errors.push(`Row ${rowNum}: Metric not found (Code: ${metricCode || 'missing'})`);
+          continue;
+        }
 
         // Skip rows without a score
         if (scoreValue === undefined || scoreValue === null || scoreValue === "") {
@@ -1160,9 +1177,13 @@ export function registerRoutes(app: Express): Server {
         framework
       };
 
+      // Get perspective from query params
+      const perspective = (req.query.perspective as 'operational' | 'design' | 'both') || 'both';
+      console.log("Generating PDF with perspective:", perspective);
+
       // Generate PDF
       console.log("Generating PDF...");
-      const pdfBuffer = await pdfService.generatePDF(assessmentData, metricNotes);
+      const pdfBuffer = await pdfService.generatePDF(assessmentData, metricNotes, perspective);
       console.log("PDF generated, size:", pdfBuffer.length);
 
       // Set response headers

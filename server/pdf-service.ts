@@ -61,9 +61,10 @@ export class PDFService {
   }
 
   calculateResults(data: AssessmentData): ResultsData {
-    const { responses, framework } = data;
+    const { responses, framework, assessment } = data;
+    const excludedMechanisms = new Set(assessment.excludedMechanisms || []);
     // Use shared calculateResults function
-    return sharedCalculateResults(framework, responses);
+    return sharedCalculateResults(framework, responses, excludedMechanisms) as any;
   }
 
   generatePolarChartData(results: ResultsData, perspective: 'operational' | 'design' | 'both') {
@@ -160,7 +161,7 @@ export class PDFService {
       }
 
       return {
-        mechanism: mechanism.name,
+        mechanism: mechanism.code,
         value: Math.round(value),
         fullMark: 100
       };
@@ -169,7 +170,11 @@ export class PDFService {
     return data;
   }
 
-  async generateReportHTML(assessmentData: AssessmentData, metricNotes?: any[]): Promise<string> {
+  async generateReportHTML(
+    assessmentData: AssessmentData, 
+    metricNotes?: any[], 
+    perspective: 'operational' | 'design' | 'both' = 'both'
+  ): Promise<string> {
     const results = this.calculateResults(assessmentData);
     const { assessment } = assessmentData;
 
@@ -183,6 +188,9 @@ export class PDFService {
 
     const overallOperationalData = this.generatePolarChartData(results, 'operational');
     const overallDesignData = this.generatePolarChartData(results, 'design');
+
+    const showOperational = perspective === 'both' || perspective === 'operational';
+    const showDesign = perspective === 'both' || perspective === 'design';
 
     const html = `
 <!DOCTYPE html>
@@ -538,29 +546,37 @@ export class PDFService {
         <h3>Overall Assessment Results</h3>
 
         <div class="overall-scores">
+            ${showOperational ? `
             <div class="overall-score">
                 <h4>Operational Score</h4>
                 <div class="value">${Math.round(results.overallOperationalScore)}%</div>
             </div>
+            ` : ''}
+            ${showDesign ? `
             <div class="overall-score">
                 <h4>Design Score</h4>
                 <div class="value">${Math.round(results.overallDesignScore)}%</div>
             </div>
+            ` : ''}
         </div>
 
         <div class="chart-container">
+            ${showOperational ? `
             <div class="chart">
                 <h4>Operational Perspective</h4>
                 <div class="polar-chart">
                     ${this.generatePolarChartSVG(overallOperationalData, '#3b82f6')}
                 </div>
             </div>
+            ` : ''}
+            ${showDesign ? `
             <div class="chart">
                 <h4>Design Perspective</h4>
                 <div class="polar-chart">
                     ${this.generatePolarChartSVG(overallDesignData, '#10b981')}
                 </div>
             </div>
+            ` : ''}
         </div>
     </div>
 
@@ -568,19 +584,23 @@ export class PDFService {
         <h4>Pillar Breakdown</h4>
         <div class="pillar-content">
             ${results.pillars.map(pillar => `
+                ${showOperational ? `
                 <div class="score-row operational">
                     <span class="score-label">${pillar.name} - Operational</span>
                     <span class="score-value ${this.getScoreClass(pillar.operationalScore)}">${Math.round(pillar.operationalScore)}%</span>
                 </div>
+                ` : ''}
+                ${showDesign ? `
                 <div class="score-row design">
                     <span class="score-label">${pillar.name} - Design</span>
                     <span class="score-value ${this.getScoreClass(pillar.designScore)}">${Math.round(pillar.designScore)}%</span>
                 </div>
+                ` : ''}
             `).join('')}
         </div>
     </div>
 
-    ${results.pillars.map(pillar => this.generatePillarSection(pillar, notesMap)).join('')}
+    ${results.pillars.map(pillar => this.generatePillarSection(pillar, notesMap, perspective)).join('')}
 
     <div class="footer">
         <p>Report generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
@@ -592,38 +612,53 @@ export class PDFService {
     return html;
   }
 
-  private generatePillarSection(pillar: PillarResults, notesMap: Map<string, string>): string {
+  private generatePillarSection(
+    pillar: PillarResults, 
+    notesMap: Map<string, string>, 
+    perspective: 'operational' | 'design' | 'both' = 'both'
+  ): string {
     const operationalMechanismData = this.generatePillarChartData(pillar, 'operational');
     const designMechanismData = this.generatePillarChartData(pillar, 'design');
     
+    const showOperational = perspective === 'both' || perspective === 'operational';
+    const showDesign = perspective === 'both' || perspective === 'design';
+
     return `
     <div class="pillar-section">
         <h2>${pillar.name} Detailed Analysis</h2>
 
         <div class="overall-scores">
+            ${showOperational ? `
             <div class="overall-score">
                 <h4>Operational Score</h4>
                 <div class="value">${Math.round(pillar.operationalScore)}%</div>
             </div>
+            ` : ''}
+            ${showDesign ? `
             <div class="overall-score">
                 <h4>Design Score</h4>
                 <div class="value">${Math.round(pillar.designScore)}%</div>
             </div>
+            ` : ''}
         </div>
 
         <div class="chart-container">
+            ${showOperational ? `
             <div class="chart">
                 <h4>Operational Mechanisms</h4>
                 <div class="polar-chart">
                     ${this.generatePolarChartSVG(operationalMechanismData.map(d => ({pillar: d.mechanism, value: d.value, fullMark: d.fullMark})), '#3b82f6')}
                 </div>
             </div>
+            ` : ''}
+            ${showDesign ? `
             <div class="chart">
                 <h4>Design Mechanisms</h4>
                 <div class="polar-chart">
                     ${this.generatePolarChartSVG(designMechanismData.map(d => ({pillar: d.mechanism, value: d.value, fullMark: d.fullMark})), '#10b981')}
                 </div>
             </div>
+            ` : ''}
         </div>
 
         <h4>Mechanisms Overview</h4>
@@ -631,28 +666,39 @@ export class PDFService {
             ${pillar.mechanisms.map(mechanism => `
                 <div class="mechanism-card">
                     <h5>${mechanism.name}</h5>
+                    ${showOperational ? `
                     <div class="score-row operational">
                         <span class="score-label">Operational</span>
                         <span class="score-value ${this.getScoreClass(mechanism.operationalScore)}">${Math.round(mechanism.operationalScore)}%</span>
                     </div>
+                    ` : ''}
+                    ${showDesign ? `
                     <div class="score-row design">
                         <span class="score-label">Design</span>
                         <span class="score-value ${this.getScoreClass(mechanism.designScore)}">${Math.round(mechanism.designScore)}%</span>
                     </div>
+                    ` : ''}
                 </div>
             `).join('')}
         </div>
 
         <h4>Detailed Metrics</h4>
         <div class="metric-list">
-            ${pillar.mechanisms.map(mechanism => `
+            ${pillar.mechanisms.map(mechanism => {
+                const filteredMetrics = mechanism.metrics.filter(m => 
+                    perspective === 'both' || m.type === perspective
+                );
+                
+                if (filteredMetrics.length === 0) return '';
+                
+                return `
                 <div style="margin-bottom: 30px;">
                     <h5 style="color: #1e40af; font-size: 18px; margin-bottom: 15px; border-bottom: 1px solid #e5e7eb; padding-bottom: 5px;">
                         ${mechanism.name} Metrics
                     </h5>
-                    ${mechanism.metrics.map(metric => this.generateMetricItem(metric, notesMap)).join('')}
-                </div>
-            `).join('')}
+                    ${filteredMetrics.map(metric => this.generateMetricItem(metric, notesMap)).join('')}
+                </div>`;
+            }).join('')}
         </div>
     </div>`;
   }
@@ -684,7 +730,11 @@ export class PDFService {
     return 'score-poor';
   }
 
-  async generatePDF(assessmentData: AssessmentData, metricNotes?: any[]): Promise<Buffer> {
+  async generatePDF(
+    assessmentData: AssessmentData, 
+    metricNotes?: any[], 
+    perspective: 'operational' | 'design' | 'both' = 'both'
+  ): Promise<Buffer> {
     await this.initialize();
 
     if (!this.browser) {
@@ -694,7 +744,7 @@ export class PDFService {
     const page: Page = await this.browser.newPage();
 
     try {
-      const html = await this.generateReportHTML(assessmentData, metricNotes);
+      const html = await this.generateReportHTML(assessmentData, metricNotes, perspective);
 
       await page.setContent(html, { waitUntil: 'networkidle0' });
 
@@ -803,8 +853,8 @@ export class PDFService {
     const { assessment1, assessment2, responses1, responses2, framework, notes1, notes2 } = comparisonData;
 
     // Calculate results for both assessments
-    const excludedMechanisms1 = new Set(assessment1.excludedMechanisms || []);
-    const excludedMechanisms2 = new Set(assessment2.excludedMechanisms || []);
+    const excludedMechanisms1 = new Set<string>(assessment1.excludedMechanisms || []);
+    const excludedMechanisms2 = new Set<string>(assessment2.excludedMechanisms || []);
 
     const results1 = sharedCalculateResults(framework, responses1, excludedMechanisms1);
     const results2 = sharedCalculateResults(framework, responses2, excludedMechanisms2);

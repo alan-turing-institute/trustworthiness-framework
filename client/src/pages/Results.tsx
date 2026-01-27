@@ -139,7 +139,7 @@ export default function Results() {
 
     setIsGeneratingReport(true);
     try {
-      const response = await fetch(`/api/assessments/${id}/report`, {
+      const response = await fetch(`/api/assessments/${id}/report?perspective=${perspective}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/pdf',
