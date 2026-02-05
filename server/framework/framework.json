@@ -167,7 +167,7 @@
             "description": "A procedure to help identify and reduce the risks to data protection is called a data protection impact assessment (DPIA). It is required for processing that poses a significant risk to individuals.",
             "type": "design",
             "standards": [
-              "Data Retention and Investigatory Powers Act 2014"
+              "UK DRIPA 2014 - Data Retention and Investigatory Powers Act"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -234,7 +234,7 @@
             "description": "The frameworks that coordinate risk identification, mitigation, preparedness, and reaction are known as DRR strategies. They frequently have disaster risk assessments as a foundation.",
             "type": "design",
             "standards": [
-              "Data Retention Regulations 2014 – DRR 2014"
+              "UK DRR 2014 - Data Retention Regulations"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -271,11 +271,11 @@
           },
           {
             "code": "P.UC.O3",
-            "name": "P.UC.O3 Compliance with Regulation of Investigatory Powers Act 2000 (RIPA) or Data Retention and Investigatory Powers Act 2014 (DRIPA)",
+            "name": "P.UC.O3 Compliance with Regulation of Investigatory Powers Act 2000 (RIPA) or UK DRIPA 2014 - Data Retention and Investigatory Powers Act (DRIPA)",
             "description": "A procedure to help identify and reduce the risks to data protection is called a data protection impact assessment (DPIA). It is required for processing that poses a significant risk to individuals.",
             "type": "operational",
             "standards": [
-              "Data Retention and Investigatory Powers Act 2014"
+              "UK DRIPA 2014 - Data Retention and Investigatory Powers Act"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -316,7 +316,7 @@
             "description": "When information is acquired directly, the individual must be told as soon as possible, or at the time the information is acquired. Content-wise, the controller must disclose his identity, the contact information of the data protection officer (if one is available), the processing's goals and legal justification, any pursued legitimate interests, the recipients of personal data when it is transmitted, and any plans to transfer personal data to third countries.",
             "type": "operational",
             "standards": [
-              "https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-le-processing/individual-rights/the-right-to-be-informed/"
+              "UK DPA 2018 - Data Protection Act"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -462,7 +462,7 @@
             "description": "Compliance with European Data Protection Directive 95/46/EC",
             "type": "operational",
             "standards": [
-              "https://en.wikipedia.org/wiki/Data_Protection_Directive"
+              "EU Directive 95/46/EC - Data Protection Directive"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -913,8 +913,8 @@
           },
           {
             "code": "P.IDA.O6",
-            "name": "P.IDA.O6 Conformance with GDPR",
-            "description": "Conformance with GDPR",
+            "name": "P.IDA.O6 Conformance with GDPR - General Data Protection Regulation",
+            "description": "Conformance with GDPR - General Data Protection Regulation",
             "type": "operational",
             "standards": [],
             "pillarCap": 100,
@@ -927,16 +927,16 @@
         ],
         "operationalConfigurations": [
           {
-            "label": "No Attribute-based encryption, no PIM, no inter-directory provisioning, no data mapping, no GDPR conformance",
-            "description": "No Attribute-based encryption, no PIM, no inter-directory provisioning, no data mapping, no GDPR conformance"
+            "label": "No Attribute-based encryption, no PIM, no inter-directory provisioning, no data mapping, no GDPR - General Data Protection Regulation conformance",
+            "description": "No Attribute-based encryption, no PIM, no inter-directory provisioning, no data mapping, no GDPR - General Data Protection Regulation conformance"
           },
           {
             "label": "Attribute-based encryption applied, as well as Privileged Identity Management (PIM) services, are deployed.",
             "description": "Attribute-based encryption applied, as well as Privileged Identity Management (PIM) services, are deployed."
           },
           {
-            "label": "Attribute-based encryption applied, Privileged Identity Management (PIM) services, in conformance with GDPR.",
-            "description": "Attribute-based encryption applied, Privileged Identity Management (PIM) services, in conformance with GDPR."
+            "label": "Attribute-based encryption applied, Privileged Identity Management (PIM) services, in conformance with GDPR - General Data Protection Regulation.",
+            "description": "Attribute-based encryption applied, Privileged Identity Management (PIM) services, in conformance with GDPR - General Data Protection Regulation."
           }
         ],
         "designConfigurations": [
@@ -1040,7 +1040,7 @@
             "description": "You can identify and reduce a project's data protection risks by doing a data protection impact assessment (DPIA). For processing that poses a significant risk to people, a DPIA is required. This contains a few particular categories of processing.",
             "type": "design",
             "standards": [
-              "https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/accountability-and-governance/data-protection-impact-assessments/"
+              "GDPR Article 35 - Data Protection Impact Assessment"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -1324,7 +1324,7 @@
             "description": "DPIA Template present",
             "type": "operational",
             "standards": [
-              "https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/accountability-and-governance/data-protection-impact-assessments/"
+              "GDPR Article 35 - Data Protection Impact Assessment"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -1339,7 +1339,7 @@
             "description": "ICO consulting procedures for residual high risk(s)",
             "type": "operational",
             "standards": [
-              "https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/accountability-and-governance/data-protection-impact-assessments/"
+              "GDPR Article 35 - Data Protection Impact Assessment"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -1700,7 +1700,7 @@
             "description": "Conformance with ISO 27701",
             "type": "operational",
             "standards": [
-              "https://www.iso.org/standard/71670.html"
+              "ISO/IEC 27701 - Privacy Information Management"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -1711,11 +1711,11 @@
           },
           {
             "code": "P.PS.O2",
-            "name": "P.PS.O2 Conformance with ISO GDPR",
-            "description": "Conformance with ISO GDPR",
+            "name": "P.PS.O2 Conformance with ISO GDPR - General Data Protection Regulation",
+            "description": "Conformance with ISO GDPR - General Data Protection Regulation",
             "type": "operational",
             "standards": [
-              "https://gdpr-info.eu"
+              "EU Regulation 2016/679 - General Data Protection Regulation (GDPR)"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -1730,7 +1730,7 @@
             "description": "Conformance with ISO PEC Cybersecurity Act",
             "type": "operational",
             "standards": [
-              "https://digital-strategy.ec.europa.eu/en/policies/cybersecurity-act"
+              "EU Regulation 2019/881 - Cybersecurity Act"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -1741,11 +1741,11 @@
           },
           {
             "code": "P.PS.O4",
-            "name": "P.PS.O4 Conformance with ISO/IEC 27550",
-            "description": "Conformance with ISO/IEC 27550",
+            "name": "P.PS.O4 Conformance with ISO/IEC 27550 - Privacy Engineering",
+            "description": "Conformance with ISO/IEC 27550 - Privacy Engineering",
             "type": "operational",
             "standards": [
-              "https://www.iso.org/standard/72024.html"
+              "ISO/IEC 27550 - Privacy Engineering"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -1760,7 +1760,7 @@
             "description": "Conformance with ISO 29101:2013",
             "type": "operational",
             "standards": [
-              "https://www.iso.org/standard/45124.html"
+              "ISO/IEC 29101 - Privacy Architecture Framework"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -1780,8 +1780,8 @@
             "description": "Conformance with ISO 27701"
           },
           {
-            "label": "Conformance with ISO GDPR",
-            "description": "Conformance with ISO GDPR"
+            "label": "Conformance with ISO GDPR - General Data Protection Regulation",
+            "description": "Conformance with ISO GDPR - General Data Protection Regulation"
           }
         ],
         "designConfigurations": [
@@ -2767,8 +2767,8 @@
           },
           {
             "code": "E.DEC.O1",
-            "name": "E.DEC.O1 The system satisfies Article 29 Guidelines and the limitation provided by Article 22 of the GDPR",
-            "description": "The system satisfies Article 29 Guidelines and the limitation provided by Article 22 of the GDPR",
+            "name": "E.DEC.O1 The system satisfies Article 29 Guidelines and the limitation provided by Article 22 of the GDPR - General Data Protection Regulation",
+            "description": "The system satisfies Article 29 Guidelines and the limitation provided by Article 22 of the GDPR - General Data Protection Regulation",
             "type": "operational",
             "standards": [],
             "pillarCap": 100,
@@ -2780,12 +2780,12 @@
         ],
         "operationalConfigurations": [
           {
-            "label": "Decisions do not follow GDPR guidelines.",
-            "description": "Decisions do not follow GDPR guidelines."
+            "label": "Decisions do not follow GDPR - General Data Protection Regulation guidelines.",
+            "description": "Decisions do not follow GDPR - General Data Protection Regulation guidelines."
           },
           {
-            "label": "The system satisfies Article 29 Guidelines and the limitation provided by Article 22 of the GDPR",
-            "description": "The system satisfies Article 29 Guidelines and the limitation provided by Article 22 of the GDPR"
+            "label": "The system satisfies Article 29 Guidelines and the limitation provided by Article 22 of the GDPR - General Data Protection Regulation",
+            "description": "The system satisfies Article 29 Guidelines and the limitation provided by Article 22 of the GDPR - General Data Protection Regulation"
           }
         ],
         "designConfigurations": [
@@ -3502,7 +3502,7 @@
             "description": "Incident reporting controls deployed",
             "type": "operational",
             "standards": [
-              "NIST SP 800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3517,7 +3517,7 @@
             "description": "Incident response policy and procedures tested",
             "type": "operational",
             "standards": [
-              "NIST SP 800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3532,7 +3532,7 @@
             "description": "Incident monitoring deployed",
             "type": "operational",
             "standards": [
-              "NIST SP 800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3547,7 +3547,7 @@
             "description": "Incident response assistance acquired",
             "type": "operational",
             "standards": [
-              "NIST SP 800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -3562,7 +3562,7 @@
             "description": "Incident Response Plan tested",
             "type": "operational",
             "standards": [
-              "NIST SP 800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3786,7 +3786,7 @@
             "description": "Provision for compliance with FATF46 policies and guidelines",
             "type": "design",
             "standards": [
-              "https://www.fatf-gafi.org/media/fatf/documents/recommendations/pdfs/Guidance-on-Digital-Identity-report.pdf"
+              "FATF - Guidance on Digital Identity"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3887,7 +3887,7 @@
             "description": "Identification of CDD measures using risk-based approach(es)",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3899,7 +3899,7 @@
             "description": "Establish Identity Assurance Levels (IAL) for ID proofing",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3911,7 +3911,7 @@
             "description": "Provision for standardised ID proofing requirements",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3923,7 +3923,7 @@
             "description": "Establish evidence collection requirements",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3935,7 +3935,7 @@
             "description": "Provision for compliance with FATF49 policies and guidelines",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3947,7 +3947,7 @@
             "description": "Identification of CDD measures using risk-based approach(es)",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3959,7 +3959,7 @@
             "description": "Provision for managing liability and legal issues",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3971,7 +3971,7 @@
             "description": "Legal structure in place for roles, rights and responsibilities",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3983,7 +3983,7 @@
             "description": "Provision for self-assessment",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -3995,7 +3995,7 @@
             "description": "Assurance levels for identity proofing",
             "type": "design",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4007,7 +4007,7 @@
             "description": "Evidence of assessing ID proofing at different IAL",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4019,7 +4019,7 @@
             "description": "Auditing of resolution-validation-verification processes in ID proofing",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4031,7 +4031,7 @@
             "description": "Use of biometrically-enabled Machine Readable Travel Document (MRTD)",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4043,7 +4043,7 @@
             "description": "Customer Due diligence (CDD) obligations imposed",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4055,7 +4055,7 @@
             "description": "Transaction monitoring technology present",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4063,11 +4063,11 @@
           },
           {
             "code": "REL.AL.O7",
-            "name": "REL.AL.O7 Conformance with ISO/IEC 29115:2013",
-            "description": "Conformance with ISO/IEC 29115:2013",
+            "name": "REL.AL.O7 Conformance with ISO/IEC 29115 - Entity Authentication Assurance:2013",
+            "description": "Conformance with ISO/IEC 29115 - Entity Authentication Assurance:2013",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4079,7 +4079,7 @@
             "description": "Conformance with ISO/IEC TS 29003",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4091,7 +4091,7 @@
             "description": "Conformance with ISO 24760 51",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4103,7 +4103,7 @@
             "description": "Conformance with eIDAS",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4111,11 +4111,11 @@
           },
           {
             "code": "REL.AL.O11",
-            "name": "REL.AL.O11 Conformance with ISO/IEC 29115",
-            "description": "Conformance with ISO/IEC 29115",
+            "name": "REL.AL.O11 Conformance with ISO/IEC 29115 - Entity Authentication Assurance",
+            "description": "Conformance with ISO/IEC 29115 - Entity Authentication Assurance",
             "type": "operational",
             "standards": [
-              "ICAO 9303"
+              "ICAO Doc 9303 - Machine Readable Travel Documents"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4429,7 +4429,7 @@
             "description": "A PEP is a system entity that requests authorization decisions and subsequently enforces them. Such entity can be  a software mechanism (such as the access control mechanism of a file system or Web server) or hardware network device that protects (in terms of regulating access to) the resources exposed.",
             "type": "design",
             "standards": [
-              "https://csrc.nist.gov/glossary/term/policy_enforcement_point"
+              "NIST SP 800-162 - Policy Enforcement Point (PEP)"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -4501,7 +4501,7 @@
             "description": "The organisation defines conditions or trigger events requiring session disconnect, and the information system terminates a user session automatically when the organization-defined criteria or trigger events requiring session disconnect occur.",
             "type": "design",
             "standards": [
-              "AC-12 SESSION TERMINATION from NIST 800-171"
+              "NIST SP 800-171 AC-12 - Session Termination"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -4587,7 +4587,7 @@
             "description": "Will the AC system process subject access requests in a timely manner?\nAC enforcement includes the number of operations required to approve a subject's access request and assess the safety (if available) of an access request. \nMeasurement is based on the system model's computational complexity. \nAdministrators should consider the worst-case subject count to evaluate performance.",
             "type": "operational",
             "standards": [
-              "NISTIR 7874"
+              "NISTIR 7874 - Access Control System Evaluation Metrics"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4603,7 +4603,7 @@
             "description": "Will the AC system process subject access requests in a timely manner?\nAC enforcement includes the number of operations required to approve a subject's access request and assess the safety (if available) of an access request. \nMeasurement is based on the system model's computational complexity. \nAdministrators should consider the worst-case subject count to evaluate performance.",
             "type": "operational",
             "standards": [
-              "NISTIR 7875"
+              "NISTIR 7875 - Access Control Evaluation (Performance)"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4619,7 +4619,7 @@
             "description": "Will the AC system process subject access requests in a timely manner?\nAC enforcement includes the number of operations required to approve a subject's access request and assess the safety (if available) of an access request. \nMeasurement is based on the system model's computational complexity. \nAdministrators should consider the worst-case subject count to evaluate performance.",
             "type": "operational",
             "standards": [
-              "NISTIR 7876"
+              "NISTIR 7876 - Access Control Evaluation (Activation/Revocation)"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4692,8 +4692,8 @@
             "description": "The collateral damage potential (CDP) metric measures the potential loss or impact on either physical assets or the financial impact upon the affected organisation if a vulnerability is exploited.\n100% No impact\n80% Low\n40% Low-Medium\n20% Medium-High, \n0% High",
             "type": "design",
             "standards": [
-              "MAGERIT",
-              "MITRE CVSS"
+              "MAGERIT - Risk Analysis and Management Methodology",
+              "CVSS - Common Vulnerability Scoring System"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4709,8 +4709,8 @@
             "description": "These metrics assess the specific security requirements for confidentiality (CR), integrity (IR) and availability (AR) in the case of EIDS.\n100% for Loss of (confidentiality / integrity / availability) is likely to have only a limited effect on the organisation\n50% Loss of (confidentiality / integrity / availability) is likely to have a serious effect on the organisation\n0% Loss of (confidentiality / integrity / availability) is likely to have a catastrophic effect on the organisation",
             "type": "design",
             "standards": [
-              "MAGERIT",
-              "MITRE CVSS"
+              "MAGERIT - Risk Analysis and Management Methodology",
+              "CVSS - Common Vulnerability Scoring System"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4726,8 +4726,8 @@
             "description": "The target distribution (TD) metric measures the proportion of vulnerable systems in the environment. \n100% None, 75% Low, 25% Medium, 0% High",
             "type": "design",
             "standards": [
-              "MAGERIT",
-              "MITRE CVSS"
+              "MAGERIT - Risk Analysis and Management Methodology",
+              "CVSS - Common Vulnerability Scoring System"
             ],
             "pillarCap": 75,
             "mechanismCap": 100,
@@ -4743,7 +4743,7 @@
             "description": "The testing and/or assessment of the management, operational, and technical security controls in an information system to establish the extent to which the measures are correctly installed, performing as intended, and meeting the system's security needs. \nEffectiveness is defined as the extent to which the controls are implemented correctly, operating as intended, and producing the desired outcome with respect to meeting the security requirements for the system.",
             "type": "design",
             "standards": [
-              "NIST 800-137"
+              "NIST SP 800-137 - Information Security Continuous Monitoring"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -4857,8 +4857,8 @@
             "description": "These metrics assess the specific security requirements for confidentiality (CR), integrity (IR) and availability (AR) in the case of EIDS.\n100% for Loss of (confidentiality / integrity / availability) is likely to have only a limited effect on the organisation\n50% Loss of (confidentiality / integrity / availability) is likely to have a serious effect on the organisation\n0% Loss of (confidentiality / integrity / availability) is likely to have a catastrophic effect on the organisation",
             "type": "operational",
             "standards": [
-              "MAGERIT",
-              "MITRE CVSS"
+              "MAGERIT - Risk Analysis and Management Methodology",
+              "CVSS - Common Vulnerability Scoring System"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4873,8 +4873,8 @@
             "description": "The target distribution (TD) metric measures the proportion of vulnerable systems in the environment. \n100% None, 75% Low, 25% Medium, 0% High",
             "type": "operational",
             "standards": [
-              "MAGERIT",
-              "MITRE CVSS"
+              "MAGERIT - Risk Analysis and Management Methodology",
+              "CVSS - Common Vulnerability Scoring System"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -4889,7 +4889,7 @@
             "description": "The testing and/or assessment of the management, operational, and technical security controls in an information system to establish the extent to which the measures are correctly installed, performing as intended, and meeting the system's security needs. \nEffectiveness is defined as the extent to which the controls are implemented correctly, operating as intended, and producing the desired outcome with respect to meeting the security requirements for the system.\n0% not implemented,\n33% implemented incorrectly or not fully implemented\n66% fully implemented, not achieving the security requirements\n100% fully implemented and with desidered outcome",
             "type": "operational",
             "standards": [
-              "NIST 800-137"
+              "NIST SP 800-137 - Information Security Continuous Monitoring"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -5104,7 +5104,7 @@
             "description": "The least privilege principle states that a security architecture should be designed so that each entity is granted the minimum system resources and authorizations that the entity needs to perform its function.",
             "type": "design",
             "standards": [
-              "NIST 800-12"
+              "NIST SP 800-12 - Introduction to Information Security"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -5120,7 +5120,7 @@
             "description": "The fundamental idea behind the concept of Segregation of Tasks (SoD) is that no individual or group of employees should be able to create fraudulent or erroneous transactions as part of their routine duties. In the context of user access, a SoD \"ruleset\" is a thorough collection of access combinations that would pose a risk to an organisation if performed by a single user. Each unique access combination is referred to as a \"rule\" of SoD. Separation of duties can be enforced either statically (by defining conflicting roles, i.e., roles which cannot be executed by the same user) or dynamically (by enforcing the control at access time).",
             "type": "design",
             "standards": [
-              "NIST 800-192"
+              "NIST SP 800-192 - Access Control Policies Verification"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -5136,7 +5136,7 @@
             "description": "The fundamental idea behind the concept of Segregation of Tasks (SoD) is that no individual or group of employees should be able to create fraudulent or erroneous transactions as part of their routine duties. In the context of user access, a SoD \"ruleset\" is a thorough collection of access combinations that would pose a risk to an organisation if performed by a single user. Each unique access combination is referred to as a \"rule\" of SoD. Separation of duties can be enforced either statically (by defining conflicting roles, i.e., roles which cannot be executed by the same user) or dynamically (by enforcing the control at access time).",
             "type": "design",
             "standards": [
-              "NIST 800-192"
+              "NIST SP 800-192 - Access Control Policies Verification"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -5205,7 +5205,7 @@
             "description": "The testing and/or assessment of the management, operational, and technical security controls in an information system to establish the extent to which the measures are correctly installed, performing as intended, and meeting the system's security needs. \nEffectiveness is defined as the extent to which the controls are implemented correctly, operating as intended, and producing the desired outcome with respect to meeting the security requirements for the system.\n0% not implemented,\n33% implemented incorrectly or not fully implemented\n66% fully implemented, not achieving the security requirements\n100% fully implemented and with desidered outcome",
             "type": "operational",
             "standards": [
-              "NIST 800-137"
+              "NIST SP 800-137 - Information Security Continuous Monitoring"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -5944,7 +5944,7 @@
             "description": "Privacy Impact Assessment (PIA) is concerned with analysing how an organisation collects, uses, shares, and maintains personally identifiable information in relation to existing risks. The objective of a Data Protection Impact Assessment (DPIA) is to identify and mitigate risks associated with the processing of personal data.",
             "type": "design",
             "standards": [
-              "NIST 7874"
+              "NISTIR 7874 - Access Control System Evaluation Metrics"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -5959,7 +5959,7 @@
             "description": "A data classification policy is a comprehensive plan used to classify a company's stored information according to its level of sensitivity, ensuring proper handling and reducing organisational risk.",
             "type": "design",
             "standards": [
-              "NIST 7874"
+              "NISTIR 7874 - Access Control System Evaluation Metrics"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -5971,10 +5971,10 @@
           {
             "code": "S.PEP.D3",
             "name": "S.PEP.D3 Provision for DLP",
-            "description": "Data loss prevention (DLP) is a collection of tools and procedures used to prevent sensitive data from being lost, mishandled, or accessed by unauthorised users. DLP software classifies regulated, confidential, and business-critical data and identifies violations of policies defined by organisations or within a predefined policy pack, typically in response to regulatory compliance requirements such as HIPAA, PCI-DSS, or GDPR.",
+            "description": "Data loss prevention (DLP) is a collection of tools and procedures used to prevent sensitive data from being lost, mishandled, or accessed by unauthorised users. DLP software classifies regulated, confidential, and business-critical data and identifies violations of policies defined by organisations or within a predefined policy pack, typically in response to regulatory compliance requirements such as HIPAA, PCI-DSS, or GDPR - General Data Protection Regulation.",
             "type": "design",
             "standards": [
-              "NIST 7874"
+              "NISTIR 7874 - Access Control System Evaluation Metrics"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -5989,7 +5989,7 @@
             "description": "Privacy Enhancing Technologies are technologies that enable organisations to share and use individuals' data in a responsible, legal, and secure manner, including by minimising the amount of data used and encrypting or anonymizing personal information.",
             "type": "design",
             "standards": [
-              "NIST 7874"
+              "NISTIR 7874 - Access Control System Evaluation Metrics"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -6004,7 +6004,7 @@
             "description": "Privacy Impact Assessment (PIA) is concerned with analysing how an organisation collects, uses, shares, and maintains personally identifiable information in relation to existing risks. The objective of a Data Protection Impact Assessment (DPIA) is to identify and mitigate risks associated with the processing of personal data.",
             "type": "operational",
             "standards": [
-              "NIST 7874"
+              "NISTIR 7874 - Access Control System Evaluation Metrics"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -6019,7 +6019,7 @@
             "description": "A data classification policy is a comprehensive plan used to classify a company's stored information according to its level of sensitivity, ensuring proper handling and reducing organisational risk.",
             "type": "operational",
             "standards": [
-              "NIST 7874"
+              "NISTIR 7874 - Access Control System Evaluation Metrics"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -6031,10 +6031,10 @@
           {
             "code": "S.PEP.O3",
             "name": "S.PEP.O3 DLP technology deployed",
-            "description": "Data loss prevention (DLP) is a collection of tools and procedures used to prevent sensitive data from being lost, mishandled, or accessed by unauthorised users. DLP software classifies regulated, confidential, and business-critical data and identifies violations of policies defined by organisations or within a predefined policy pack, typically in response to regulatory compliance requirements such as HIPAA, PCI-DSS, or GDPR.",
+            "description": "Data loss prevention (DLP) is a collection of tools and procedures used to prevent sensitive data from being lost, mishandled, or accessed by unauthorised users. DLP software classifies regulated, confidential, and business-critical data and identifies violations of policies defined by organisations or within a predefined policy pack, typically in response to regulatory compliance requirements such as HIPAA, PCI-DSS, or GDPR - General Data Protection Regulation.",
             "type": "operational",
             "standards": [
-              "NIST 7874"
+              "NISTIR 7874 - Access Control System Evaluation Metrics"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -6049,7 +6049,7 @@
             "description": "Privacy Enhancing Technologies are technologies that enable organisations to share and use individuals' data in a responsible, legal, and secure manner, including by minimising the amount of data used and encrypting or anonymizing personal information.",
             "type": "operational",
             "standards": [
-              "NIST 7874"
+              "NISTIR 7874 - Access Control System Evaluation Metrics"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -6168,10 +6168,10 @@
           {
             "code": "S.RC.O8",
             "name": "S.RC.O8 Conformance with ISO27001",
-            "description": "ISO270001: Information security standard created by the International Organization for Standardization (ISO), which provides a framework and guidelines for establishing, implementing and managing an information security management system (ISMS).",
+            "description": "ISO/IEC 27001 - Information Security Management Systems: Information security standard created by the International Organization for Standardization (ISO), which provides a framework and guidelines for establishing, implementing and managing an information security management system (ISMS).",
             "type": "operational",
             "standards": [
-              "ISO270001"
+              "ISO/IEC 27001 - Information Security Management Systems"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -6180,11 +6180,11 @@
           },
           {
             "code": "S.RC.O9",
-            "name": "S.RC.O9 Conformance with ISO24760",
-            "description": "ISO24760: IT Security and Privacy, A framework for identity management",
+            "name": "S.RC.O9 Conformance with ISO/IEC 24760 - Identity Management Framework",
+            "description": "ISO/IEC 24760 - Identity Management Framework: IT Security and Privacy, A framework for identity management",
             "type": "operational",
             "standards": [
-              "ISO24760"
+              "ISO/IEC 24760 - Identity Management Framework"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -6193,11 +6193,11 @@
           },
           {
             "code": "S.RC.O10",
-            "name": "S.RC.O10 Conformance with ISO29115",
-            "description": "ISO29115: a framework for managing entity authentication assurance in a given context.",
+            "name": "S.RC.O10 Conformance with ISO/IEC 29115 - Entity Authentication Assurance",
+            "description": "ISO/IEC 29115 - Entity Authentication Assurance: a framework for managing entity authentication assurance in a given context.",
             "type": "operational",
             "standards": [
-              "ISO29115"
+              "ISO/IEC 29115 - Entity Authentication Assurance"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -6206,11 +6206,11 @@
           },
           {
             "code": "S.RC.O11",
-            "name": "S.RC.O11 Conformance with ISO29146",
-            "description": "ISO29146: a framework for access management (AM) and the secure management of the process to access information and Information and Communications Technologies (ICT) resources, associated with the accountability of a subject within some context.",
+            "name": "S.RC.O11 Conformance with ISO/IEC 29146 - Access Management Framework",
+            "description": "ISO/IEC 29146 - Access Management Framework: a framework for access management (AM) and the secure management of the process to access information and Information and Communications Technologies (ICT) resources, associated with the accountability of a subject within some context.",
             "type": "operational",
             "standards": [
-              "ISO29146"
+              "ISO/IEC 29146 - Access Management Framework"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -6219,11 +6219,11 @@
           },
           {
             "code": "S.RC.O12",
-            "name": "S.RC.O12 Conformance with GDPR",
-            "description": "GDPR: The General Data Protection Regulation is a Regulation in EU law on data protection and privacy in the EU and the European Economic Area.",
+            "name": "S.RC.O12 Conformance with GDPR - General Data Protection Regulation",
+            "description": "GDPR - General Data Protection Regulation: The General Data Protection Regulation is a Regulation in EU law on data protection and privacy in the EU and the European Economic Area.",
             "type": "operational",
             "standards": [
-              "GDPR"
+              "GDPR - General Data Protection Regulation"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -6232,11 +6232,11 @@
           },
           {
             "code": "S.RC.O13",
-            "name": "S.RC.O13 Conformance with ETSI EN 319411",
-            "description": "ETSI EN 319411: Requirements for trust service providers issuing EU qualified certificates",
+            "name": "S.RC.O13 Conformance with ETSI EN 319411 - Trust Service Providers for EU Qualified Certificates",
+            "description": "ETSI EN 319411 - Trust Service Providers for EU Qualified Certificates: Requirements for trust service providers issuing EU qualified certificates",
             "type": "operational",
             "standards": [
-              "ETSI EN 319411"
+              "ETSI EN 319411 - Trust Service Providers for EU Qualified Certificates"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -6245,11 +6245,11 @@
           },
           {
             "code": "S.RC.O14",
-            "name": "S.RC.O14 Conformance with ETSI EN 319521",
-            "description": "ETSI EN 319521: Electronic Signatures and Infrastructures (ESI); Policy and security requirements for Registered Electronic Mail Service Providers",
+            "name": "S.RC.O14 Conformance with ETSI EN 319521 - Registered Electronic Mail Service Providers",
+            "description": "ETSI EN 319521 - Registered Electronic Mail Service Providers: Electronic Signatures and Infrastructures (ESI); Policy and security requirements for Registered Electronic Mail Service Providers",
             "type": "operational",
             "standards": [
-              "ETSI EN 319521"
+              "ETSI EN 319521 - Registered Electronic Mail Service Providers"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -6313,7 +6313,7 @@
             "description": "Standard cryptographic methods are always preferable above propretary solutions, that may hide vulnerabilities.",
             "type": "design",
             "standards": [
-              "NIST 800-57"
+              "NIST SP 800-57 - Key Management"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -6539,7 +6539,7 @@
             "description": "A descriptive record of components within an information system.",
             "type": "design",
             "standards": [
-              "NIST 800-128"
+              "NIST SP 800-128 - Security-Focused Configuration Management"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7060,7 +7060,7 @@
             "description": "Assets registration programme aims to support the development of an automated, secure data exchange process for registering assets and collecting and gaining access to data on such assets.",
             "type": "design",
             "standards": [
-              "MAGERIT methodology"
+              "MAGERIT - Risk Analysis and Management Methodology"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -7101,8 +7101,8 @@
             "description": "Potential risk identified",
             "type": "design",
             "standards": [
-              "ISO27005 InfoSec Risk Management",
-              "SP800 37R2"
+              "ISO/IEC 27005 - Information Security Risk Management",
+              "NIST SP 800-37 Rev. 2 - Risk Management Framework"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -7195,7 +7195,7 @@
             "description": "Assets registration programme aims to support the development of an automated, secure data exchange process for registering assets and collecting and gaining access to data on such assets.",
             "type": "operational",
             "standards": [
-              "MAGERIT methodology"
+              "MAGERIT - Risk Analysis and Management Methodology"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -7236,8 +7236,8 @@
             "description": "Established set of security impact levels",
             "type": "operational",
             "standards": [
-              "ISO27005 InfoSec Risk Management",
-              "SP800 37R2"
+              "ISO/IEC 27005 - Information Security Risk Management",
+              "NIST SP 800-37 Rev. 2 - Risk Management Framework"
             ],
             "pillarCap": 100,
             "mechanismCap": 100,
@@ -7443,7 +7443,7 @@
             "description": "Provision for control guidelines in conformance with NIST SP800-53",
             "type": "design",
             "standards": [
-              "NIST SP800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7458,8 +7458,7 @@
             "description": "Provision for Guidelines NIST SP 800-41",
             "type": "design",
             "standards": [
-              "SP 800-41 Rev. 1",
-              "Guidelines on Firewalls and Firewall Policy"
+              "NIST SP 800-41 Rev. 1 - Guidelines on Firewalls and Firewall Policy"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7474,8 +7473,7 @@
             "description": "Provision for Guidelines NIST 800-189",
             "type": "design",
             "standards": [
-              "NIST Publishes SP 800-189",
-              "Resilient Interdomain Traffic Exchange: BGP Security and DDoS Mitigation"
+              "NIST SP 800-189 - Resilient Interdomain Traffic Exchange"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7490,7 +7488,7 @@
             "description": "Provision for Guidelines NIST 800-77",
             "type": "design",
             "standards": [
-              "Guide to IPsec VPNs"
+              "NIST SP 800-77 - Guide to IPsec VPNs"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7505,7 +7503,7 @@
             "description": "Provision for Guidelines NIST 800-94",
             "type": "design",
             "standards": [
-              "Guide to Intrusion Detection and Prevention Systems (IDPS)"
+              "NIST SP 800-94 - Guide to Intrusion Detection and Prevention Systems (IDPS)"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7585,7 +7583,7 @@
             "description": "DoS Protection",
             "type": "operational",
             "standards": [
-              "NIST SP 800-61"
+              "NIST SP 800-61 - Computer Security Incident Handling"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7652,7 +7650,7 @@
             "description": "Application partitioning",
             "type": "operational",
             "standards": [
-              "NIST SP800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7667,7 +7665,7 @@
             "description": "Session authenticity",
             "type": "operational",
             "standards": [
-              "NIST SP800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7682,7 +7680,7 @@
             "description": "Covert channel analysis",
             "type": "operational",
             "standards": [
-              "NIST SP800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7697,7 +7695,7 @@
             "description": "Process isolation",
             "type": "operational",
             "standards": [
-              "NIST SP800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
@@ -7712,7 +7710,7 @@
             "description": "Usage restriction",
             "type": "operational",
             "standards": [
-              "NIST SP800-53(r4)"
+              "NIST SP 800-53 Rev. 4 - Security and Privacy Controls"
             ],
             "pillarCap": 0,
             "mechanismCap": 100,
