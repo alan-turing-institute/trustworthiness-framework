@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0,0 L0,7 L7,3.5 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="760" height="260" fill="#0f172a" rx="14"/>
+
+  <!-- DOCKER outer border -->
+  <rect x="14" y="14" width="732" height="232" rx="10" fill="none" stroke="#2496ed" stroke-width="2" stroke-dasharray="7,4"/>
+  <!-- Docker label -->
+  <rect x="28" y="6" width="76" height="18" rx="4" fill="#0f172a"/>
+  <text x="66" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#2496ed" letter-spacing="1">🐳 Docker</text>
+
+  <!-- ── TYPESCRIPT base bar (shared) ── -->
+  <rect x="30" y="178" width="560" height="36" rx="7" fill="#1d3044" stroke="#3178c6" stroke-width="1.5"/>
+  <text x="310" y="201" text-anchor="middle" font-size="12" font-weight="700" fill="#5b9bd5" letter-spacing="2">TypeScript</text>
+
+  <!-- ── FRONTEND column ── -->
+  <!-- React 18 box -->
+  <rect x="30" y="80" width="260" height="50" rx="7" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="160" y="101" text-anchor="middle" font-size="13" font-weight="700" fill="#93c5fd">React 18</text>
+  <text x="160" y="119" text-anchor="middle" font-size="10" fill="#64748b">Vite · shadcn/ui · TanStack Query · Recharts</text>
+
+  <!-- Frontend label -->
+  <text x="160" y="68" text-anchor="middle" font-size="9" font-weight="700" fill="#3b82f6" letter-spacing="2">FRONTEND</text>
+
+  <!-- React -> TS connector -->
+  <line x1="160" y1="130" x2="160" y2="178" stroke="#3b82f6" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
+
+  <!-- ── BACKEND column ── -->
+  <!-- Node.js box -->
+  <rect x="330" y="80" width="260" height="50" rx="7" fill="#1e1040" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="460" y="101" text-anchor="middle" font-size="13" font-weight="700" fill="#c4b5fd">Node.js</text>
+  <text x="460" y="119" text-anchor="middle" font-size="10" fill="#64748b">Express 4 · Passport.js · Zod · Puppeteer</text>
+
+  <!-- Backend label -->
+  <text x="460" y="68" text-anchor="middle" font-size="9" font-weight="700" fill="#8b5cf6" letter-spacing="2">BACKEND</text>
+
+  <!-- Node -> TS connector -->
+  <line x1="460" y1="130" x2="460" y2="178" stroke="#8b5cf6" stroke-width="1.5" stroke-opacity="0.5" marker-end="url(#arr)"/>
+
+  <!-- ── FRONTEND <-> BACKEND arrow ── -->
+  <line x1="290" y1="105" x2="330" y2="105" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="330" y1="113" x2="290" y2="113" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="310" y="98" text-anchor="middle" font-size="8" fill="#475569">REST</text>
+
+  <!-- ── DATABASE column ── -->
+  <rect x="620" y="60" width="110" height="154" rx="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+  <text x="675" y="82" text-anchor="middle" font-size="9" font-weight="700" fill="#10b981" letter-spacing="2">DATABASE</text>
+
+  <!-- ORM label -->
+  <rect x="636" y="90" width="78" height="26" rx="5" fill="#065f46" stroke="#10b981" stroke-width="1"/>
+  <text x="675" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="#6ee7b7">Drizzle ORM</text>
+
+  <!-- divider -->
+  <line x1="636" y1="124" x2="714" y2="124" stroke="#065f46" stroke-width="1"/>
+
+  <!-- SQLite -->
+  <text x="675" y="145" text-anchor="middle" font-size="12" fill="#6ee7b7">SQLite</text>
+  <!-- slash -->
+  <line x1="651" y1="162" x2="699" y2="162" stroke="#065f46" stroke-width="1" stroke-dasharray="3,2"/>
+  <!-- Postgres -->
+  <text x="675" y="178" text-anchor="middle" font-size="12" fill="#6ee7b7">PostgreSQL</text>
+  <text x="675" y="198" text-anchor="middle" font-size="9" fill="#34d399" font-style="italic">interchangeable</text>
+
+  <!-- Backend -> DB arrow -->
+  <line x1="590" y1="105" x2="620" y2="125" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+
+</svg>

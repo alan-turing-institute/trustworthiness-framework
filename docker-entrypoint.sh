@@ -19,4 +19,4 @@ echo "Database migrations completed successfully"
 
 # Switch to non-root user and start the application
 echo "Starting application as user nextjs..."
-exec su-exec nextjs "$@"
+exec gosu nextjs "$@"

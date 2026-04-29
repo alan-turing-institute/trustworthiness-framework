@@ -1,4 +1,4 @@
-import puppeteer, { type Browser, type Page } from 'puppeteer';
+import puppeteer, { type Page } from 'puppeteer';
 import type { Assessment, AssessmentResponse, PillarWithMechanisms } from "@shared/schema";
 import { calculateResults as sharedCalculateResults } from "@shared/scoreCalculation";
 
@@ -42,22 +42,47 @@ interface ResultsData {
 }
 
 export class PDFService {
-  private browser: Browser | null = null;
+  private readonly launchArgs = [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-gpu',
+    '--disable-software-rasterizer',
+  ];
 
-  async initialize() {
-    if (!this.browser) {
-      this.browser = await puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-      });
+  /**
+   * Launch a fresh browser, run the operation, and close it.
+   * Uses pipe transport instead of WebSocket to avoid ECONNRESET / socket
+   * hang-up errors that occur when Chromium's DevTools WebSocket drops in
+   * constrained Docker environments.
+   */
+  private async withBrowser<T>(operation: (page: Page) => Promise<T>): Promise<T> {
+    const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || undefined;
+
+    const browser = await puppeteer.launch({
+      headless: 'shell',         // old headless mode — most compatible
+      pipe: true,                // stdio pipes instead of WebSocket
+      executablePath,
+      protocolTimeout: 180_000,  // 3 min protocol timeout
+      args: this.launchArgs,
+    });
+
+    try {
+      const page = await browser.newPage();
+      page.setDefaultNavigationTimeout(60_000);
+
+      try {
+        return await operation(page);
+      } finally {
+        await page.close().catch(() => {});
+      }
+    } finally {
+      await browser.close().catch(() => {});
     }
   }
 
   async close() {
-    if (this.browser) {
-      await this.browser.close();
-      this.browser = null;
-    }
+    // No-op: browsers are now per-request
   }
 
   calculateResults(data: AssessmentData): ResultsData {
@@ -735,15 +760,7 @@ export class PDFService {
     metricNotes?: any[], 
     perspective: 'operational' | 'design' | 'both' = 'both'
   ): Promise<Buffer> {
-    await this.initialize();
-
-    if (!this.browser) {
-      throw new Error('Failed to initialize browser');
-    }
-
-    const page: Page = await this.browser.newPage();
-
-    try {
+    return this.withBrowser(async (page) => {
       const html = await this.generateReportHTML(assessmentData, metricNotes, perspective);
 
       await page.setContent(html, { waitUntil: 'networkidle0' });
@@ -767,9 +784,7 @@ export class PDFService {
       });
 
       return Buffer.from(pdf);
-    } finally {
-      await page.close();
-    }
+    });
   }
 
   // Helper methods for comparison
@@ -813,15 +828,7 @@ export class PDFService {
   }
 
   async generateComparisonPDF(comparisonData: any): Promise<Buffer> {
-    await this.initialize();
-
-    if (!this.browser) {
-      throw new Error('Failed to initialize browser');
-    }
-
-    const page: Page = await this.browser.newPage();
-
-    try {
+    return this.withBrowser(async (page) => {
       const html = await this.generateComparisonHTML(comparisonData);
       await page.setContent(html, { waitUntil: 'networkidle0' });
 
@@ -844,9 +851,7 @@ export class PDFService {
       });
 
       return Buffer.from(pdf);
-    } finally {
-      await page.close();
-    }
+    });
   }
 
   async generateComparisonHTML(comparisonData: any): Promise<string> {

@@ -1,20 +1,33 @@
-# Use Node.js 20 Alpine as base image
-FROM node:20-alpine
+# Use Debian-based Node.js image (Alpine's Chromium crashes on ARM64/aarch64)
+FROM node:20-slim
 
-# Install necessary system dependencies for Puppeteer
-RUN apk add --no-cache \
+# Install Chromium and dependencies for Puppeteer
+RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium \
-    nss \
-    freetype \
-    freetype-dev \
-    harfbuzz \
+    fonts-freefont-ttf \
+    libfreetype6 \
+    libharfbuzz0b \
+    libnss3 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    libgbm1 \
+    libasound2 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libx11-xcb1 \
+    gosu \
+    wget \
     ca-certificates \
-    ttf-freefont \
-    su-exec
+  && rm -rf /var/lib/apt/lists/*
 
-# Set Puppeteer to use installed Chromium
+# Set Puppeteer to use the system Chromium
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Create app directory
 WORKDIR /app
@@ -45,8 +58,8 @@ RUN npm install drizzle-kit
 RUN npm cache clean --force
 
 # Create non-root user for security
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+RUN groupadd -g 1001 nodejs
+RUN useradd -m -u 1001 -g nodejs nextjs
 
 # Create data directory for SQLite database
 RUN mkdir -p /app/data

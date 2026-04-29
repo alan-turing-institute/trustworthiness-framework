@@ -39,6 +39,32 @@ import { z } from "zod";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 import { calculateResults } from "@shared/scoreCalculation";
+import { inspect } from "node:util";
+
+function serializeUnknownError(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  if (typeof error === "string") {
+    return error;
+  }
+
+  if (error && typeof error === "object") {
+    const messageCandidate = (error as { message?: unknown }).message;
+    if (typeof messageCandidate === "string" && messageCandidate.trim()) {
+      return messageCandidate;
+    }
+
+    try {
+      return JSON.stringify(error);
+    } catch {
+      return inspect(error, { depth: 3 });
+    }
+  }
+
+  return String(error);
+}
 
 /**
  * Helper function to calculate pillar scores for an assessment
@@ -1201,9 +1227,9 @@ export function registerRoutes(app: Express): Server {
       console.error("Error generating PDF report:", error);
       if (error instanceof Error) {
         console.error("Stack:", error.stack);
-        res.status(500).json({ message: "Failed to generate PDF report", error: error.message });
+        res.status(500).json({ message: "Failed to generate PDF report", error: serializeUnknownError(error) });
       } else {
-        res.status(500).json({ message: "Failed to generate PDF report", error: String(error) });
+        res.status(500).json({ message: "Failed to generate PDF report", error: serializeUnknownError(error) });
       }
     }
   });
@@ -1299,9 +1325,9 @@ export function registerRoutes(app: Express): Server {
       console.error("Error generating comparison PDF:", error);
       if (error instanceof Error) {
         console.error("Stack:", error.stack);
-        res.status(500).json({ message: "Failed to generate comparison PDF", error: error.message });
+        res.status(500).json({ message: "Failed to generate comparison PDF", error: serializeUnknownError(error) });
       } else {
-        res.status(500).json({ message: "Failed to generate comparison PDF", error: String(error) });
+        res.status(500).json({ message: "Failed to generate comparison PDF", error: serializeUnknownError(error) });
       }
     }
   });
