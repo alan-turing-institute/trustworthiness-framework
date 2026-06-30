@@ -3603,8 +3603,8 @@
         "description": "ID recovery controls and measures",
         "metrics": [
           {
-            "code": "R£S.IDR.D1",
-            "name": "R£S.IDR.D1 Provision for password history policy",
+            "code": "RES.IDR.D1",
+            "name": "RES.IDR.D1 Provision for password history policy",
             "description": "Provision for password history policy",
             "type": "design",
             "standards": [],
@@ -3615,8 +3615,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.D2",
-            "name": "R£S.IDR.D2 Provision for minimum password policy age",
+            "code": "RES.IDR.D2",
+            "name": "RES.IDR.D2 Provision for minimum password policy age",
             "description": "Provision for minimum password policy age",
             "type": "design",
             "standards": [],
@@ -3627,8 +3627,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.D3",
-            "name": "R£S.IDR.D3 Provision for Maximum password age policy",
+            "code": "RES.IDR.D3",
+            "name": "RES.IDR.D3 Provision for Maximum password age policy",
             "description": "Provision for Maximum password age policy",
             "type": "design",
             "standards": [],
@@ -3639,8 +3639,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.D4",
-            "name": "R£S.IDR.D4 Provision for Minimum password length policy",
+            "code": "RES.IDR.D4",
+            "name": "RES.IDR.D4 Provision for Minimum password length policy",
             "description": "Provision for Minimum password length policy",
             "type": "design",
             "standards": [],
@@ -3651,8 +3651,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.D5",
-            "name": "R£S.IDR.D5 Provision for a password audit policy",
+            "code": "RES.IDR.D5",
+            "name": "RES.IDR.D5 Provision for a password audit policy",
             "description": "Provision for a password audit policy",
             "type": "design",
             "standards": [],
@@ -3663,8 +3663,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.D6",
-            "name": "R£S.IDR.D6 Provision for automated password recovery",
+            "code": "RES.IDR.D6",
+            "name": "RES.IDR.D6 Provision for automated password recovery",
             "description": "Provision for automated password recovery",
             "type": "design",
             "standards": [],
@@ -3675,8 +3675,8 @@
             "percentageChoice1": 0
           },
           {
-            "code": "R£S.IDR.O1",
-            "name": "R£S.IDR.O1 Enforce password history policy",
+            "code": "RES.IDR.O1",
+            "name": "RES.IDR.O1 Enforce password history policy",
             "description": "Enforce password history policy",
             "type": "operational",
             "standards": [],
@@ -3687,8 +3687,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.O2",
-            "name": "R£S.IDR.O2 Enforce minimum password policy age",
+            "code": "RES.IDR.O2",
+            "name": "RES.IDR.O2 Enforce minimum password policy age",
             "description": "Enforce minimum password policy age",
             "type": "operational",
             "standards": [],
@@ -3699,8 +3699,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.O3",
-            "name": "R£S.IDR.O3 Enforce Maximum password age policy",
+            "code": "RES.IDR.O3",
+            "name": "RES.IDR.O3 Enforce Maximum password age policy",
             "description": "Enforce Maximum password age policy",
             "type": "operational",
             "standards": [],
@@ -3711,8 +3711,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.O4",
-            "name": "R£S.IDR.O4 Enforce Minimum password length policy",
+            "code": "RES.IDR.O4",
+            "name": "RES.IDR.O4 Enforce Minimum password length policy",
             "description": "Enforce Minimum password length policy",
             "type": "operational",
             "standards": [],
@@ -3723,8 +3723,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.O5",
-            "name": "R£S.IDR.O5 Enforced password audit policy",
+            "code": "RES.IDR.O5",
+            "name": "RES.IDR.O5 Enforced password audit policy",
             "description": "Enforced password audit policy",
             "type": "operational",
             "standards": [],
@@ -3735,8 +3735,8 @@
             "percentageChoice1": 100
           },
           {
-            "code": "R£S.IDR.O6",
-            "name": "R£S.IDR.O6 Automated password recovery deployed",
+            "code": "RES.IDR.O6",
+            "name": "RES.IDR.O6 Automated password recovery deployed",
             "description": "Automated password recovery deployed",
             "type": "operational",
             "standards": [],

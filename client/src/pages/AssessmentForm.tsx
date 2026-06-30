@@ -48,7 +48,7 @@ export default function AssessmentForm() {
   const [isPublic, setIsPublic] = useState(false);
   const [status, setStatus] = useState<"draft" | "in_progress" | "completed">("draft");
   const [activePillar, setActivePillar] = useState(0);
-  const [responses, setResponses] = useState<Record<string, { answer: boolean; answerValue?: number }>>({});
+  const [responses, setResponses] = useState<Record<string, { answer: boolean; answerValue?: number; notInScope?: boolean }>>({});
   const [openMechanisms, setOpenMechanisms] = useState<Record<string, boolean>>({});
   const [excludedMechanisms, setExcludedMechanisms] = useState<Record<string, boolean>>({});
   const [mechanismConfigurations, setMechanismConfigurations] = useState<
@@ -70,7 +70,7 @@ export default function AssessmentForm() {
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
   const isSavingRef = useRef(false);
   const percentageSliderTimeoutRef = useRef<NodeJS.Timeout>();
-  const pendingPercentageResponse = useRef<{ metricId: string; answer: boolean; answerValue: number } | null>(null);
+  const pendingPercentageResponse = useRef<{ metricId: string; answer: boolean; answerValue: number; notInScope?: boolean } | null>(null);
   const noteTimeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
 
   // Refs to track current values without causing re-renders
@@ -169,11 +169,12 @@ export default function AssessmentForm() {
 
   useEffect(() => {
     if (assessmentResponses) {
-      const responseMap: Record<string, { answer: boolean; answerValue?: number }> = {};
+      const responseMap: Record<string, { answer: boolean; answerValue?: number; notInScope?: boolean }> = {};
       assessmentResponses.forEach((response: AssessmentResponse) => {
         responseMap[response.metricId] = {
           answer: response.answer,
           answerValue: response.answerValue !== null ? response.answerValue : undefined,
+          notInScope: !!response.notInScope,
         };
       });
       setResponses(responseMap);
@@ -317,7 +318,7 @@ export default function AssessmentForm() {
 
   // Save response mutation
   const saveResponseMutation = useMutation({
-    mutationFn: async (data: { metricId: string; answer: boolean; answerValue: number | null }) => {
+    mutationFn: async (data: { metricId: string; answer: boolean; answerValue: number | null; notInScope?: boolean }) => {
       console.log('[saveResponseMutation] Saving response:', data);
       setIsSaving(true);
       return await apiRequest("POST", `/api/assessments/${id}/responses`, data);
@@ -531,18 +532,35 @@ export default function AssessmentForm() {
     }
   };
 
-  const handleResponseChange = (metricId: string, metric: any, value: boolean | number) => {
+  const handleResponseChange = (metricId: string, metric: any, value: boolean | number | "not-in-scope") => {
+    if (value === "not-in-scope") {
+      setResponses(prev => ({
+        ...prev,
+        [metricId]: { answer: false, answerValue: undefined, notInScope: true }
+      }));
+      if (id) {
+        saveResponseMutation.mutate({
+          metricId,
+          answer: false,
+          answerValue: null,
+          notInScope: true
+        });
+      }
+      return;
+    }
+
     if (metric.metricType === "boolean") {
       const boolValue = value as boolean;
       setResponses(prev => ({
         ...prev,
-        [metricId]: { answer: boolValue, answerValue: undefined }
+        [metricId]: { answer: boolValue, answerValue: undefined, notInScope: false }
       }));
       if (id) {
         saveResponseMutation.mutate({
           metricId,
           answer: boolValue,
-          answerValue: null
+          answerValue: null,
+          notInScope: false
         });
       }
     } else if (metric.metricType === "percentage") {
@@ -550,15 +568,16 @@ export default function AssessmentForm() {
       // Update UI immediately
       setResponses(prev => ({
         ...prev,
-        [metricId]: { answer: percentValue === 100, answerValue: percentValue }
+        [metricId]: { answer: percentValue === 100, answerValue: percentValue, notInScope: false }
       }));
-      
+
       if (id) {
         // Store the pending response
         pendingPercentageResponse.current = {
           metricId,
           answer: percentValue === 100,
-          answerValue: percentValue
+          answerValue: percentValue,
+          notInScope: false
         };
         
         // Clear any existing timeout
@@ -771,22 +790,24 @@ export default function AssessmentForm() {
 
   const calculateMechanismScore = (mechanism: any) => {
     let totalScore = 0;
-    let metricCount = mechanism.metrics.length;
+    // Not In Scope metrics excluded from numerator AND denominator
+    const scoredMetrics = mechanism.metrics.filter((metric: any) => !responses[metric.id]?.notInScope);
+    let metricCount = scoredMetrics.length;
 
-    mechanism.metrics.forEach((metric: any) => {
+    scoredMetrics.forEach((metric: any) => {
       totalScore += calculateMetricScore(metric);
     });
 
     let score = metricCount > 0 ? Math.round(totalScore / metricCount) : 0;
 
     // Apply mechanism caps based on low-performing metrics
-    const hasLowMetric = mechanism.metrics.some((metric: any) => {
+    const hasLowMetric = scoredMetrics.some((metric: any) => {
       const metricScore = calculateMetricScore(metric);
       return metricScore < 50;
     });
 
     if (hasLowMetric) {
-      const lowMetrics = mechanism.metrics.filter((metric: any) => {
+      const lowMetrics = scoredMetrics.filter((metric: any) => {
         const metricScore = calculateMetricScore(metric);
         return metricScore < 50;
       });
@@ -1419,9 +1440,9 @@ export default function AssessmentForm() {
 
                                   {metric.metricType === "boolean" ? (
                                     <RadioGroup
-                                      value={responses[metric.id]?.answer?.toString() || ""}
+                                      value={responses[metric.id]?.notInScope ? "not-in-scope" : (responses[metric.id]?.answer?.toString() || "")}
                                       onValueChange={(value) =>
-                                        handleResponseChange(metric.id, metric, value === "true")
+                                        handleResponseChange(metric.id, metric, value === "not-in-scope" ? "not-in-scope" : value === "true")
                                       }
                                     >
                                       <div className="flex items-center space-x-6">
@@ -1437,14 +1458,39 @@ export default function AssessmentForm() {
                                             No / Not Implemented
                                           </Label>
                                         </div>
+                                        <div className="flex items-center space-x-2">
+                                          <RadioGroupItem value="not-in-scope" id={`${metric.id}-nis`} data-testid="not-in-scope-button" />
+                                          <Label htmlFor={`${metric.id}-nis`} className="text-sm font-medium cursor-pointer text-text-secondary">
+                                            Not In Scope
+                                          </Label>
+                                        </div>
                                       </div>
                                     </RadioGroup>
                                   ) : (
-                                    <PercentageSlider
-                                      value={responses[metric.id]?.answerValue || 0}
-                                      onChange={(value) => handleResponseChange(metric.id, metric, value)}
-                                      disabled={!id}
-                                    />
+                                    <div className={responses[metric.id]?.notInScope ? "opacity-50 pointer-events-none" : ""}>
+                                      <PercentageSlider
+                                        value={responses[metric.id]?.answerValue || 0}
+                                        onChange={(value) => handleResponseChange(metric.id, metric, value)}
+                                        disabled={!id || responses[metric.id]?.notInScope}
+                                      />
+                                    </div>
+                                  )}
+
+                                  {metric.metricType !== "boolean" && (
+                                    <div className="flex items-center space-x-2 mt-3">
+                                      <Checkbox
+                                        id={`${metric.id}-nis`}
+                                        checked={!!responses[metric.id]?.notInScope}
+                                        disabled={!id}
+                                        onCheckedChange={(checked) =>
+                                          handleResponseChange(metric.id, metric, checked ? "not-in-scope" : 0)
+                                        }
+                                        data-testid="not-in-scope-checkbox"
+                                      />
+                                      <Label htmlFor={`${metric.id}-nis`} className="text-sm font-medium cursor-pointer text-text-secondary">
+                                        Not In Scope (excluded from score)
+                                      </Label>
+                                    </div>
                                   )}
 
                                   {!id && (

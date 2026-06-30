@@ -10,6 +10,8 @@ export interface ResultsData {
     designScore: number;
     isCapped?: boolean;
     cappingMechanisms?: any[];
+    operationalInScope?: boolean;
+    designInScope?: boolean;
     mechanisms: Array<{
       id: string;
       name: string;
@@ -18,6 +20,8 @@ export interface ResultsData {
       designScore: number;
       isCapped?: boolean;
       cappingMetrics?: any[];
+      operationalInScope?: boolean;
+      designInScope?: boolean;
       metrics: Array<{
         id: string;
         name: string;
@@ -26,9 +30,12 @@ export interface ResultsData {
         score: number;
         mechanismCap: number;
         pillarCap: number;
+        notInScope?: boolean;
       }>;
     }>;
   }>;
+  overallOperationalScore: number;
+  overallDesignScore: number;
 }
 
 /**
@@ -50,6 +57,15 @@ export const calculateMetricScore = (metric: any, responseMap: Map<string, any>)
 };
 
 /**
+ * Whether a metric is marked "Not In Scope" — excluded from all score totals
+ */
+export const isMetricNotInScope = (metric: any, responseMap: Map<string, any>): boolean => {
+  if (!metric) return false;
+  const response = responseMap.get(metric.id);
+  return !!response?.notInScope;
+};
+
+/**
  * Apply mechanism-level capping based on low-scoring metrics
  */
 export function applyMetricCaps(mechanism: any, pillar: any, calculateScore: (metric: any) => number) {
@@ -66,12 +82,12 @@ export function applyMetricCaps(mechanism: any, pillar: any, calculateScore: (me
     };
   }
 
-  // Find metrics with score < 50% separated by type
-  const lowOperationalMetrics = mechanism.metrics.filter((metric: any) => 
-    metric.type === "operational" && calculateScore(metric) < 50
+  // Find metrics with score < 50% separated by type (Not In Scope metrics never cap)
+  const lowOperationalMetrics = mechanism.metrics.filter((metric: any) =>
+    metric.type === "operational" && !metric.notInScope && calculateScore(metric) < 50
   );
-  const lowDesignMetrics = mechanism.metrics.filter((metric: any) => 
-    metric.type === "design" && calculateScore(metric) < 50
+  const lowDesignMetrics = mechanism.metrics.filter((metric: any) =>
+    metric.type === "design" && !metric.notInScope && calculateScore(metric) < 50
   );
 
   const originalOperationalScore = mechanism.operationalScore || 0;
@@ -151,8 +167,9 @@ export function calculateResults(
     const mechanisms = pillar.mechanisms
       .filter(mechanism => !excludedMechanismIds.has(mechanism.id)) // Skip excluded mechanisms
       .map(mechanism => {
-        const operationalMetrics = mechanism.metrics.filter(m => m.type === "operational");
-        const designMetrics = mechanism.metrics.filter(m => m.type === "design");
+        // Not In Scope metrics are excluded from weighted averages (numerator AND denominator)
+        const operationalMetrics = mechanism.metrics.filter(m => m.type === "operational" && !isMetricNotInScope(m, responseMap));
+        const designMetrics = mechanism.metrics.filter(m => m.type === "design" && !isMetricNotInScope(m, responseMap));
 
         const calculateScore = (metric: any) => calculateMetricScore(metric, responseMap);
 
@@ -171,6 +188,7 @@ export function calculateResults(
         const metrics = mechanism.metrics.map(metric => {
           const mechanismCap = typeof metric.mechanismCap === 'number' ? metric.mechanismCap : (parseFloat(String(metric.mechanismCap)) ?? 100);
           const pillarCap = typeof metric.pillarCap === 'number' ? metric.pillarCap : (parseFloat(String(metric.pillarCap)) ?? 100);
+          const notInScope = isMetricNotInScope(metric, responseMap);
           const score = calculateScore(metric);
 
           return {
@@ -178,6 +196,7 @@ export function calculateResults(
             mechanismCap,
             pillarCap,
             score,
+            notInScope,
           };
         });
 
@@ -190,6 +209,11 @@ export function calculateResults(
           designScore,
           operationalWeight: mechanism.operationalWeight || 1.0,
           designWeight: mechanism.designWeight || 1.0,
+          // Whether this mechanism has any in-scope metric of each type.
+          // If all metrics of a type are Not In Scope, the mechanism is excluded
+          // from that type's pillar aggregation (not counted with weight 0/score 0).
+          operationalInScope: operationalMetrics.length > 0,
+          designInScope: designMetrics.length > 0,
           metrics,
         };
 
@@ -199,16 +223,20 @@ export function calculateResults(
         return mechanismData;
       });
 
-    // Calculate weighted average scores using mechanism weights
-    const totalOperationalWeight = mechanisms.reduce((sum, m) => sum + (m.operationalWeight || 1.0), 0);
-    const totalDesignWeight = mechanisms.reduce((sum, m) => sum + (m.designWeight || 1.0), 0);
+    // Calculate weighted average scores using mechanism weights.
+    // Only mechanisms with in-scope metrics of the given type contribute (numerator AND denominator).
+    const operationalMechanisms = mechanisms.filter(m => m.operationalInScope);
+    const designMechanisms = mechanisms.filter(m => m.designInScope);
+
+    const totalOperationalWeight = operationalMechanisms.reduce((sum, m) => sum + (m.operationalWeight || 1.0), 0);
+    const totalDesignWeight = designMechanisms.reduce((sum, m) => sum + (m.designWeight || 1.0), 0);
 
     let operationalScore = totalOperationalWeight > 0
-      ? mechanisms.reduce((sum, m) => sum + (m.operationalScore * (m.operationalWeight || 1.0)), 0) / totalOperationalWeight
+      ? operationalMechanisms.reduce((sum, m) => sum + (m.operationalScore * (m.operationalWeight || 1.0)), 0) / totalOperationalWeight
       : 0;
 
     let designScore = totalDesignWeight > 0
-      ? mechanisms.reduce((sum, m) => sum + (m.designScore * (m.designWeight || 1.0)), 0) / totalDesignWeight
+      ? designMechanisms.reduce((sum, m) => sum + (m.designScore * (m.designWeight || 1.0)), 0) / totalDesignWeight
       : 0;
 
     // Apply pillar caps from mechanisms with applied caps
@@ -217,15 +245,23 @@ export function calculateResults(
     let pillarCappingMechanisms: any[] = [];
 
     mechanisms.forEach(m => {
-      const hasCappingMetrics = m.metrics.some(metric =>
-        metric.score < 50 && (metric.mechanismCap < 100 || metric.pillarCap < 100)
+      // Operational metrics cap only the operational score; design metrics only the design score.
+      const hasOperationalCapping = m.metrics.some(metric =>
+        !metric.notInScope && metric.type === "operational" && metric.score < 50 && (metric.mechanismCap < 100 || metric.pillarCap < 100)
+      );
+      const hasDesignCapping = m.metrics.some(metric =>
+        !metric.notInScope && metric.type === "design" && metric.score < 50 && (metric.mechanismCap < 100 || metric.pillarCap < 100)
       );
 
-      if (hasCappingMetrics) {
+      if (hasOperationalCapping || hasDesignCapping) {
         pillarCappingMechanisms.push(m);
+      }
+      if (hasOperationalCapping) {
         operationalScore = Math.min(operationalScore, 85);
-        designScore = Math.min(designScore, 85);
         pillarOperationalCapped = true;
+      }
+      if (hasDesignCapping) {
+        designScore = Math.min(designScore, 85);
         pillarDesignCapped = true;
       }
     });
@@ -239,16 +275,23 @@ export function calculateResults(
       designScore,
       isCapped: pillarOperationalCapped || pillarDesignCapped,
       cappingMechanisms: pillarCappingMechanisms,
+      // Pillar contributes to overall only if it has at least one in-scope mechanism of the type.
+      operationalInScope: operationalMechanisms.length > 0,
+      designInScope: designMechanisms.length > 0,
       mechanisms,
     };
   });
 
-  const overallOperationalScore = pillars.length > 0
-    ? pillars.reduce((sum, p) => sum + p.operationalScore, 0) / pillars.length
+  // Overall = average of pillars that have in-scope metrics of the given type.
+  const operationalPillars = pillars.filter(p => p.operationalInScope);
+  const designPillars = pillars.filter(p => p.designInScope);
+
+  const overallOperationalScore = operationalPillars.length > 0
+    ? operationalPillars.reduce((sum, p) => sum + p.operationalScore, 0) / operationalPillars.length
     : 0;
 
-  const overallDesignScore = pillars.length > 0
-    ? pillars.reduce((sum, p) => sum + p.designScore, 0) / pillars.length
+  const overallDesignScore = designPillars.length > 0
+    ? designPillars.reduce((sum, p) => sum + p.designScore, 0) / designPillars.length
     : 0;
 
   return {

@@ -660,7 +660,9 @@ export function registerRoutes(app: Express): Server {
             // Determine current score display
             let currentScore = "";
             if (response) {
-              if (metric.metricType === "boolean") {
+              if (response.notInScope) {
+                currentScore = "Not In Scope";
+              } else if (metric.metricType === "boolean") {
                 currentScore = response.answer ? "Yes" : "No";
               } else {
                 currentScore = response.answerValue?.toString() || "0";
@@ -809,16 +811,27 @@ export function registerRoutes(app: Express): Server {
         }
 
         try {
+          const normalized = String(scoreValue).toLowerCase().trim();
           // Parse and save score
-          if (answerType === "boolean") {
-            const normalizedValue = String(scoreValue).toLowerCase().trim();
+          if (normalized === "not in scope" || normalized === "n/a" || normalized === "na") {
+            await storage.upsertAssessmentResponse({
+              assessmentId: req.params.id,
+              metricId,
+              answer: false,
+              answerValue: null,
+              notInScope: true
+            });
+            updatedScores++;
+          } else if (answerType === "boolean") {
+            const normalizedValue = normalized;
             const boolValue = normalizedValue === "yes" || normalizedValue === "true" || normalizedValue === "1";
 
             await storage.upsertAssessmentResponse({
               assessmentId: req.params.id,
               metricId,
               answer: boolValue,
-              answerValue: null
+              answerValue: null,
+              notInScope: false
             });
             updatedScores++;
           } else if (answerType === "percentage") {
@@ -832,7 +845,8 @@ export function registerRoutes(app: Express): Server {
               assessmentId: req.params.id,
               metricId,
               answer: numValue === 100,
-              answerValue: numValue
+              answerValue: numValue,
+              notInScope: false
             });
             updatedScores++;
           }
@@ -931,7 +945,7 @@ export function registerRoutes(app: Express): Server {
         });
       }
 
-      if (metric.metricType === "percentage" && (validatedData.answerValue == null || validatedData.answerValue === undefined)) {
+      if (metric.metricType === "percentage" && !validatedData.notInScope && (validatedData.answerValue == null || validatedData.answerValue === undefined)) {
         return res.status(400).json({
           message: "Percentage metrics require a value between 0 and 100"
         });

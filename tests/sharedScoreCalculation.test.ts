@@ -291,4 +291,67 @@ describe('Shared Score Calculation', () => {
       expect(results.overallDesignScore).toBe(0);
     });
   });
+
+  describe('Not In Scope', () => {
+    it('excludes a not-in-scope metric from the weighted average', () => {
+      // pillar-2 mech-3 has a single operational metric (metric-4)
+      const responses: AssessmentResponse[] = [
+        { id: 'r', assessmentId: 'test', metricId: 'metric-4', answer: false, answerValue: null, notInScope: true, createdAt: new Date(), updatedAt: new Date() },
+      ];
+      const results = calculateResults(mockFramework, responses, new Set());
+      const mech3 = results.pillars[1].mechanisms[0];
+
+      // Only metric excluded -> no in-scope metrics -> score 0, and NOT capped
+      expect(mech3.operationalScore).toBe(0);
+      expect(mech3.isCapped).toBeFalsy();
+      expect(mech3.metrics[0].notInScope).toBe(true);
+    });
+
+    it('does not let a not-in-scope 0% metric cap or drag down the mechanism', () => {
+      // mech-1: metric-1 operational, metric-2 design. Mark the failing operational metric out of scope.
+      const responses: AssessmentResponse[] = [
+        { id: 'r1', assessmentId: 'test', metricId: 'metric-1', answer: false, answerValue: null, notInScope: true, createdAt: new Date(), updatedAt: new Date() },
+        { id: 'r2', assessmentId: 'test', metricId: 'metric-2', answer: true, answerValue: null, createdAt: new Date(), updatedAt: new Date() },
+      ];
+      const results = calculateResults(mockFramework, responses, new Set());
+      const mech1 = results.pillars[0].mechanisms[0];
+
+      // Failing operational metric is excluded -> not capped, design unaffected
+      expect(mech1.isCapped).toBeFalsy();
+      expect(mech1.designScore).toBe(100);
+    });
+
+    it('an operational low metric caps only the operational pillar score, not design', () => {
+      // mech-1: metric-1 operational (score 0, pillarCap 70 -> triggers cap), metric-2 design = 100.
+      // Isolate mech-1 by excluding mech-2.
+      const responses: AssessmentResponse[] = [
+        { id: 'a', assessmentId: 'test', metricId: 'metric-1', answer: false, answerValue: null, createdAt: new Date(), updatedAt: new Date() },
+        { id: 'b', assessmentId: 'test', metricId: 'metric-2', answer: true, answerValue: null, createdAt: new Date(), updatedAt: new Date() },
+      ];
+      const results = calculateResults(mockFramework, responses, new Set(['mech-2']));
+      const p = results.pillars[0];
+
+      // design must NOT be pulled down to the 85 pillar cap by the operational metric
+      expect(p.designScore).toBe(100);
+      // operational is capped (<= 85) by its own low metric
+      expect(p.operationalScore).toBeLessThanOrEqual(85);
+    });
+
+    it('a mechanism whose type is fully not-in-scope does not drag the pillar or overall', () => {
+      // pillar-2 / mech-3 has a single operational metric (metric-4); mark it out of scope.
+      // pillar-1 answered positively. Overall must ignore pillar-2's operational entirely.
+      const responses: AssessmentResponse[] = [
+        { id: 'a', assessmentId: 'test', metricId: 'metric-1', answer: true, answerValue: null, createdAt: new Date(), updatedAt: new Date() },
+        { id: 'b', assessmentId: 'test', metricId: 'metric-2', answer: true, answerValue: null, createdAt: new Date(), updatedAt: new Date() },
+        { id: 'c', assessmentId: 'test', metricId: 'metric-4', answer: false, answerValue: null, notInScope: true, createdAt: new Date(), updatedAt: new Date() },
+      ];
+      const results = calculateResults(mockFramework, responses, new Set());
+
+      // pillar-2 has no in-scope operational metric -> excluded from overall operational
+      expect(results.pillars[1].operationalInScope).toBe(false);
+      // overall operational = pillar-1 only (pillar-2 NOT averaged in as a 0)
+      expect(results.overallOperationalScore).toBeCloseTo(results.pillars[0].operationalScore, 5);
+      expect(results.overallOperationalScore).toBeGreaterThan(0);
+    });
+  });
 });

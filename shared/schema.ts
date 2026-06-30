@@ -208,6 +208,7 @@ export const assessmentResponses = sqliteTable("assessment_responses", {
   metricId: text("metric_id").notNull().references(() => metrics.id, { onDelete: "cascade" }),
   answer: integer("answer", { mode: 'boolean' }).notNull(), // For boolean metrics: true = Yes/Implemented, false = No/Not Implemented
   answerValue: real("answer_value"), // For percentage metrics: 0-100 value
+  notInScope: integer("not_in_scope", { mode: 'boolean' }).default(false), // true = metric excluded from score totals
   createdAt: integer("created_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
   updatedAt: integer("updated_at", { mode: 'timestamp' }).$defaultFn(() => new Date()),
 }, (table) => ({
@@ -359,6 +360,7 @@ export const insertAssessmentSchema = createInsertSchema(assessments).omit({ id:
 });
 export const insertAssessmentResponseSchema = createInsertSchema(assessmentResponses).omit({ id: true, createdAt: true, updatedAt: true }).extend({
   answerValue: z.number().min(0).max(100).nullable().optional(),
+  notInScope: z.boolean().nullable().optional(),
 });
 export const insertAssessmentMetricNoteSchema = createInsertSchema(assessmentMetricNotes).omit({ id: true, createdAt: true, updatedAt: true });
 export const insertAssessmentStandardsComplianceSchema = createInsertSchema(assessmentStandardsCompliance).omit({ id: true, createdAt: true, updatedAt: true });

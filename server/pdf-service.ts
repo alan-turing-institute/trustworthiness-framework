@@ -354,6 +354,7 @@ export class PDFService {
         .score-excellent { background: #10b981; }
         .score-good { background: #f59e0b; }
         .score-poor { background: #ef4444; }
+        .metric-not-in-scope { background: #9ca3af; padding: 4px 12px; border-radius: 16px; color: white; font-weight: bold; }
         .pillar-section {
             page-break-before: always;
             margin-top: 50px;
@@ -735,7 +736,9 @@ export class PDFService {
             <div class="metric-header">
                 <span class="metric-name">${metric.name}</span>
                 <span class="metric-type ${metric.type}">${metric.type}</span>
-                <span class="metric-score ${this.getScoreClass(metric.score)}">${Math.round(metric.score)}%</span>
+                ${metric.notInScope
+                  ? `<span class="metric-score metric-not-in-scope">N/A</span>`
+                  : `<span class="metric-score ${this.getScoreClass(metric.score)}">${Math.round(metric.score)}%</span>`}
             </div>
             <div class="metric-details">
                 <div class="metric-detail-item">

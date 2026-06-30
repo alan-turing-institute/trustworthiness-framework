@@ -500,6 +500,7 @@ export class DatabaseStorage implements IStorage {
         set: {
           answer: response.answer, // Update the answer if conflict
           answerValue: response.answerValue, // Update the percentage value if provided
+          notInScope: response.notInScope ?? false, // Update Not In Scope flag
           updatedAt: new Date(),
         },
       })
